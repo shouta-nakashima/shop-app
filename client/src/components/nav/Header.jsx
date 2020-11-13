@@ -4,7 +4,8 @@ import { AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, Logou
 import { Link } from 'react-router-dom'
 import {auth} from '../../firebase'
 import { useDispatch } from 'react-redux'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const { SubMenu, Item } = Menu;//Menu.SubMenu
 
@@ -23,6 +24,7 @@ const Header = () => {
       type: "LOGOUT",
       payload: null
     })
+    toast.warn("ログアウトしました。")
     history.push('/login')
   }
   return (
