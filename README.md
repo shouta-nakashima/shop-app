@@ -1,18 +1,17 @@
 # shop-app
-shop-app
 
-### frontend
+## Frontend
 
-react
+react/redux
 
-### backend
+## Backend
 
 Node/express
 
-### DB
+## DB
 
 mongoDB
 
-### Authentications
+## Authentications
 
 firebase/Authentication
