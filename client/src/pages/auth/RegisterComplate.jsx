@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
+import { Button } from 'antd'
+import { LoginOutlined } from '@ant-design/icons';
 
 
 const RegisterComplate = ({history}) => {
@@ -37,7 +39,7 @@ const RegisterComplate = ({history}) => {
         //redux store
         console.log("user", user, idTokenResult);
         //redirect
-        toast.info( '新規登録が完了しました。')
+        toast.info('👍新規登録が完了しました。')
         history.push('/')
       }
     } catch (error) {
@@ -66,7 +68,18 @@ const RegisterComplate = ({history}) => {
       autoFocus
     />
     <br/>
-    <button type="submit" className="btn btn-raised">Sign Up</button>
+    <Button
+      onClick={handleSubmit}
+      type="primary"
+      className="mb-3"
+      block
+      shape="round"
+      icon={<LoginOutlined />}
+      size="large"
+      disabled={!email}
+    >
+      新規登録する
+    </Button>
   </form>
   return (
     <div className="container p-5">

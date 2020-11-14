@@ -25,7 +25,7 @@ const Header = () => {
       type: "LOGOUT",
       payload: null
     })
-    toast.warn("ログアウトしました。")
+    toast.warn("👋ログアウトしました。")
     history.push('/login')
   }
   return (

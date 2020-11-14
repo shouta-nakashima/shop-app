@@ -1,10 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
-import {REACT_APP_REJISTER_REDIRECT_URL} from '../../urlConfig'
+import { REACT_APP_REJISTER_REDIRECT_URL } from '../../urlConfig'
+import { Button } from 'antd'
+import { MailOutlined } from '@ant-design/icons';
 
-const Register = () => {
+const Register = ({history}) => {
   const [email, setEmail] = useState('')
+  const {user} = useSelector(state => ({...state}))
+
+  useEffect(() => {
+    if (user && user.token) {
+      history.push('/')
+    }
+  },[user])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -13,7 +23,7 @@ const Register = () => {
       handleCodeInApp: true
     }
     await auth.sendSignInLinkToEmail(email, config)
-    toast.success(`${ email }宛に登録用のメールを送信しました。`)
+    toast.success(`📩${ email }宛に登録用のメールを送信しました。`)
     //save user Email LocalStorage
     window.localStorage.setItem('emailForRegistation', email)
     //clear state
@@ -30,7 +40,18 @@ const Register = () => {
       autoFocus
     />
     <br/>
-    <button type="submit" className="btn btn-raised">Sign Up</button>
+    <Button
+      onClick={handleSubmit}
+      type="primary"
+      className="mb-3"
+      block
+      shape="round"
+      icon={<MailOutlined />}
+      size="large"
+      disabled={!email}
+    >
+      新規登録用メールの送信
+    </Button>
   </form>
   return (
     <div className="container p-5">
