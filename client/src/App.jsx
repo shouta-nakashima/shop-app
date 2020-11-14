@@ -31,7 +31,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <ToastContainer position="top-center"/>
+      <ToastContainer/>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
