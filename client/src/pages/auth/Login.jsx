@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { auth } from '../../firebase'
+import { auth, googleAuthProvider } from '../../firebase'
 import { toast } from 'react-toastify'
 import { REACT_APP_REJISTER_REDIRECT_URL } from '../../urlConfig'
 import { Button } from 'antd'
-import { MailOutlined } from '@ant-design/icons';
+import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import{ useDispatch } from 'react-redux'
 
 const Login = ({history}) => {
@@ -33,6 +33,26 @@ const Login = ({history}) => {
       toast.error('ログインに失敗しました。再度お客様情報をお確かめ下さい。')
       setLoading(false)
     }
+  }
+
+  const googleLogin = async () => {
+    auth.signInWithPopup(googleAuthProvider)
+      .then(async (result) => {
+        const { user } = result
+        const idTokenResult = await user.getIdTokenResult()
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: idTokenResult.token
+          }
+        })
+        toast.info('ログインしました。')
+        history.push('/')
+      }).catch((error) => {
+        console.log(error);
+        toast.error(error.message)
+      })
   }
 
   const loginForm = () => <form onSubmit={handleSubmit}>
@@ -74,9 +94,20 @@ const Login = ({history}) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          <h3>Login</h3>
+          {loading ? (<h3 className="text-danger">Loading...</h3>) : (<h3>Login Page</h3>)  }
           <br/>
           {loginForm()}
+          <Button
+            onClick={googleLogin}
+            type="danger"
+            className="mb-3"
+            block
+            shape="round"
+            icon={<GoogleOutlined />}
+            size="large"
+          >
+            Googleアカウントでログイン
+          </Button>
         </div>
       </div>
     </div>
