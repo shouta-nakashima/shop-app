@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const {readdirSync} = require('fs')
+//const fs = require('fs') 上記に変更
 require('dotenv').config()
 
 //app
@@ -22,12 +24,12 @@ app.use(morgan("dev"))
 app.use(bodyParser.json({ limit: "2mb" }))
 app.use(cors())
 
-//route
-app.get('/api', (req, res) => {
-  res.json({
-    data: "hey you hit node API"
-  })
-})
+//route middleware
+
+//fs.readdirSyncを下記に変更
+readdirSync('./routes').map((r) =>
+  app.use('/api', require('./routes/' + r))
+)
 
 //port
 const port = process.env.PORT || 8000

@@ -4,11 +4,23 @@
 
 react/redux
 
+#### npm Installed packages
+
+ant-design/icons@4.2.2  
+antd@4.8.2  
+firebase@8.0.1  
+react@17.0.1  
+react-redux@7.2.2  
+react-router-dom@5.2.0  
+react-toastify@6.1.0  
+redux@4.0.5  
+redux-devtools-extension@2.13.8
+
 ## Backend
 
 Node/express
 
-#### installed
+#### npm Installed packages
 
 body-parser@1.19.0  
 express@4.17.1  
