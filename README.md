@@ -8,6 +8,7 @@ react/redux
 
 ant-design/icons@4.2.2  
 antd@4.8.2  
+axios@0.21.0  
 firebase@8.0.1  
 react@17.0.1  
 react-redux@7.2.2  
