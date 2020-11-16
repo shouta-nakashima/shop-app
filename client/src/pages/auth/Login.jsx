@@ -4,7 +4,18 @@ import { toast } from 'react-toastify'
 import { Button } from 'antd'
 import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+
+const createOrUpdateUser = async(authtoken) => {
+  return await axios.post(`${ process.env.REACT_APP_API }/create-or-update-user`,
+    {},
+    {
+    headers: {
+      authtoken
+    }
+  })
+}
 
 const Login = ({history}) => {
   const [email, setEmail] = useState('')
@@ -26,15 +37,20 @@ const Login = ({history}) => {
       const result = await auth.signInWithEmailAndPassword(email, password)
       const {user}= result
       const idTokenResult = await user.getIdTokenResult()
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult.token
-        }
-      })
-      toast.info('ログインしました。')
-      history.push('/')
+
+      createOrUpdateUser(idTokenResult.token)
+        .then(res => console.log('create or update', res))
+        .catch()
+      
+      // dispatch({
+      //   type: "LOGGED_IN_USER",
+      //   payload: {
+      //     email: user.email,
+      //     token: idTokenResult.token
+      //   }
+      // })
+      // toast.info('ログインしました。')
+      // history.push('/')
     } catch (error) {
       console.log(error);
       toast.error('ログインに失敗しました。再度お客様情報をお確かめ下さい。')

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
-import { REACT_APP_REJISTER_REDIRECT_URL } from '../../urlConfig'
 import { Button } from 'antd'
 import { MailOutlined } from '@ant-design/icons';
 
@@ -19,7 +18,7 @@ const Register = ({history}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const config = {
-      url: REACT_APP_REJISTER_REDIRECT_URL,
+      url: process.env.REACT_APP_REJISTER_REDIRECT_URL,
       handleCodeInApp: true
     }
     await auth.sendSignInLinkToEmail(email, config)

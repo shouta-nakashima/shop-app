@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { REACT_APP_FORGOT_PASSWORD_REDIRECT } from '../../urlConfig'
 import { Button } from 'antd'
 import { MailOutlined } from '@ant-design/icons';
 
@@ -24,7 +23,7 @@ const ForgotPassword = ({history}) => {
     setLoading(true)
 
     const config = {
-      url: REACT_APP_FORGOT_PASSWORD_REDIRECT,
+      url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT,
       handleCodeInApp: true
     }
 
