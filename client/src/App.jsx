@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { Register, Login, RegisterComplate, ForgotPassword } from './pages/auth/index'
+import { History } from './pages/user/index'
+import UserRoute from './components/routes/UserRoute'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Home from './pages/Home'
@@ -45,7 +47,8 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complate" component={RegisterComplate} />
-        <Route exact path="/forgot/password" component={ForgotPassword}/>
+        <Route exact path="/forgot/password" component={ForgotPassword} />
+        <UserRoute exact path="/user/history" component={History}/>
       </Switch>
     </>
   )
