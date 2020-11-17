@@ -8,13 +8,20 @@ import { Link } from 'react-router-dom'
 import { createOrUpdateUser } from "../../functions/auth";
 
 
-
 const Login = ({history}) => {
   const [email, setEmail] = useState('fantajista5.6nakaji.s@gmail.com')
   const [password, setPassword] = useState('test1234')
   const [loading, setLoading] = useState(false)
   let dispatch = useDispatch()
   const {user} = useSelector(state => ({...state}))
+
+  const roleBaedRedirect = (res) => {
+    if (res.data.role === "admin") {
+      history.push('/admindashboard')
+    } else {
+      history.push('/user/history')
+    }
+  }
 
   useEffect(() => {
     if (user && user.token) {
@@ -42,12 +49,12 @@ const Login = ({history}) => {
               _id: res.data._id
             }
           })
+          roleBaedRedirect(res)
         })
-        .catch()
-      
+        .catch(err => console.log(err))
       
       toast.info('ログインしました。')
-      history.push('/')
+      //history.push('/')
     } catch (error) {
       console.log(error);
       toast.error('ログインに失敗しました。再度お客様情報をお確かめ下さい。')
@@ -72,10 +79,11 @@ const Login = ({history}) => {
               _id: res.data._id
             }
           })
+          roleBaedRedirect(res)
         })
-        .catch()
+        .catch(err => console.log(err))
         toast.info('👍ログインしました。')
-        history.push('/')
+        // history.push('/')
       }).catch((error) => {
         console.log(error);
         toast.error('🙅‍♂️ログインに失敗しました。入力情報を再度ご確認ください。')
