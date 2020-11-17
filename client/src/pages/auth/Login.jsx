@@ -18,8 +18,8 @@ const createOrUpdateUser = async(authtoken) => {
 }
 
 const Login = ({history}) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('fantajista5.6nakaji.s@gmail.com')
+  const [password, setPassword] = useState('test1234')
   const [loading, setLoading] = useState(false)
   let dispatch = useDispatch()
   const {user} = useSelector(state => ({...state}))
@@ -39,18 +39,23 @@ const Login = ({history}) => {
       const idTokenResult = await user.getIdTokenResult()
 
       createOrUpdateUser(idTokenResult.token)
-        .then(res => console.log('create or update', res))
+        .then(res => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id
+            }
+          })
+        })
         .catch()
       
-      // dispatch({
-      //   type: "LOGGED_IN_USER",
-      //   payload: {
-      //     email: user.email,
-      //     token: idTokenResult.token
-      //   }
-      // })
-      // toast.info('ログインしました。')
-      // history.push('/')
+      
+      toast.info('ログインしました。')
+      history.push('/')
     } catch (error) {
       console.log(error);
       toast.error('ログインに失敗しました。再度お客様情報をお確かめ下さい。')
@@ -63,13 +68,20 @@ const Login = ({history}) => {
       .then(async (result) => {
         const { user } = result
         const idTokenResult = await user.getIdTokenResult()
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token
-          }
+        createOrUpdateUser(idTokenResult.token)
+        .then(res => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id
+            }
+          })
         })
+        .catch()
         toast.info('👍ログインしました。')
         history.push('/')
       }).catch((error) => {
