@@ -6,7 +6,7 @@ const router = express.Router()
 const {authCheck} = require('../middlewares/auth')
 
 //controller 
-const { createOrUpdateUser } = require('../controllers/auth')
+const { createOrUpdateUser, currentUser} = require('../controllers/auth')
 
 //testing
 // const myMiddleware = (req, res, next) => {
@@ -16,7 +16,7 @@ const { createOrUpdateUser } = require('../controllers/auth')
 
 //route
 router.post('/create-or-update-user', authCheck, createOrUpdateUser)
-
+router.post('/current-user', authCheck, currentUser)
 //testing
 // router.get('/testing', myMiddleware, (req, res) => {
 //   res.json({
