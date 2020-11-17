@@ -5,17 +5,9 @@ import { Button } from 'antd'
 import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { createOrUpdateUser } from "../../functions/auth";
 
-const createOrUpdateUser = async(authtoken) => {
-  return await axios.post(`${ process.env.REACT_APP_API }/create-or-update-user`,
-    {},
-    {
-    headers: {
-      authtoken
-    }
-  })
-}
+
 
 const Login = ({history}) => {
   const [email, setEmail] = useState('fantajista5.6nakaji.s@gmail.com')
@@ -39,7 +31,7 @@ const Login = ({history}) => {
       const idTokenResult = await user.getIdTokenResult()
 
       createOrUpdateUser(idTokenResult.token)
-        .then(res => {
+        .then((res) => {
           dispatch({
             type: "LOGGED_IN_USER",
             payload: {
@@ -69,7 +61,7 @@ const Login = ({history}) => {
         const { user } = result
         const idTokenResult = await user.getIdTokenResult()
         createOrUpdateUser(idTokenResult.token)
-        .then(res => {
+        .then((res) => {
           dispatch({
             type: "LOGGED_IN_USER",
             payload: {
