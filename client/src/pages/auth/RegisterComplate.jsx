@@ -3,16 +3,20 @@ import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
 import { Button } from 'antd'
 import { LoginOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux'
+import { createOrUpdateUser } from "../../functions/auth";
 
 
 const RegisterComplate = ({history}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  let dispatch = useDispatch()
+  const {user} = useSelector(state => ({...state}))
 
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistation"));
-    console.log(window.location.href);
-    console.log(window.localStorage.getItem("emailForRegistation"));
+    // console.log(window.location.href);
+    // console.log(window.localStorage.getItem("emailForRegistation"));
   },[])
 
   const handleSubmit = async (e) => {
@@ -37,7 +41,20 @@ const RegisterComplate = ({history}) => {
         await user.updatePassword(password)
         const idTokenResult = user.getIdTokenResult()
         //redux store
-        console.log("user", user, idTokenResult);
+        createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id
+            }
+          })
+        })
+        .catch()
         //redirect
         toast.info('👍新規登録が完了しました。')
         history.push('/')
@@ -63,7 +80,7 @@ const RegisterComplate = ({history}) => {
       type="password"
       className="form-control"
       value={password}
-      onChange={e => setPassword(e.target.value)}
+      onChange={(e) => setPassword(e.target.value)}
       placeholder="Password"
       autoFocus
     />
