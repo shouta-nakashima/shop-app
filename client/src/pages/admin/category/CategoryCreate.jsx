@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import {getCategories, createCategory, deleteCategory} from '../../../functions/category'
 
 const CategoryCreate = () => {
@@ -28,13 +30,32 @@ const CategoryCreate = () => {
       .then((res) => {
         setLoading(false)
         setName('')
-        toast.success(`カテゴリーに${res.data.name}を作成しました。`)
+        toast.success(`カテゴリーに${ res.data.name }を作成しました。`)
+        loadCategories()
       })
       .catch(err => {
         setLoading(false)
-        console.log(err);
         if (err.response.status === 400) toast.error(err.response.data);
       })
+  }
+
+  const handleDelete = (slug) => {
+    //let answer = window.confirm('削除しますか？')
+    if (window.confirm('本当に削除しますか？')) {
+      setLoading(true)
+      deleteCategory(slug, user.token)
+        .then(res => {
+          setLoading(false)
+          toast.error(`カテゴリー${ res.data.name }を削除しました。`)
+          loadCategories()
+        })
+        .catch(err => {
+          if (err.response.status === 400) {
+            setLoading(false)
+            toast.error(err.response.data);
+          }
+        })
+    }
   }
 
   const categoryForm = () => (
@@ -64,7 +85,19 @@ const CategoryCreate = () => {
           {loading ? <h4>Loading...</h4> : <h4>Create category</h4>}
           {categoryForm()}
           <hr />
-          {categories.length}
+          {categories.map((category) => (
+            <div className="alert alert-secondary" key={category._id}>
+              { category.name}
+              <span onClick={() => handleDelete(category.slug)} className="btn btn-sm float-right">
+                <DeleteOutlined className="text-danger" />
+              </span>
+              <Link to={`/admin/category/${ category.slug }`}>
+                <span className="btn btn-sm float-right">
+                  <EditOutlined className="text-warning" />
+                </span>
+              </Link>
+            </div>
+          ) )}
         </div>
       </div>
     </div>
