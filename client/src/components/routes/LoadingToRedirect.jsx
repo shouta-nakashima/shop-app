@@ -17,7 +17,8 @@ const LoadingToRedirect = () => {
   }, [count,history])
   return (
     <div className="container p-5 text-center">
-      <p>{count}秒でトップページへリダイレクトします。</p>
+      <h4>このページにはアクセス出来ません。</h4>
+      <p>あと{count}秒でトップページへリダイレクトします。</p>
     </div>
   )
 }
