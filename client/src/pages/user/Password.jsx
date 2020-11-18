@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import UserNav from '../../components/nav/UserNav'
+import AdminNav from '../../components/nav/AdminNav'
 import { auth } from '../../firebase'
 import {toast} from 'react-toastify'
 
