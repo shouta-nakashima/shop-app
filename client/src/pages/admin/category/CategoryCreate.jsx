@@ -30,7 +30,7 @@ const CategoryCreate = () => {
       .then((res) => {
         setLoading(false)
         setName('')
-        toast.success(`カテゴリーに${ res.data.name }を作成しました。`)
+        toast.success(`カテゴリーに"${ res.data.name }"を作成しました。`)
         loadCategories()
       })
       .catch(err => {
@@ -46,7 +46,7 @@ const CategoryCreate = () => {
       deleteCategory(slug, user.token)
         .then(res => {
           setLoading(false)
-          toast.error(`カテゴリー${ res.data.name }を削除しました。`)
+          toast.error(`カテゴリー"${ res.data.name }"を削除しました。`)
           loadCategories()
         })
         .catch(err => {
@@ -71,7 +71,7 @@ const CategoryCreate = () => {
           required
         />
         <br/>
-        <button className="btn btn-outline-primary">カテゴリーを保存</button>
+        <button className="btn btn-outline-primary">Save category</button>
       </div>
     </form>
   )
