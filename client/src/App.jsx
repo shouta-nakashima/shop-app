@@ -12,6 +12,7 @@ import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
 import { currentUser } from './functions/auth'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import CategoryCreate from './pages/admin/category/CategoryCreate'
 
 const App = () => {
 
@@ -53,7 +54,8 @@ const App = () => {
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
-        <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
+        <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <AdminRoute exact path="/admin/category" component={CategoryCreate}/>
       </Switch>
     </>
   )
