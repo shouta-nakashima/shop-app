@@ -3,13 +3,15 @@ import { Switch, Route } from 'react-router-dom'
 import { Register, Login, RegisterComplate, ForgotPassword } from './pages/auth/index'
 import { History, Wishlist, Password } from './pages/user/index'
 import UserRoute from './components/routes/UserRoute'
+import AdminRoute from './components/routes/AdminRoute'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
-import {currentUser} from './functions/auth'
+import { currentUser } from './functions/auth'
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 const App = () => {
 
@@ -37,7 +39,7 @@ const App = () => {
       }
     })
     return () => unsubscribe()
-  },[])
+  },[dispatch])
   return (
     <>
       <Header />
@@ -50,7 +52,8 @@ const App = () => {
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
-        <UserRoute exact path="/user/wishlist" component={Wishlist}/>
+        <UserRoute exact path="/user/wishlist" component={Wishlist} />
+        <AdminRoute exact path="/admin/dashboard" component={AdminDashboard}/>
       </Switch>
     </>
   )

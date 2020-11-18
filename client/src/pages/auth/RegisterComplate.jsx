@@ -3,7 +3,7 @@ import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
 import { Button } from 'antd'
 import { LoginOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { createOrUpdateUser } from "../../functions/auth";
 
 
@@ -11,13 +11,13 @@ const RegisterComplate = ({history}) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   let dispatch = useDispatch()
-  const {user} = useSelector(state => ({...state}))
+  //const {user} = useSelector(state => ({...state}))
 
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistation"));
     // console.log(window.location.href);
     // console.log(window.localStorage.getItem("emailForRegistation"));
-  },[])
+  },[history])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
