@@ -4,72 +4,49 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
-import { getSubs, createSub, deleteSub } from '../../../functions/sub'
+import {updateSub, getSub } from '../../../functions/sub'
 import { getCategories } from '../../../functions/category'
 import {CategoryForm, LocalSearch} from '../../../components/forms/index'
 
-const SubCreate = () => {
+const SubUpdate = ({history,match}) => {
 
   const { user } = useSelector((state) => ({ ...state }))
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
-  const [category, setCategory] = useState("")
-  const [subs, setSubs] = useState([])
-  //search step1
-  const [keyword, setKeyword] = useState('')
-
+  const [parent, setParent] = useState('')
+  
   useEffect(() => {
     loadCategories()
-    loadSubs()
+    loadSub()
   }, [])
   
   const loadCategories = () =>
     getCategories()
       .then((c) => { setCategories(c.data) })
 
-  const loadSubs = () =>
-    getSubs()
-      .then((s) => { setSubs(s.data) })
+  const loadSub = () =>
+    getSub(match.params.slug).then((s) => {
+      setName(s.data.name)
+      setParent(s.data.parent)
+    })
 
   const handleSubmit = (e) => {
     e.preventDefault()
     //console.log(name);
     setLoading(true)
-    createSub({ name, parent: category }, user.token)
+    updateSub(match.params.slug,{ name, parent }, user.token)
       .then((res) => {
         setLoading(false)
         setName('')
-        toast.success(`サブカテゴリーに"${ res.data.name }"を作成しました。`)
-        loadSubs()
+        toast.success(`サブカテゴリー"${ res.data.name }"を更新しました。`)
+        history.push('/admin/sub')
       })
       .catch(err => {
         setLoading(false)
         if (err.response.status === 400) toast.error(err.response.data);
       })
   }
-
-  const handleDelete = (slug) => {
-    //let answer = window.confirm('削除しますか？')
-    if (window.confirm('本当に削除しますか？')) {
-      setLoading(true)
-      deleteSub(slug, user.token)
-        .then(res => {
-          setLoading(false)
-          toast.error(`サブカテゴリー"${ res.data.name }"を削除しました。`)
-          loadSubs()
-        })
-        .catch(err => {
-          if (err.response.status === 400) {
-            setLoading(false)
-            toast.error(err.response.data);
-          }
-        })
-    }
-  }
-
-  //search step4
-  const searched = (keyword) => (sub) => sub.name.toLowerCase().includes(keyword)
 
   return (
     <div className ="container-fluid">
@@ -78,20 +55,21 @@ const SubCreate = () => {
           <AdminNav/>
         </div>
         <div className="col">
-          {loading ? <h4>Loading...</h4> : <h4>Create sub category</h4>}
+          {loading ? <h4>Loading...</h4> : <h4>Update sub category</h4>}
 
           <div className="form-group">
             <label>Category Name</label>
             <select
               name="ategory"
               className="form-control"
-              onChange={e => setCategory(e.target.value)}
+              onChange={e => setParent(e.target.value)}
             >
               <option value="">Select a Category</option>
               {categories.length > 0 && categories.map((category) => (
                 <option
                   key={category._id}
                   value={category._id}
+                  selected={category._id === parent}
                 >
                   {category.name}
                 </option>))}
@@ -104,28 +82,10 @@ const SubCreate = () => {
             text={"Create Sub Category"}
             subName={"Sub Category Name"}
           />
-          <LocalSearch
-            setKeyword={setKeyword}
-            keyword={keyword}
-          />
-          {/* search step5 */}
-          {subs.filter(searched(keyword)).map((sub) => (
-            <div className="alert alert-secondary" key={sub._id}>
-              { sub.name}
-              <span onClick={() => handleDelete(sub.slug)} className="btn btn-sm float-right">
-                <DeleteOutlined className="text-danger" />
-              </span>
-              <Link to={`/admin/sub/${ sub.slug }`}>
-                <span className="btn btn-sm float-right">
-                  <EditOutlined className="text-warning" />
-                </span>
-              </Link>
-            </div>
-          ) )}
         </div>
       </div>
     </div>
   )
 }
 
-export default SubCreate
+export default SubUpdate
