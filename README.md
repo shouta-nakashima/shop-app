@@ -32,7 +32,7 @@ dotenv@8.2.0
 jsonwebtoken@8.5.1  
 mongoose@5.10.14  
 express-jwt@6.0.0  
-firebase-admin@9.4.1
+firebase-admin@9.4.1  
 slugify@1.4.6
 
 ## DB
