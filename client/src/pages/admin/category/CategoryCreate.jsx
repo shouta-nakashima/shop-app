@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import { getCategories, createCategory, deleteCategory } from '../../../functions/category'
-import CategoryForm from '../../../components/forms/CategoryForm'
+import {CategoryForm, LocalSearch} from '../../../components/forms/index'
 
 const CategoryCreate = () => {
 
@@ -61,12 +61,6 @@ const CategoryCreate = () => {
     }
   }
 
-  //search step3
-  const handleSearchChange = (e) => {
-    e.preventDefault()
-    setKeyword(e.target.value.toLowerCase())
-  }
-
   //search step4
   const searched = (keyword) => (category) => category.name.toLowerCase().includes(keyword)
 
@@ -84,15 +78,10 @@ const CategoryCreate = () => {
             setName={setName}
             text={"Create category"}
           />
-          {/* search step2 */}
-          <input
-            type="search"
-            placeholder="カテゴリーを検索" 
-            value={keyword}
-            onChange={handleSearchChange}
-            className="form-control mb-4"
+          <LocalSearch
+            setKeyword={setKeyword}
+            keyword={keyword}
           />
-          <hr />
           {/* search step5 */}
           {categories.filter(searched(keyword)).map((category) => (
             <div className="alert alert-secondary" key={category._id}>
