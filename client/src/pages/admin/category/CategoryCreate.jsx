@@ -13,6 +13,8 @@ const CategoryCreate = () => {
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
+  //search step1
+  const [keyword, setKeyword] = useState('')
 
   useEffect(() => {
     loadCategories()
@@ -59,6 +61,15 @@ const CategoryCreate = () => {
     }
   }
 
+  //search step3
+  const handleSearchChange = (e) => {
+    e.preventDefault()
+    setKeyword(e.target.value.toLowerCase())
+  }
+
+  //search step4
+  const searched = (keyword) => (category) => category.name.toLowerCase().includes(keyword)
+
   return (
     <div className ="container-fluid">
       <div className="row">
@@ -73,8 +84,17 @@ const CategoryCreate = () => {
             setName={setName}
             text={"Create category"}
           />
+          {/* search step2 */}
+          <input
+            type="search"
+            placeholder="カテゴリーを検索" 
+            value={keyword}
+            onChange={handleSearchChange}
+            className="form-control mb-4"
+          />
           <hr />
-          {categories.map((category) => (
+          {/* search step5 */}
+          {categories.filter(searched(keyword)).map((category) => (
             <div className="alert alert-secondary" key={category._id}>
               { category.name}
               <span onClick={() => handleDelete(category.slug)} className="btn btn-sm float-right">
