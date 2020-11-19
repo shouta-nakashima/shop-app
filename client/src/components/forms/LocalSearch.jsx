@@ -10,7 +10,7 @@ const LocalSearch = ({ keyword, setKeyword }) => {
     // search step2
       <input
         type="search"
-        placeholder="カテゴリーを検索" 
+        placeholder="Search" 
         value={keyword}
         onChange={handleSearchChange}
         className="form-control mb-4"

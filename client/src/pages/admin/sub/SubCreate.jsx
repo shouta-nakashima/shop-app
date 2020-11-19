@@ -15,17 +15,22 @@ const SubCreate = () => {
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
   const [category, setCategory] = useState("")
+  const [subs, setSubs] = useState([])
   //search step1
   const [keyword, setKeyword] = useState('')
 
   useEffect(() => {
     loadCategories()
+    loadSus()
   }, [])
   
   const loadCategories = () =>
     getCategories()
-      .then((c) => { setCategories(c.data) })
+      .then((s) => { setCategories(s.data) })
 
+  const loadSus = () =>
+    getSubs()
+      .then((c) => { setSubs(c.data) })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -35,7 +40,8 @@ const SubCreate = () => {
       .then((res) => {
         setLoading(false)
         setName('')
-        toast.success(`カテゴリーに"${ res.data.name }"を作成しました。`)
+        toast.success(`サブカテゴリーに"${ res.data.name }"を作成しました。`)
+        loadSus()
       })
       .catch(err => {
         setLoading(false)
@@ -50,8 +56,8 @@ const SubCreate = () => {
       deleteSub(slug, user.token)
         .then(res => {
           setLoading(false)
-          toast.error(`カテゴリー"${ res.data.name }"を削除しました。`)
-          loadCategories()
+          toast.error(`サブカテゴリー"${ res.data.name }"を削除しました。`)
+          loadSus()
         })
         .catch(err => {
           if (err.response.status === 400) {
@@ -63,7 +69,7 @@ const SubCreate = () => {
   }
 
   //search step4
-  const searched = (keyword) => (category) => category.name.toLowerCase().includes(keyword)
+  const searched = (keyword) => (sub) => sub.name.toLowerCase().includes(keyword)
 
   return (
     <div className ="container-fluid">
@@ -81,7 +87,7 @@ const SubCreate = () => {
               className="form-control"
               onChange={e => setCategory(e.target.value)}
             >
-              <option value="">Please select a category</option>
+              <option value="">Select a Category</option>
               {categories.length > 0 && categories.map((category) => (
                 <option
                   key={category._id}
@@ -95,26 +101,26 @@ const SubCreate = () => {
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
-            text={"Create category"}
+            text={"Create Sub Category"}
           />
           <LocalSearch
             setKeyword={setKeyword}
             keyword={keyword}
           />
           {/* search step5 */}
-          {/* {categories.filter(searched(keyword)).map((category) => (
-            <div className="alert alert-secondary" key={category._id}>
-              { category.name}
-              <span onClick={() => handleDelete(category.slug)} className="btn btn-sm float-right">
+          {subs.filter(searched(keyword)).map((sub) => (
+            <div className="alert alert-secondary" key={sub._id}>
+              { sub.name}
+              <span onClick={() => handleDelete(sub.slug)} className="btn btn-sm float-right">
                 <DeleteOutlined className="text-danger" />
               </span>
-              <Link to={`/admin/category/${ category.slug }`}>
+              <Link to={`/admin/sub/${ sub.slug }`}>
                 <span className="btn btn-sm float-right">
                   <EditOutlined className="text-warning" />
                 </span>
               </Link>
             </div>
-          ) )} */}
+          ) )}
         </div>
       </div>
     </div>
