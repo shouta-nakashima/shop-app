@@ -77,6 +77,7 @@ const CategoryCreate = () => {
             name={name}
             setName={setName}
             text={"Create category"}
+            subName={"Category Name"}
           />
           <LocalSearch
             setKeyword={setKeyword}

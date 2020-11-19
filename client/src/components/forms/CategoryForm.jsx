@@ -1,10 +1,10 @@
 import React from 'react'
 
-const CategoryForm = ({handleSubmit, name, setName,text}) => (
+const CategoryForm = ({handleSubmit, name, setName,text, subName}) => (
   
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label>Category Name</label>
+        <label>{subName }</label>
         <input
           type="text"
           className="form-control"

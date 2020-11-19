@@ -50,6 +50,7 @@ const CategoryUpdate = ({history, match}) => {
             name={name}
             setName={setName}
             text={"Update category"}
+            subName={"Category Name"}
           />
         </div>
       </div>
