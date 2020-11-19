@@ -4,7 +4,8 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
-import {getCategories, createCategory, deleteCategory} from '../../../functions/category'
+import { getCategories, createCategory, deleteCategory } from '../../../functions/category'
+import CategoryForm from '../../../components/forms/CategoryForm'
 
 const CategoryCreate = () => {
 
@@ -58,23 +59,6 @@ const CategoryCreate = () => {
     }
   }
 
-  const categoryForm = () => (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label>Category Name</label>
-        <input
-          type="text"
-          className="form-control"
-          onChange={e => setName(e.target.value)}
-          value={name}
-          autoFocus
-          required
-        />
-        <br/>
-        <button className="btn btn-outline-primary">Save category</button>
-      </div>
-    </form>
-  )
   return (
     <div className ="container-fluid">
       <div className="row">
@@ -83,7 +67,12 @@ const CategoryCreate = () => {
         </div>
         <div className="col">
           {loading ? <h4>Loading...</h4> : <h4>Create category</h4>}
-          {categoryForm()}
+          <CategoryForm
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+            text={"Create category"}
+          />
           <hr />
           {categories.map((category) => (
             <div className="alert alert-secondary" key={category._id}>
