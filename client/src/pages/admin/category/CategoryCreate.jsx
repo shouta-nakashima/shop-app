@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import { getCategories, createCategory, deleteCategory } from '../../../functions/category'
-import CategoryForm from '../../../components/forms/CategoryForm'
+import {CategoryForm, LocalSearch} from '../../../components/forms/index'
 
 const CategoryCreate = () => {
 
@@ -13,6 +13,8 @@ const CategoryCreate = () => {
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
+  //search step1
+  const [keyword, setKeyword] = useState('')
 
   useEffect(() => {
     loadCategories()
@@ -59,6 +61,9 @@ const CategoryCreate = () => {
     }
   }
 
+  //search step4
+  const searched = (keyword) => (category) => category.name.toLowerCase().includes(keyword)
+
   return (
     <div className ="container-fluid">
       <div className="row">
@@ -73,8 +78,12 @@ const CategoryCreate = () => {
             setName={setName}
             text={"Create category"}
           />
-          <hr />
-          {categories.map((category) => (
+          <LocalSearch
+            setKeyword={setKeyword}
+            keyword={keyword}
+          />
+          {/* search step5 */}
+          {categories.filter(searched(keyword)).map((category) => (
             <div className="alert alert-secondary" key={category._id}>
               { category.name}
               <span onClick={() => handleDelete(category.slug)} className="btn btn-sm float-right">
