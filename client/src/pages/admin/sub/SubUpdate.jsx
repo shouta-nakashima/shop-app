@@ -79,7 +79,7 @@ const SubUpdate = ({history,match}) => {
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
-            text={"Create Sub Category"}
+            text={"Update Sub Category"}
             subName={"Sub Category Name"}
           />
         </div>
