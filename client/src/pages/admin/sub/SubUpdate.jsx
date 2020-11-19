@@ -2,11 +2,9 @@ import React, {useState, useEffect} from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import {updateSub, getSub } from '../../../functions/sub'
 import { getCategories } from '../../../functions/category'
-import {CategoryForm, LocalSearch} from '../../../components/forms/index'
+import {CategoryForm} from '../../../components/forms/index'
 
 const SubUpdate = ({history,match}) => {
 
