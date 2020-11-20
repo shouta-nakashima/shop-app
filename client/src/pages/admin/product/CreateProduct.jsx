@@ -15,7 +15,7 @@ const initialState = {
   quantity: '',
   images: [],
   colors: ["Black", "Brown", "White", "Silver", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
+  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "Dell"],
   color: '',
   brand: ''
 }
@@ -23,6 +23,7 @@ const initialState = {
 
 const CreateProduct = () => {
   const [values, setValues] = useState(initialState)
+  const {user} = useSelector((state) => ({...state}))
   const {
     title,
     description,
@@ -41,11 +42,19 @@ const CreateProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    //
+    createProduct(values, user.token)
+      .then((res) => {
+      console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 400) toast.error(err.response.data);
+      })
   }
 
   const handleChange = (e) => {
-    //
+    setValues({ ...values, [e.target.name]: e.target.value })
+    //console.log(e.target.name, '----', e.target.value);
   }
   return (
     <div className="container-fluid">
