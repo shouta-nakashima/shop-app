@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ProductCreateForm = ({ handleChange, handleSubmit, values }) => {
+const ProductCreateForm = ({ handleChange, handleSubmit, values, handleCategoryChange}) => {
 
   const {
     title,
@@ -67,7 +67,7 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values }) => {
         <select
           name="category"
           className="form-control"
-          onChange={handleChange}
+          onChange={handleCategoryChange}
         >
           <option value="">選択してください</option>
           {categories.length > 0 && categories.map((category) => (
