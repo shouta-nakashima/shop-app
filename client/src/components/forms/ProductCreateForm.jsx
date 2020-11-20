@@ -62,6 +62,23 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values }) => {
           ))}
         </select>
       </div>
+      <div className="form-group">
+        <label>Category Name</label>
+        <select
+          name="category"
+          className="form-control"
+          onChange={handleChange}
+        >
+          <option value="">選択してください</option>
+          {categories.length > 0 && categories.map((category) => (
+            <option
+              key={category._id}
+              value={category._id}
+            >
+              {category.name}
+            </option>))}
+        </select>
+      </div>
       <button className="btn btn-outline-info">SAVE</button>
     </form>
   )
