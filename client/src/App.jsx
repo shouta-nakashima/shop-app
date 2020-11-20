@@ -12,7 +12,8 @@ import { useDispatch } from 'react-redux'
 import { currentUser } from './functions/auth'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import { CategoryCreate, CategoryUpdate } from './pages/admin/category/index'
-import {SubCreate, SubUpdate} from './pages/admin/sub/index'
+import { SubCreate, SubUpdate } from './pages/admin/sub/index'
+import {CreateProduct} from './pages/admin/product/index'
 
 const App = () => {
 
@@ -59,6 +60,7 @@ const App = () => {
         <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
         <AdminRoute exact path="/admin/sub" component={SubCreate} />
         <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
+        <AdminRoute exact path="/admin/product" component={CreateProduct} />
       </Switch>
     </>
   )
