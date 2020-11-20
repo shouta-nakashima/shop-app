@@ -44,7 +44,9 @@ const CreateProduct = () => {
     e.preventDefault()
     createProduct(values, user.token)
       .then((res) => {
-      console.log(res);
+        console.log(res);
+        window.alert(`${ res.data.title }を作成しました。`)
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);
