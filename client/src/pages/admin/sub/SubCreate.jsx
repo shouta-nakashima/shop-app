@@ -83,7 +83,7 @@ const SubCreate = () => {
           <div className="form-group">
             <label>Category Name</label>
             <select
-              name="ategory"
+              name="category"
               className="form-control"
               onChange={e => setCategory(e.target.value)}
             >
