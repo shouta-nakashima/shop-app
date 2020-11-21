@@ -15,7 +15,8 @@ react-redux@7.2.2
 react-router-dom@5.2.0  
 react-toastify@6.1.0  
 redux@4.0.5  
-redux-devtools-extension@2.13.8
+redux-devtools-extension@2.13.8  
+react-image-file-resize@0.3.8
 
 ## Backend
 
