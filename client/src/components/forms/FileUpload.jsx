@@ -2,7 +2,8 @@ import React from 'react'
 import Resizer from 'react-image-file-resizer'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import {Avatar} from 'antd'
+import { Avatar, Badge } from 'antd'
+
 
 const FileUpload = ({values, setValues, setLoading}) => {
 
@@ -46,11 +47,49 @@ const FileUpload = ({values, setValues, setLoading}) => {
     //ProductCreateのimages []にURLを設定する
   }
 
+  const handleImageDelete = (public_id) => {
+    setLoading(true)
+    console.log(public_id);
+    axios.post(
+      `${ process.env.REACT_APP_API }/removeimage`,
+      { public_id},
+      {
+        headers: {
+          authtoken: user ? user.token : ''
+        }
+      }
+    )
+    .then((res) => {
+      setLoading(false)
+      const { images } = values
+      let filteredImages = images.filter((item) => {
+        return item.public_id !== public_id
+      })
+      setValues({...values, images: filteredImages})
+    })
+      .catch(err => {
+        setLoading(false)
+        console.log((err));
+    })
+  }
+
   return (
     <>
       <div className="row">
         {values.images && values.images.map((image) => (
-          <Avatar key={image.public_id} src={image.url} size={ 100} className="m-3"/>
+          <Badge
+            count="X"
+            key={image.public_id}
+            onClick={() => handleImageDelete(image.public_id)}
+            style={{cursor: "pointer"}}
+          >
+            <Avatar
+              src={image.url}
+              size={100}
+              className="ml-3"
+              shape="square"
+            />
+          </Badge>
         ))}
       </div>
       <div className="row">
