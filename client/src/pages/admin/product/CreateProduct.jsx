@@ -59,12 +59,13 @@ const CreateProduct = () => {
   const handleCategoryChange = (e) => {
     e.preventDefault()
     console.log('CLICK CATEGORY', e.target.value);
-    setValues({ ...values, category: e.target.value })
+    setValues({ ...values, subs: [], category: e.target.value })
     getCategorySubs(e.target.value)
       .then((res) => {
         console.log('SUBs',res);
         setSubOptions(res.data)
       })
+    setShowSubs(true)
   }
   return (
     <div className="container-fluid">
