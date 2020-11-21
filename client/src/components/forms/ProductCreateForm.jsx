@@ -1,6 +1,13 @@
 import React from 'react'
 
-const ProductCreateForm = ({ handleChange, handleSubmit, values, handleCategoryChange}) => {
+const ProductCreateForm = ({
+  handleChange,
+  handleSubmit,
+  values,
+  handleCategoryChange,
+  subOptions,
+  showSubs
+}) => {
 
   const {
     title,
@@ -80,6 +87,7 @@ const ProductCreateForm = ({ handleChange, handleSubmit, values, handleCategoryC
         </select>
       </div>
       <button className="btn btn-outline-info">SAVE</button>
+      {subOptions ? subOptions.length : 'No subs'}
     </form>
   )
 }
