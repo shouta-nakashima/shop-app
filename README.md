@@ -33,7 +33,8 @@ jsonwebtoken@8.5.1
 mongoose@5.10.14  
 express-jwt@6.0.0  
 firebase-admin@9.4.1  
-slugify@1.4.6
+slugify@1.4.6  
+cloudinary@1.23.0
 
 ## DB
 
