@@ -79,6 +79,7 @@ const CreateProduct = () => {
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             values={values}
+            setValues={setValues}
             handleCategoryChange={handleCategoryChange}
             subOptions={subOptions}
             showSubs={showSubs}
