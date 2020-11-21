@@ -4,7 +4,9 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { createProduct } from '../../../functions/product'
 import { ProductCreateForm } from '../../../components/forms/index'
-import {getCategories, getCategorySubs} from '../../../functions/category'
+import { getCategories, getCategorySubs } from '../../../functions/category'
+import { FileUpload } from '../../../components/forms/index'
+import {LoadingOutlined } from '@ant-design/icons'
 
 const initialState = {
   title: '',
@@ -26,6 +28,7 @@ const CreateProduct = () => {
   const [values, setValues] = useState(initialState)
   const [subOptions, setSubOptions] = useState([])
   const [showSubs, setShowSubs] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { user } = useSelector((state) => ({ ...state }))
   
   useEffect(() => {
@@ -74,8 +77,16 @@ const CreateProduct = () => {
           <AdminNav/>
         </div>
         <div className="col-md-10">
-          <h4>Product Create</h4>
+          {loading ? <LoadingOutlined className="text-danger h1" /> : <h4>Product Create</h4>}
           <hr />
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+            {JSON.stringify(values.images)}
+          </div>
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
