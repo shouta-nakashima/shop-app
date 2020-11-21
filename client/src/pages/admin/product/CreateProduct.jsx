@@ -25,6 +25,7 @@ const initialState = {
 const CreateProduct = () => {
   const [values, setValues] = useState(initialState)
   const [subOptions, setSubOptions] = useState([])
+  const [showSubs, setShowSubs] = useState(false)
   const { user } = useSelector((state) => ({ ...state }))
   
   useEffect(() => {
@@ -58,12 +59,13 @@ const CreateProduct = () => {
   const handleCategoryChange = (e) => {
     e.preventDefault()
     console.log('CLICK CATEGORY', e.target.value);
-    setValues({ ...values, category: e.target.value })
+    setValues({ ...values, subs: [], category: e.target.value })
     getCategorySubs(e.target.value)
       .then((res) => {
         console.log('SUBs',res);
         setSubOptions(res.data)
       })
+    setShowSubs(true)
   }
   return (
     <div className="container-fluid">
@@ -78,7 +80,10 @@ const CreateProduct = () => {
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             values={values}
+            setValues={setValues}
             handleCategoryChange={handleCategoryChange}
+            subOptions={subOptions}
+            showSubs={showSubs}
           />
         </div>
       </div>
