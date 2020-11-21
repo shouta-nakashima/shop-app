@@ -4,7 +4,8 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { createProduct } from '../../../functions/product'
 import { ProductCreateForm } from '../../../components/forms/index'
-import {getCategories, getCategorySubs} from '../../../functions/category'
+import { getCategories, getCategorySubs } from '../../../functions/category'
+import {FileUpload} from '../../../components/forms/index'
 
 const initialState = {
   title: '',
@@ -76,6 +77,9 @@ const CreateProduct = () => {
         <div className="col-md-10">
           <h4>Product Create</h4>
           <hr />
+          <div className="p-3">
+            <FileUpload/>
+          </div>
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
