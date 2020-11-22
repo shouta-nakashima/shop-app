@@ -41,13 +41,9 @@ cloudinary@1.23.0
 
 ### mongoDB  
 #### model  
-#### product
- title,slug,description,price,category,subs,quantity,sold,images,shipping,color,brand,rating,timestamps
-#### category
-name,slug,timestamps
-#### subs
-name,slug,parent,timestamps  
-
+#### [product](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/product.js)
+#### [category](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/category.js)
+#### [subs](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/sub.js)
 #### 詳細はserver/modelsの中を確認ください。
 
 
