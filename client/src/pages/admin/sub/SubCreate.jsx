@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import { getSubs, createSub, deleteSub } from '../../../functions/sub'
 import { getCategories } from '../../../functions/category'
-import {CategoryForm, LocalSearch} from '../../../components/forms/index'
+import { CategoryForm, LocalSearch } from '../../../components/forms/index'
+import { Spin} from 'antd';
 
 const SubCreate = () => {
 
@@ -72,59 +73,61 @@ const SubCreate = () => {
   const searched = (keyword) => (sub) => sub.name.toLowerCase().includes(keyword)
 
   return (
-    <div className ="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav/>
-        </div>
-        <div className="col">
-          {loading ? <h4>Loading...</h4> : <h4>Create sub category</h4>}
-
-          <div className="form-group">
-            <label>Category Name</label>
-            <select
-              name="category"
-              className="form-control"
-              onChange={e => setCategory(e.target.value)}
-            >
-              <option value="">Select a Category</option>
-              {categories.length > 0 && categories.map((category) => (
-                <option
-                  key={category._id}
-                  value={category._id}
-                >
-                  {category.name}
-                </option>))}
-            </select>
+    <Spin spinning={loading} tip="Loading..." size="large">
+      <div className ="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            <AdminNav/>
           </div>
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-            text={"Create Sub Category"}
-            subName={"Sub Category Name"}
-          />
-          <LocalSearch
-            setKeyword={setKeyword}
-            keyword={keyword}
-          />
-          {/* search step5 */}
-          {subs.filter(searched(keyword)).map((sub) => (
-            <div className="alert alert-secondary" key={sub._id}>
-              { sub.name}
-              <span onClick={() => handleDelete(sub.slug)} className="btn btn-sm float-right">
-                <DeleteOutlined className="text-danger" />
-              </span>
-              <Link to={`/admin/sub/${ sub.slug }`}>
-                <span className="btn btn-sm float-right">
-                  <EditOutlined className="text-warning" />
-                </span>
-              </Link>
+          <div className="col">
+            <h4>Create sub category</h4>
+
+            <div className="form-group">
+              <label>Category Name</label>
+              <select
+                name="category"
+                className="form-control"
+                onChange={e => setCategory(e.target.value)}
+              >
+                <option value="">Select a Category</option>
+                {categories.length > 0 && categories.map((category) => (
+                  <option
+                    key={category._id}
+                    value={category._id}
+                  >
+                    {category.name}
+                  </option>))}
+              </select>
             </div>
-          ) )}
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              name={name}
+              setName={setName}
+              text={"Create Sub Category"}
+              subName={"Sub Category Name"}
+            />
+            <LocalSearch
+              setKeyword={setKeyword}
+              keyword={keyword}
+            />
+            {/* search step5 */}
+            {subs.filter(searched(keyword)).map((sub) => (
+              <div className="alert alert-secondary" key={sub._id}>
+                { sub.name}
+                <span onClick={() => handleDelete(sub.slug)} className="btn btn-sm float-right">
+                  <DeleteOutlined className="text-danger" />
+                </span>
+                <Link to={`/admin/sub/${ sub.slug }`}>
+                  <span className="btn btn-sm float-right">
+                    <EditOutlined className="text-warning" />
+                  </span>
+                </Link>
+              </div>
+            ) )}
+          </div>
         </div>
       </div>
-    </div>
+    </Spin>
   )
 }
 
