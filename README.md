@@ -1,6 +1,6 @@
 # shop-app
 
-## Frontend
+## Frontend create-react-app
 
 react/redux
 
@@ -18,7 +18,7 @@ redux@4.0.5
 redux-devtools-extension@2.13.8  
 react-image-file-resize@0.3.8
 
-## Backend
+## Backend CRUD API
 
 Node/express
 
@@ -40,11 +40,11 @@ cloudinary@1.23.0
 ## DB
 
 ### mongoDB  
-#### model  
+### model  
 #### [product](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/product.js)
 #### [category](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/category.js)
 #### [subs](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/sub.js)
-#### 詳細はserver/modelsの中を確認ください。
+##### ※詳細はserver/modelsの中を確認ください。
 
 
 ## Authentications
