@@ -86,7 +86,7 @@ const CreateProduct = () => {
                 setValues={setValues}
                 setLoading={setLoading}
               />
-              {JSON.stringify(values.images)}
+              {/* {JSON.stringify(values.images)} */}
             </div>
             <ProductCreateForm
               handleSubmit={handleSubmit}

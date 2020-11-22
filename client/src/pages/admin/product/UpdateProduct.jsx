@@ -7,6 +7,7 @@ import { ProductCreateForm } from '../../../components/forms/index'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import { FileUpload } from '../../../components/forms/index'
 import { Spin } from 'antd';
+import {ProductUpdateForm} from '../../../components/forms/index'
 
 const initialState = {
   title: '',
@@ -42,6 +43,15 @@ const UpdateProduct = ({ match }) => {
         setValues({...values, ...p.data})
       })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value })
+    //console.log(e.target.name, '----', e.target.value);
+  }
   
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
@@ -53,7 +63,12 @@ const UpdateProduct = ({ match }) => {
           <div className="col-md-10">
             <h4 className="text-center pt-3 pb-3">Product Update</h4>
             <hr />
-            {JSON.stringify(values)}
+            <ProductUpdateForm
+              handleSubmit={handleSubmit}
+              handleChange={handleChange}
+              values={values}
+              setValues={setValues}
+            />
           </div>
         </div>
       </div>
