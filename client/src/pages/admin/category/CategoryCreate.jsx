@@ -66,7 +66,7 @@ const CategoryCreate = () => {
   const searched = (keyword) => (category) => category.name.toLowerCase().includes(keyword)
 
   return (
-    <Spin spinning={loading} tip="Loading...">
+    <Spin spinning={loading} tip="Loading..." size="large">
       <div className ="container-fluid">
         <div className="row">
           <div className="col-md-2">
