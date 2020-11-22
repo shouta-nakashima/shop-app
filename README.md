@@ -39,7 +39,17 @@ cloudinary@1.23.0
 
 ## DB
 
-mongoDB
+### mongoDB  
+#### model  
+#### product
+ title,slug,description,price,category,subs,quantity,sold,images,shipping,color,brand,rating,timestamps
+#### category
+name,slug,timestamps
+#### subs
+name,slug,parent,timestamps  
+
+#### 詳細はserver/modelsの中を確認ください。
+
 
 ## Authentications
 
