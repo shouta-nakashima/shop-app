@@ -42,8 +42,12 @@ const ProductUpdateForm = ({
       </div>
       <div className="form-group">
         <label>Shipping</label>
-        <select name="shipping" className="form-control" onChange={handleChange}>
-          <option>選択してください</option>
+        <select
+          name="shipping"
+          className="form-control"
+          onChange={handleChange}
+          value={shipping === "Yes" ? "Yes" : "No"}
+        >
           <option value="No">No</option>
           <option value="Yes">Yes</option>
         </select>
@@ -54,8 +58,12 @@ const ProductUpdateForm = ({
       </div>
       <div className="form-group">
         <label>Color</label>
-        <select name="color" className="form-control" onChange={handleChange}>
-          <option>選択してください</option>
+        <select
+          name="color"
+          className="form-control"
+          onChange={handleChange}
+          value={color}
+        >
           {colors.map(c => (
             <option key={c} value={c}>{c}</option>
           ))}
@@ -63,8 +71,12 @@ const ProductUpdateForm = ({
       </div>
       <div className="form-group">
         <label>Brands</label>
-        <select name="brand" className="form-control" onChange={handleChange}>
-          <option>選択してください</option>
+        <select
+          name="brand"
+          className="form-control"
+          onChange={handleChange}
+          value={brand}
+        >
           {brands.map(b => (
             <option key={b} value={b}>{b}</option>
           ))}
