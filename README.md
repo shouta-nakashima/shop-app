@@ -1,6 +1,6 @@
 # shop-app
 
-## [Frontend create-react-app]()
+## [Frontend create-react-app](https://github.com/shouta-nakashima/shop-app/tree/master/client)
 
 react/redux
 
@@ -18,7 +18,7 @@ redux@4.0.5
 redux-devtools-extension@2.13.8  
 react-image-file-resize@0.3.8
 
-## [Backend CRUD API]()
+## [Backend CRUD API](https://github.com/shouta-nakashima/shop-app/tree/master/server)
 
 Node/express
 
