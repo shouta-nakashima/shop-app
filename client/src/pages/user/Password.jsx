@@ -3,6 +3,7 @@ import {UserNav,AdminNav} from '../../components/nav/index'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import { Spin } from 'antd';
 
 const Password = () => {
   const [password, setPassword] = useState('')
@@ -37,23 +38,24 @@ const Password = () => {
           disabled={loading}
           value={password}
         />
+        <br/>
         <button className="btn btn-primary" disabled={!password || password.length < 6 || loading}>パスワードを変更</button>
       </div>
     </form>
   return (
-    <div className ="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          {user.role === 'admin' ? <AdminNav/> : <UserNav/>}
-          
-        </div>
-        <div className="col">
-          
-          {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Password Update</h4>}
-          {passwordupdateForm()}
+    <Spin spinning={loading} tip="Loading..." size="large">
+      <div className ="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            {user.role === 'admin' ? <AdminNav/> : <UserNav/>}
+          </div>
+          <div className="col">
+            <h4 className="text-center pt-3 pb-3">Password Update</h4>
+            {passwordupdateForm()}
+          </div>
         </div>
       </div>
-    </div>
+    </Spin>
   )
 }
 

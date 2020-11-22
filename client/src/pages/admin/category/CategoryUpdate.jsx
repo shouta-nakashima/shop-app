@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { getCategory, updateCategory } from '../../../functions/category'
 import CategoryForm from '../../../components/forms/CategoryForm'
+import { Spin} from 'antd';
 
 const CategoryUpdate = ({history, match}) => {
 
@@ -38,23 +39,25 @@ const CategoryUpdate = ({history, match}) => {
   }
 
   return (
-    <div className ="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav/>
-        </div>
-        <div className="col">
-          {loading ? <h4>Loading...</h4> : <h4>Update category</h4>}
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-            text={"Update category"}
-            subName={"Category Name"}
-          />
+    <Spin spinning={loading} tip="Loading..." size="large">
+      <div className ="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            <AdminNav/>
+          </div>
+          <div className="col">
+            <h4 className="text-center pt-3 pb-3">Update category</h4>
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              name={name}
+              setName={setName}
+              text={"Update category"}
+              subName={"Category Name"}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </Spin>
   )
 }
 

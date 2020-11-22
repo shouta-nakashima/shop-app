@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import { getCategories, createCategory, deleteCategory } from '../../../functions/category'
-import {CategoryForm, LocalSearch} from '../../../components/forms/index'
+import { CategoryForm, LocalSearch } from '../../../components/forms/index'
+import { Spin} from 'antd';
 
 const CategoryCreate = () => {
 
@@ -65,41 +66,43 @@ const CategoryCreate = () => {
   const searched = (keyword) => (category) => category.name.toLowerCase().includes(keyword)
 
   return (
-    <div className ="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav/>
-        </div>
-        <div className="col">
-          {loading ? <h4>Loading...</h4> : <h4>Create category</h4>}
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-            text={"Create category"}
-            subName={"Category Name"}
-          />
-          <LocalSearch
-            setKeyword={setKeyword}
-            keyword={keyword}
-          />
-          {/* search step5 */}
-          {categories.filter(searched(keyword)).map((category) => (
-            <div className="alert alert-secondary" key={category._id}>
-              { category.name}
-              <span onClick={() => handleDelete(category.slug)} className="btn btn-sm float-right">
-                <DeleteOutlined className="text-danger" />
-              </span>
-              <Link to={`/admin/category/${ category.slug }`}>
-                <span className="btn btn-sm float-right">
-                  <EditOutlined className="text-warning" />
+    <Spin spinning={loading} tip="Loading..." size="large">
+      <div className ="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            <AdminNav/>
+          </div>
+          <div className="col">
+            <h4 className="text-center pt-3 pb-3">Create category</h4>
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              name={name}
+              setName={setName}
+              text={"Create category"}
+              subName={"Category Name"}
+            />
+            <LocalSearch
+              setKeyword={setKeyword}
+              keyword={keyword}
+            />
+            {/* search step5 */}
+            {categories.filter(searched(keyword)).map((category) => (
+              <div className="alert alert-secondary" key={category._id}>
+                { category.name}
+                <span onClick={() => handleDelete(category.slug)} className="btn btn-sm float-right">
+                  <DeleteOutlined className="text-danger" />
                 </span>
-              </Link>
-            </div>
-          ) )}
+                <Link to={`/admin/category/${ category.slug }`}>
+                  <span className="btn btn-sm float-right">
+                    <EditOutlined className="text-warning" />
+                  </span>
+                </Link>
+              </div>
+            ) )}
+          </div>
         </div>
-      </div>
-    </div>
+        </div>
+      </Spin>
   )
 }
 

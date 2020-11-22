@@ -6,7 +6,7 @@ import { createProduct } from '../../../functions/product'
 import { ProductCreateForm } from '../../../components/forms/index'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import { FileUpload } from '../../../components/forms/index'
-import {LoadingOutlined } from '@ant-design/icons'
+import { Spin} from 'antd';
 
 const initialState = {
   title: '',
@@ -71,34 +71,36 @@ const CreateProduct = () => {
     setShowSubs(true)
   }
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav/>
-        </div>
-        <div className="col-md-10">
-          {loading ? <LoadingOutlined className="text-danger h1" /> : <h4>Product Create</h4>}
-          <hr />
-          <div className="p-3">
-            <FileUpload
+    <Spin spinning={loading} tip="Loading..." size="large">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-2">
+            <AdminNav/>
+          </div>
+          <div className="col-md-10">
+            <h4 className="text-center pt-3 pb-3">Product Create</h4>
+            <hr />
+            <div className="p-3">
+              <FileUpload
+                values={values}
+                setValues={setValues}
+                setLoading={setLoading}
+              />
+              {JSON.stringify(values.images)}
+            </div>
+            <ProductCreateForm
+              handleSubmit={handleSubmit}
+              handleChange={handleChange}
               values={values}
               setValues={setValues}
-              setLoading={setLoading}
+              handleCategoryChange={handleCategoryChange}
+              subOptions={subOptions}
+              showSubs={showSubs}
             />
-            {JSON.stringify(values.images)}
           </div>
-          <ProductCreateForm
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            values={values}
-            setValues={setValues}
-            handleCategoryChange={handleCategoryChange}
-            subOptions={subOptions}
-            showSubs={showSubs}
-          />
         </div>
       </div>
-    </div>
+    </Spin>
   )
 }
 
