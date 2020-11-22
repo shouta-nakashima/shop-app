@@ -78,7 +78,7 @@ const CreateProduct = () => {
             <AdminNav/>
           </div>
           <div className="col-md-10">
-            <h4>Product Create</h4>
+            <h4 className="text-center pt-3 pb-3">Product Create</h4>
             <hr />
             <div className="p-3">
               <FileUpload

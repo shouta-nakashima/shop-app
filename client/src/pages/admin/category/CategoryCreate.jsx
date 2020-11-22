@@ -73,7 +73,7 @@ const CategoryCreate = () => {
             <AdminNav/>
           </div>
           <div className="col">
-            <h4>Create category</h4>
+            <h4 className="text-center pt-3 pb-3">Create category</h4>
             <CategoryForm
               handleSubmit={handleSubmit}
               name={name}

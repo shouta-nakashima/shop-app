@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React from 'react'
 import AdminNav from '../../components/nav/AdminNav'
 
 
@@ -11,7 +11,7 @@ const AdminDashboard = () => {
           <AdminNav/>
         </div>
         <div className="col">
-          <h4>Admin Dashboard</h4>
+          <h4 className="text-center pt-3 pb-3">Admin Dashboard</h4>
         </div>
       </div>
     </div>

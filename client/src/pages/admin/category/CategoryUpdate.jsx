@@ -46,7 +46,7 @@ const CategoryUpdate = ({history, match}) => {
             <AdminNav/>
           </div>
           <div className="col">
-            <h4>Update category</h4>
+            <h4 className="text-center pt-3 pb-3">Update category</h4>
             <CategoryForm
               handleSubmit={handleSubmit}
               name={name}

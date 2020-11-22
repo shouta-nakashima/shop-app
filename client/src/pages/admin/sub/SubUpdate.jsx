@@ -55,12 +55,12 @@ const SubUpdate = ({history,match}) => {
             <AdminNav/>
           </div>
           <div className="col">
-            <h4>Update sub category</h4>
+            <h4 className="text-center pt-3 pb-3">Update sub category</h4>
 
             <div className="form-group">
               <label>Category Name</label>
               <select
-                name="ategory"
+                name="category"
                 className="form-control"
                 onChange={e => setParent(e.target.value)}
               >

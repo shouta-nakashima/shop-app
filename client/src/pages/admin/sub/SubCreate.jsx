@@ -80,7 +80,7 @@ const SubCreate = () => {
             <AdminNav/>
           </div>
           <div className="col">
-            <h4>Create sub category</h4>
+            <h4 className="text-center pt-3 pb-3">Create sub category</h4>
 
             <div className="form-group">
               <label>Category Name</label>
@@ -89,7 +89,7 @@ const SubCreate = () => {
                 className="form-control"
                 onChange={e => setCategory(e.target.value)}
               >
-                <option value="">Select a Category</option>
+                <option value="">選択してください</option>
                 {categories.length > 0 && categories.map((category) => (
                   <option
                     key={category._id}
