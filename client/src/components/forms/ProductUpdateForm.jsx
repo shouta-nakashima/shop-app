@@ -10,7 +10,9 @@ const ProductUpdateForm = ({
   setValues,
   handleCategoryChange,
   categories,
-  subOptions
+  subOptions,
+  arrayOfSubIds,
+  setArrayOfSubIds
 }) => {
 
   const {
@@ -100,6 +102,21 @@ const ProductUpdateForm = ({
               {category.name}
             </option>))}
         </select>
+      </div>
+      <div>
+        <label>Sub Category</label>
+        <Select
+          mode="multiple"
+          style={{ width: '100%' }}
+          placeholder="選択してください"
+          value={arrayOfSubIds}
+          name="subs"
+          onChange={(value) => setArrayOfSubIds(value)}
+        >
+          {subOptions.length && subOptions.map((s) => (
+            <Option key={s._id} value={s._id}>{ s.name}</Option>
+          ))}
+        </Select>
       </div>
       <br/>
       <button className="btn btn-outline-info">SAVE</button>

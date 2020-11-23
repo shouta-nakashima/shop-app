@@ -30,6 +30,7 @@ const UpdateProduct = ({ match }) => {
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
   const [subOptions, setSubOptions] = useState([])
+  const [arrayOfSubIds, setArrayOfSubIds] = useState([])
   const { user } = useSelector((state) => ({ ...state }))
   let {slug} = match.params
 
@@ -42,7 +43,17 @@ const UpdateProduct = ({ match }) => {
     getProduct(slug)
       .then(p => {
         //console.log('single product', p);
-        setValues({...values, ...p.data})
+        setValues({ ...values, ...p.data })
+        getCategorySubs(p.data.category._id)
+          .then((res) => {
+          setSubOptions(res.data)
+          })
+        let arr = []
+        p.data.subs.map((s) => {
+          arr.push(s._id)
+        })
+        console.log('SUBS Arr', arr);
+        setArrayOfSubIds((prev) => arr)
       })
   }
 
@@ -91,6 +102,8 @@ const UpdateProduct = ({ match }) => {
               handleCategoryChange={handleCategoryChange}
               categories={categories}
               subOptions={subOptions}
+              arrayOfSubIds={arrayOfSubIds}
+              setArrayOfSubIds={setArrayOfSubIds}
             />
           </div>
         </div>
