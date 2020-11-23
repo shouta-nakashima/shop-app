@@ -3,7 +3,6 @@ import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { getProduct } from '../../../functions/product'
-import { ProductCreateForm } from '../../../components/forms/index'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import { FileUpload } from '../../../components/forms/index'
 import { Spin } from 'antd';
@@ -53,7 +52,7 @@ const UpdateProduct = ({ match }) => {
         p.data.subs.map((s) => {
           arr.push(s._id)
         })
-        console.log('SUBS Arr', arr);
+        //console.log('SUBS Arr', arr);
         setArrayOfSubIds((prev) => arr)
       })
   }
@@ -61,7 +60,7 @@ const UpdateProduct = ({ match }) => {
   const loadCategories = () =>
     getCategories()
       .then((c) => {
-        console.log('Get Categories', c.data);
+        //console.log('Get Categories', c.data);
         setCategories(c.data)
       })
 
@@ -76,14 +75,14 @@ const UpdateProduct = ({ match }) => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault()
-    console.log('CLICK CATEGORY', e.target.value);
+    //console.log('CLICK CATEGORY', e.target.value);
     setValues({ ...values, subs: [] })
     
     setSelectedCategory(e.target.value)
 
     getCategorySubs(e.target.value)
       .then((res) => {
-        console.log('SUBs',res);
+        //console.log('SUBs',res);
         setSubOptions(res.data)
       })
     if (values.category._id === e.target.value) {
@@ -102,6 +101,14 @@ const UpdateProduct = ({ match }) => {
           <div className="col-md-10">
             <h4 className="text-center pt-3 pb-3">Product Update</h4>
             <hr />
+            <div className="p-3">
+              <FileUpload
+                values={values}
+                setValues={setValues}
+                setLoading={setLoading}
+              />
+              {/* {JSON.stringify(values.images)} */}
+            </div>
             <ProductUpdateForm
               handleSubmit={handleSubmit}
               handleChange={handleChange}
