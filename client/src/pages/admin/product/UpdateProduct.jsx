@@ -31,6 +31,7 @@ const UpdateProduct = ({ match }) => {
   const [categories, setCategories] = useState([])
   const [subOptions, setSubOptions] = useState([])
   const [arrayOfSubIds, setArrayOfSubIds] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState("")
   const { user } = useSelector((state) => ({ ...state }))
   let {slug} = match.params
 
@@ -76,12 +77,19 @@ const UpdateProduct = ({ match }) => {
   const handleCategoryChange = (e) => {
     e.preventDefault()
     console.log('CLICK CATEGORY', e.target.value);
-    setValues({ ...values, subs: [], category: e.target.value })
+    setValues({ ...values, subs: [] })
+    
+    setSelectedCategory(e.target.value)
+
     getCategorySubs(e.target.value)
       .then((res) => {
         console.log('SUBs',res);
         setSubOptions(res.data)
       })
+    if (values.category._id === e.target.value) {
+      loadProduct()
+    }
+    setArrayOfSubIds([])
   }
   
   return (
@@ -104,6 +112,7 @@ const UpdateProduct = ({ match }) => {
               subOptions={subOptions}
               arrayOfSubIds={arrayOfSubIds}
               setArrayOfSubIds={setArrayOfSubIds}
+              selectedCategory={selectedCategory}
             />
           </div>
         </div>
