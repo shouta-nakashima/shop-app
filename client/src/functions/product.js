@@ -25,4 +25,9 @@ export const updateProduct = async (slug, product, authtoken) =>
     headers: {
       authtoken,
     },
-});
+  });
+
+export const getProducts = async (sort, order, limit) =>
+  await axios.post(`${ process.env.REACT_APP_API }/products`, {
+    sort, order, limit
+  });

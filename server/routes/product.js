@@ -16,6 +16,6 @@ router.delete('/product/:slug', authCheck, adminCheck, remove)
 router.get('/product/:slug', read)
 router.put('/product/:slug', authCheck, adminCheck, update)
 
-router.post('/product', list)
+router.post('/products', list)
 
 module.exports = router
