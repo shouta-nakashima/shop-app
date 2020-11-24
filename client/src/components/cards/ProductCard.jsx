@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card} from 'antd'
 import { ReadOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import noImages from '../../image/no_image.png'
 import { Link } from 'react-router-dom'
