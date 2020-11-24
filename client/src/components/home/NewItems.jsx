@@ -3,7 +3,7 @@ import { getProducts, getProductsCount } from '../../functions/product'
 import ProductCard from '../cards/ProductCard'
 import {Pagination} from 'antd'
 
-const NewItems = ({loading, setLoading}) => {
+const NewItems = ({setLoading}) => {
   const [products, setProducts] = useState([])
   const [productsCount, setProductsCount] = useState(0)
   const [page, setPage] = useState(1)

@@ -12,10 +12,10 @@ const Home = () => {
         <Jumbotron text={ ['Welcome to SHOP APP','Thanks for coming!!','Have fun slowly']}/>
       </div>
       <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">New Items</h4>
-      <NewItems loading={loading} setLoading={setLoading} />
+      <NewItems setLoading={setLoading} />
       <br/>
       <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">Best Sellers</h4>
-      <BestSellers loading={loading} setLoading={ setLoading}/>
+      <BestSellers setLoading={ setLoading}/>
     </Spin>
   )
 }
