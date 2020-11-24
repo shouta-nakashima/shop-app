@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { getProductsByCount } from '../functions/product'
 import { Spin } from 'antd';
 import ProductCard from '../components/cards/ProductCard'
+import Jumbotron from '../components/cards/Jumbotron'
 
 const Home = () => {
   const [products, setProducts] = useState([])
@@ -21,8 +22,8 @@ const Home = () => {
   }
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="jumbotron">
-        <h4>Home</h4>
+      <div className="jumbotron text-info h1 font-weight-bold text-center">
+        <Jumbotron text={ ['Welcome to SHOP APP','Thanks for coming!!','Have fun slowly']}/>
       </div>
       <div className="container">
         <div className="row">

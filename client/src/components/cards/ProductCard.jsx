@@ -21,9 +21,9 @@ const ProductCard = ({ product }) => {
 
     actions={[
       <Link to={`/product/${slug}`}> 
-        <ReadOutlined className="text-info" /> <br/> 詳細を見る
+        <ReadOutlined className="text-info" /> <br/> view the details
       </Link>,
-      <><ShoppingCartOutlined  className="text-danger" /> <br/> カートに追加 </>
+      <><ShoppingCartOutlined  className="text-danger" /> <br/> Add to cart </>
     ]}
     >
       <Meta title={title} description={`${ description && description.substring(0, 15)}...`}/>

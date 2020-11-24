@@ -16,7 +16,8 @@ react-router-dom@5.2.0
 react-toastify@6.1.0  
 redux@4.0.5  
 redux-devtools-extension@2.13.8  
-react-image-file-resize@0.3.8
+react-image-file-resize@0.3.8  
+typewriter-effect@2.15.0
 
 ## [Backend CRUD API](https://github.com/shouta-nakashima/shop-app/tree/master/server)
 
@@ -39,13 +40,17 @@ cloudinary@1.23.0
 
 ## DB
 
-### mongoDB  
-### Collection  
-#### [product](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/product.js)
-#### [category](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/category.js)
-#### [subs](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/sub.js)
-##### ※詳細はserver/modelsの中を確認ください。
+### mongoDB
 
+### Collection
+
+#### [product](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/product.js)
+
+#### [category](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/category.js)
+
+#### [subs](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/sub.js)
+
+##### ※詳細は server/models の中を確認ください。
 
 ## Authentications
 
