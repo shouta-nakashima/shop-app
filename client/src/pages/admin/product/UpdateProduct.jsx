@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { getProduct } from '../../../functions/product'
+import { getProduct, updateProduct } from '../../../functions/product'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import { FileUpload } from '../../../components/forms/index'
 import { Spin } from 'antd';
@@ -24,7 +24,7 @@ const initialState = {
 }
 
 
-const UpdateProduct = ({ match }) => {
+const UpdateProduct = ({ match, history}) => {
   const [values, setValues] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
@@ -66,6 +66,21 @@ const UpdateProduct = ({ match }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setLoading(true)
+
+    values.subs = arrayOfSubIds
+    values.category = selectedCategory ? selectedCategory : values.category
+
+    updateProduct(slug, values, user.token)
+      .then((res) => {
+        setLoading(false)
+        toast.info(`${ res.data.title }を更新しました！！`)
+        history.push('/admin/products')
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.err)
+      })
   }
 
   const handleChange = (e) => {

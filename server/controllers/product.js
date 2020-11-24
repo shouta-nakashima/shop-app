@@ -59,6 +59,9 @@ exports.update = async (req, res) => {
     res.json(updated)
   } catch (err) {
     console.log('UPDATE ERR', err);
-    return res.status(400).send('NO!! Update')
+    //return res.status(400).send('NO!! Update')
+    res.status(400).json({
+      err: err.message
+    })
   }
 }
