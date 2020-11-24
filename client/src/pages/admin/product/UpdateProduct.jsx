@@ -2,17 +2,16 @@ import React, {useState, useEffect} from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { createProduct } from '../../../functions/product'
-import { ProductCreateForm } from '../../../components/forms/index'
+import { getProduct, updateProduct } from '../../../functions/product'
 import { getCategories, getCategorySubs } from '../../../functions/category'
 import { FileUpload } from '../../../components/forms/index'
-import { Spin} from 'antd';
+import { Spin } from 'antd';
+import {ProductUpdateForm} from '../../../components/forms/index'
 
 const initialState = {
   title: '',
   description: '',
   price: '',
-  categories: [],
   category: '',
   subs: [],
   shipping: '',
@@ -24,32 +23,62 @@ const initialState = {
   brand: ''
 }
 
-const CreateProduct = () => {
+
+const UpdateProduct = ({ match, history}) => {
   const [values, setValues] = useState(initialState)
-  const [subOptions, setSubOptions] = useState([])
-  const [showSubs, setShowSubs] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [subOptions, setSubOptions] = useState([])
+  const [arrayOfSubIds, setArrayOfSubIds] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState("")
   const { user } = useSelector((state) => ({ ...state }))
-  
+  let {slug} = match.params
+
   useEffect(() => {
+    loadProduct()
     loadCategories()
-  }, [])
+  },[])
+
+  const loadProduct = () => {
+    getProduct(slug)
+      .then(p => {
+        //console.log('single product', p);
+        setValues({ ...values, ...p.data })
+        getCategorySubs(p.data.category._id)
+          .then((res) => {
+          setSubOptions(res.data)
+          })
+        let arr = []
+        p.data.subs.map((s) => {
+          arr.push(s._id)
+        })
+        //console.log('SUBS Arr', arr);
+        setArrayOfSubIds((prev) => arr)
+      })
+  }
 
   const loadCategories = () =>
     getCategories()
-      .then((c) => { setValues({...values, categories: c.data}) })
+      .then((c) => {
+        //console.log('Get Categories', c.data);
+        setCategories(c.data)
+      })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    createProduct(values, user.token)
+    setLoading(true)
+
+    values.subs = arrayOfSubIds
+    values.category = selectedCategory ? selectedCategory : values.category
+
+    updateProduct(slug, values, user.token)
       .then((res) => {
-        console.log(res);
-        window.alert(`${ res.data.title }を作成しました。`)
-        window.location.reload()
+        setLoading(false)
+        toast.info(`${ res.data.title }を更新しました！！`)
+        history.push('/admin/products')
       })
       .catch((err) => {
         console.log(err);
-        //if (err.response.status === 400) toast.error(err.response.data);
         toast.error(err.response.data.err)
       })
   }
@@ -61,15 +90,22 @@ const CreateProduct = () => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault()
-    console.log('CLICK CATEGORY', e.target.value);
-    setValues({ ...values, subs: [], category: e.target.value })
+    //console.log('CLICK CATEGORY', e.target.value);
+    setValues({ ...values, subs: [] })
+    
+    setSelectedCategory(e.target.value)
+
     getCategorySubs(e.target.value)
       .then((res) => {
-        console.log('SUBs',res);
+        //console.log('SUBs',res);
         setSubOptions(res.data)
       })
-    setShowSubs(true)
+    if (values.category._id === e.target.value) {
+      loadProduct()
+    }
+    setArrayOfSubIds([])
   }
+  
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
@@ -78,7 +114,7 @@ const CreateProduct = () => {
             <AdminNav/>
           </div>
           <div className="col-md-10">
-            <h4 className="text-center pt-3 pb-3">Product Create</h4>
+            <h4 className="text-center pt-3 pb-3">Product Update</h4>
             <hr />
             <div className="p-3">
               <FileUpload
@@ -88,14 +124,17 @@ const CreateProduct = () => {
               />
               {/* {JSON.stringify(values.images)} */}
             </div>
-            <ProductCreateForm
+            <ProductUpdateForm
               handleSubmit={handleSubmit}
               handleChange={handleChange}
               values={values}
               setValues={setValues}
               handleCategoryChange={handleCategoryChange}
+              categories={categories}
               subOptions={subOptions}
-              showSubs={showSubs}
+              arrayOfSubIds={arrayOfSubIds}
+              setArrayOfSubIds={setArrayOfSubIds}
+              selectedCategory={selectedCategory}
             />
           </div>
         </div>
@@ -104,4 +143,4 @@ const CreateProduct = () => {
   )
 }
 
-export default CreateProduct
+export default UpdateProduct

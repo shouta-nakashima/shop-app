@@ -37,3 +37,31 @@ exports.remove = async (req, res) => {
     return res.status(400).send('NO! undelete product')
   }
 }
+
+exports.read = async (req, res) => {
+  const product = await Product.findOne({ slug: req.params.slug })
+    .populate('category')
+    .populate('subs')
+    .exec()
+    res.json(product)
+}
+
+exports.update = async (req, res) => {
+  try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title)
+    }
+    const updated = await Product.findOneAndUpdate(
+      { slug: req.params.slug },
+      req.body,
+      { new: true }
+    ).exec()
+    res.json(updated)
+  } catch (err) {
+    console.log('UPDATE ERR', err);
+    //return res.status(400).send('NO!! Update')
+    res.status(400).json({
+      err: err.message
+    })
+  }
+}

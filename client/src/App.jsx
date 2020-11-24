@@ -13,7 +13,7 @@ import { currentUser } from './functions/auth'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import { CategoryCreate, CategoryUpdate } from './pages/admin/category/index'
 import { SubCreate, SubUpdate } from './pages/admin/sub/index'
-import {CreateProduct, AllProducts} from './pages/admin/product/index'
+import {CreateProduct, AllProducts, UpdateProduct} from './pages/admin/product/index'
 
 const App = () => {
 
@@ -62,6 +62,7 @@ const App = () => {
         <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
         <AdminRoute exact path="/admin/product" component={CreateProduct} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
+        <AdminRoute exact path="/admin/product/:slug" component={UpdateProduct} />
       </Switch>
     </>
   )
