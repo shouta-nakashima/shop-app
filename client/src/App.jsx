@@ -13,7 +13,8 @@ import { currentUser } from './functions/auth'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import { CategoryCreate, CategoryUpdate } from './pages/admin/category/index'
 import { SubCreate, SubUpdate } from './pages/admin/sub/index'
-import {CreateProduct, AllProducts, UpdateProduct} from './pages/admin/product/index'
+import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product/index'
+import Product from './pages/Product'
 
 const App = () => {
 
@@ -52,9 +53,12 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complate" component={RegisterComplate} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
+        <Route exact path="/product/:slug" component={Product} />
+        {/* login user route */}
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
+        {/* admin user route */}
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
