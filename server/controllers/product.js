@@ -114,7 +114,7 @@ exports.productStar = async (req, res) => {
   // who is updating?
   // check if currently logged in user have already added rating to this product?
   let existingRatingObject = product.ratings.find(
-    (ele) => ele.postedBy === user._id
+    (ele) => ele.postedBy.toString() === user._id.toString()
   );
 
   // if user haven't left rating yet, push it
