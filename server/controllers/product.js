@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 const slugify = require("slugify");
 
 exports.create = async (req, res) => {
@@ -106,26 +107,37 @@ exports.productsCount = async (req, res) => {
 }
 
 exports.productStar = async (req, res) => {
-  const product = await Product.findById(req.params.productId).exec()
-  const user = User.findOne({ email: req.user.email }).exec()
-  const {star} = req.body
+  const product = await Product.findById(req.params.productId).exec();
+  const user = await User.findOne({ email: req.user.email }).exec();
+  const { star } = req.body;
 
-  let exitingRatingObject = product.ratings.find((ele) => (ele.postedBy.toString() === user._id.toString()))
+  // who is updating?
+  // check if currently logged in user have already added rating to this product?
+  let existingRatingObject = product.ratings.find(
+    (ele) => ele.postedBy === user._id
+  );
 
-  if (exitingRatingObject === undefined) {
-    let ratingAdded = await Product.findByIdAndUpdate(product._id, {
-      $push: {ratings: {star: star, postedby: user._id}}
-    }, { new: true }).exec()
-    console.log('rating', ratingAdded);
-    res.json(ratingAdded)
+  // if user haven't left rating yet, push it
+  if (existingRatingObject === undefined) {
+    let ratingAdded = await Product.findByIdAndUpdate(
+      product._id,
+      {
+        $push: { ratings: { star, postedBy: user._id } },
+      },
+      { new: true }
+    ).exec();
+    console.log("ratingAdded", ratingAdded);
+    res.json(ratingAdded);
   } else {
+    // if user have already left rating, update it
     const ratingUpdated = await Product.updateOne(
       {
-        ratings: { $elemMatch: exitingRatingObject },
-      }, { $set: { "rating.$.star": star } },
-      {new: true}
-    ).exec()
-    console.log(ratingUpdated);
-    res.json(ratingUpdated)
+        ratings: { $elemMatch: existingRatingObject },
+      },
+      { $set: { "ratings.$.star": star } },
+      { new: true }
+    ).exec();
+    console.log("ratingUpdated", ratingUpdated);
+    res.json(ratingUpdated);
   }
-}
+};
