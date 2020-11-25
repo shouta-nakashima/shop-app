@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Tabs } from 'antd'
 import {Link} from 'react-router-dom'
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -7,8 +7,10 @@ import { Carousel } from 'react-responsive-carousel';
 import NoImage from '../../image/no_image.png'
 import {ProductListItem} from './index'
 
+const {TabPane} = Tabs
+
 const ProductDetail = ({ product }) => {
-  const {title, images} = product
+  const {title, images, description} = product
   return (
     <>
       <div className="col-md-7">
@@ -18,6 +20,14 @@ const ProductDetail = ({ product }) => {
           </Carousel>) : 
           <Card cover={<img alt="images" src={NoImage} className="mb-3 card-image" />}></Card>
         }
+        <Tabs type="card">
+          <TabPane tab="Description" key="1">
+            {description && description}
+          </TabPane>
+          <TabPane tab="More" key="2">
+          この製品の詳細については、XXXX-XXXX-XXXX までお電話ください。
+          </TabPane>
+        </Tabs>
       </div>
       <div className="col-md-5">
         <h1 className="bg-info p-3">{ title}</h1>
