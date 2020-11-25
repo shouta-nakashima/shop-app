@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getProduct } from '../functions/product'
-import {ProductDetail} from '../components/cards/index'
+import { ProductDetail } from '../components/cards/index'
 
 const Product = ({match}) => {
   const [product, setProduct] = useState({})
