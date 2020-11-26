@@ -30,7 +30,7 @@ const Product = ({match}) => {
     setStar(newRating);
     //console.table(newRating, name);
     productStar(name, newRating, user.token).then((res) => {
-      console.log("rating clicked", res.data);
+      //console.log("rating clicked", res.data);
       loadSingleProduct(); // 更新された評価をリアルタイムで表示
     });
   };

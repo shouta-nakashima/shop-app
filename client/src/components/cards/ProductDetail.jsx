@@ -36,7 +36,7 @@ const ProductDetail = ({ product, onStarClick, star }) => {
         <h1 className="bg-info p-3">{title}</h1>
         {product && product.ratings && product.ratings.length > 0
           ? showAverage(product)
-          : <p className="text-center pt-3 pb-3">まだ評価はありません。</p>}
+          : <p className="text-center pt-3 pb-3">No Rating</p>}
         <Card
           actions={[
             <>
@@ -47,6 +47,8 @@ const ProductDetail = ({ product, onStarClick, star }) => {
             </Link>,
             <RatingModal>
               <StarRating
+                starHoverColor="skyBlue"
+                starRatedColor="orange"
                 name={_id}
                 numberOfStars={5}
                 changeRating={onStarClick}
