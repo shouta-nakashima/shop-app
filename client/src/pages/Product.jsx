@@ -31,7 +31,7 @@ const Product = ({match}) => {
     //console.table(newRating, name);
     productStar(name, newRating, user.token).then((res) => {
       console.log("rating clicked", res.data);
-      loadSingleProduct(); // if you want to show updated rating in real time
+      loadSingleProduct(); // 更新された評価をリアルタイムで表示
     });
   };
   return (

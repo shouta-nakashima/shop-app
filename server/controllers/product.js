@@ -111,13 +111,13 @@ exports.productStar = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
   const { star } = req.body;
 
-  // who is updating?
-  // check if currently logged in user have already added rating to this product?
+  // 誰が更新しているかの確認
+  // 現在ログインしているユーザーがすでにこの製品に評価を追加しているかどうかを確認
   let existingRatingObject = product.ratings.find(
     (ele) => ele.postedBy.toString() === user._id.toString()
   );
 
-  // if user haven't left rating yet, push it
+  // ユーザーがまだ評価を残していない場合は、プッシュ
   if (existingRatingObject === undefined) {
     let ratingAdded = await Product.findByIdAndUpdate(
       product._id,
@@ -129,7 +129,7 @@ exports.productStar = async (req, res) => {
     console.log("ratingAdded", ratingAdded);
     res.json(ratingAdded);
   } else {
-    // if user have already left rating, update it
+    // ユーザーがすでに評価を残している場合は、それを更新
     const ratingUpdated = await Product.updateOne(
       {
         ratings: { $elemMatch: existingRatingObject },
