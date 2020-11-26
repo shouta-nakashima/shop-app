@@ -143,7 +143,7 @@ exports.productStar = async (req, res) => {
   }
 };
 
-exports.listRelated = (req, res) => {
+exports.listRelated = async (req, res) => {
   const product = await Product.findById(req.params.productId).exec()
 
   const related = await Product.find({
