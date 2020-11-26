@@ -18,7 +18,8 @@ redux@4.0.5
 redux-devtools-extension@2.13.8  
 react-image-file-resize@0.3.8  
 typewriter-effect@2.15.0  
-react-responsive-carousel@3.2.10
+react-responsive-carousel@3.2.10  
+react-star-ratings@2.3.0
 
 ## [Backend CRUD API](https://github.com/shouta-nakashima/shop-app/tree/master/server)
 
