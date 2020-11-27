@@ -17,7 +17,7 @@ const Home = () => {
       <br/>
       <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">Best Sellers</h4>
       <BestSellers setLoading={setLoading} />
-      <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">All Category</h4>
+      <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">Category</h4>
       <CategoryList setLoading={setLoading}/>
     </Spin>
   )
