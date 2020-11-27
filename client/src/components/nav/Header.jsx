@@ -6,6 +6,7 @@ import {auth} from '../../firebase'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import {Search} from '../forms/index'
 
 const { SubMenu, Item } = Menu;//Menu.SubMenu
 
@@ -61,6 +62,9 @@ const Header = () => {
           <Item icon={<LogoutOutlined />} onClick={logout}>Logout</Item>
         </SubMenu>
       )}
+      <span className="float-right p-1">
+        <Search/>
+      </span>
     </Menu>
   )
 }
