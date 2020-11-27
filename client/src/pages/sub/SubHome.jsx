@@ -14,7 +14,7 @@ const SubHome = ({match}) => {
     setLoading(true)
     getSub(slug)
       .then(res => {
-      console.log(JSON.stringify(res.data, null,4));
+      //console.log(JSON.stringify(res.data, null,4));
       setSub(res.data.sub)
         setProducts(res.data.products)
         setLoading(false)
@@ -27,7 +27,7 @@ const SubHome = ({match}) => {
         <div className="row">
           <div className="col">
             <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-              {products.length } Products in "{sub.name}" Category
+              {products.length } Products in "{sub.name}" Sub Category
             </h4>
           </div>
         </div>
