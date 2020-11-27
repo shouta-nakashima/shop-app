@@ -15,6 +15,7 @@ import { CategoryCreate, CategoryUpdate } from './pages/admin/category/index'
 import { SubCreate, SubUpdate } from './pages/admin/sub/index'
 import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product/index'
 import Product from './pages/Product'
+import CategoryHome from './pages/category/CategoryHome'
 
 const App = () => {
 
@@ -55,6 +56,7 @@ const App = () => {
         <Route exact path="/register/complate" component={RegisterComplate} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <Route exact path="/product/:slug" component={Product} />
+        <Route exact path="/category/:slug" component={CategoryHome} />
         {/* login user route */}
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />

@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Spin } from 'antd';
 import { Jumbotron } from '../components/cards/index'
-import {NewItems, BestSellers} from '../components/home/index'
+import { NewItems, BestSellers } from '../components/home/index'
+import CategoryList from '../components/category/CategoryList'
 
 const Home = () => {
   const [loading, setLoading] = useState(false)
@@ -15,7 +16,9 @@ const Home = () => {
       <NewItems setLoading={setLoading} />
       <br/>
       <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">Best Sellers</h4>
-      <BestSellers setLoading={ setLoading}/>
+      <BestSellers setLoading={setLoading} />
+      <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">Category</h4>
+      <CategoryList setLoading={setLoading}/>
     </Spin>
   )
 }
