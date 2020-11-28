@@ -67,7 +67,7 @@ const Shop = () => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3 pt-2">
+          <div className="col-md-3 pt-2 text-center">
             <h4>Search&Filter</h4>
             <hr/>
             <Menu mode="inline" defaultOpenKeys={["1","2"]}>
@@ -86,7 +86,7 @@ const Shop = () => {
                     range
                     value={price}
                     onChange={handleSlider}
-                    max="400000"
+                    max="300000"
                   />
                 </div>
               </SubMenu>
