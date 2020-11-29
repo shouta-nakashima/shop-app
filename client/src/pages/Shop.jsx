@@ -4,7 +4,8 @@ import {getCategories} from '../functions/category'
 import {useSelector, useDispatch} from 'react-redux'
 import {ProductCard} from '../components/cards/index'
 import { Spin, Menu, Slider, Checkbox } from 'antd';
-import {DollarCircleOutlined, DownSquareOutlined} from '@ant-design/icons'
+import { DollarCircleOutlined, DownSquareOutlined,StarOutlined } from '@ant-design/icons'
+import {Star} from '../components/forms/index'
 
 
 const {SubMenu,ItemGroup} = Menu
@@ -16,6 +17,7 @@ const Shop = () => {
   const [ok, setOk] = useState(false)
   const [categories, setCategories] = useState([])
   const [categoryIds, setCategoryIds] = useState([])
+  const [star, setStar] = useState('')
 
   let dispatch = useDispatch()
   let {search} = useSelector((state) => ({...state}))
@@ -62,6 +64,7 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: {text: ""}
     })
+    setStar("")
     setCategoryIds([])
     setPrice(value)
     setTimeout(() => {
@@ -91,6 +94,7 @@ const Shop = () => {
       payload: {text: ""}
     })
     setPrice([0,0])
+    setStar("")
     //console.log(e.target.value);
     let inTheState = [...categoryIds]
     let justChecked = e.target.value
@@ -108,6 +112,29 @@ const Shop = () => {
     fetchProducts({category: inTheState})
   }
 
+  //5 star ratingで商品を表示
+  const handleStarClick = (num) => {
+    //console.log(num);
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: {text: ""}
+    })
+    setPrice([0,0])
+    setCategoryIds([])
+    setStar(num)
+    fetchProducts({stars: num})
+  }
+  const showStars = () => (
+    <div className="pr-4 pl-4 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} /><br/>
+      <Star starClick={handleStarClick} numberOfStars={4} /><br/>
+      <Star starClick={handleStarClick} numberOfStars={3} /><br/>
+      <Star starClick={handleStarClick} numberOfStars={2} /><br/>
+      <Star starClick={handleStarClick} numberOfStars={1}/>
+    </div>
+  )
+
+
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
@@ -115,7 +142,7 @@ const Shop = () => {
           <div className="col-md-3 pt-2 text-center">
             <h4>Search&Filter</h4>
             <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2"]}>
+            <Menu mode="inline" defaultOpenKeys={["1", "2","3"]}>
               {/* price */}
               <SubMenu
                 key="1"
@@ -147,6 +174,20 @@ const Shop = () => {
               >
                 <div>
                   {showCategories()}
+                </div>
+              </SubMenu>
+
+              {/* stars */}
+              <SubMenu
+                key="3"
+                title={
+                  <span className="h6">
+                    <StarOutlined /> Rating
+                  </span>
+                }
+              >
+                <div>
+                  {showStars()}
                 </div>
               </SubMenu>
             </Menu>
