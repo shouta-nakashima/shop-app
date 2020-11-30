@@ -25,6 +25,7 @@ const Shop = () => {
   const [brand, setBrand] = useState('')
   const [colors, setColors] = useState(["Black","Brown","White","Silver","Blue"])
   const [color, setColor] = useState('')
+  const [shipping, setShipping] = useState('')
 
   let dispatch = useDispatch()
   let {search} = useSelector((state) => ({...state}))
@@ -78,6 +79,7 @@ const Shop = () => {
     setCategoryIds([])
     setSub('')
     setColor('')
+    setShipping('')
     setPrice(value)
     setTimeout(() => {
       setOk(!ok)
@@ -110,6 +112,7 @@ const Shop = () => {
     setSub('')
     setBrand("")
     setColor('')
+    setShipping('')
     //console.log(e.target.value);
     let inTheState = [...categoryIds]
     let justChecked = e.target.value
@@ -140,6 +143,7 @@ const Shop = () => {
     setStar(num)
     setBrand("")
     setColor('')
+    setShipping('')
     fetchProducts({stars: num})
   }
   const showStars = () => (
@@ -175,6 +179,7 @@ const Shop = () => {
     setStar('')
     setBrand("")
     setColor('')
+    setShipping('')
     fetchProducts({sub: sub})
   }
 
@@ -203,6 +208,7 @@ const Shop = () => {
     setCategoryIds([])
     setStar('')
     setColor('')
+    setShipping('')
     setBrand(e.target.value)
     fetchProducts({brand: e.target.value})
   }
@@ -232,8 +238,47 @@ const Shop = () => {
     setCategoryIds([])
     setStar('')
     setBrand('')
+    setShipping('')
     setColor(e.target.value)
     fetchProducts({color: e.target.value})
+  }
+
+  //shippingに基づいて商品を表示
+  const showShipping = () => (
+    <>
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingChange}
+        value="Yes"
+        checked={shipping === "Yes"}
+      >
+        Yes
+      </Checkbox>
+      <br/>
+      <Checkbox
+        className="pb-2 pl-4 pr-4"
+        onChange={handleShippingChange}
+        value="No"
+        checked={shipping === "No"}
+      >
+        No
+      </Checkbox>
+    </>
+  )
+
+  const handleShippingChange = (e) => {
+    setSub('')
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: {text: ""}
+    })
+    setPrice([0,0])
+    setCategoryIds([])
+    setStar('')
+    setBrand('')
+    setColor('')
+    setShipping(e.target.value)
+    fetchProducts({shipping: e.target.value})
   }
 
 
@@ -244,7 +289,7 @@ const Shop = () => {
           <div className="col-md-3 pt-2 text-center">
             <h4>Search&Filter</h4>
             <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5", "6"]}>
+            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5", "6", "7"]}>
               {/* price */}
               <SubMenu
                 key="1"
@@ -332,6 +377,20 @@ const Shop = () => {
               >
                 <div className="pl-4 pr-4">
                   {showColors()}
+                </div>
+              </SubMenu>
+
+              {/* shipping */}
+              <SubMenu
+                key="7"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined /> Shipping
+                  </span>
+                }
+              >
+                <div className="pl-4 pr-4">
+                  {showShipping()}
                 </div>
               </SubMenu>
             </Menu>
