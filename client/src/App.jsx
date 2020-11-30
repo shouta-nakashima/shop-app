@@ -5,7 +5,7 @@ import { History, Wishlist, Password } from './pages/user/index'
 import {UserRoute,AdminRoute} from './components/routes/index'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Home from './pages/Home'
+import {Home,Product,Shop} from './pages/index'
 import Header from './components/nav/Header'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
@@ -14,10 +14,9 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import { CategoryCreate, CategoryUpdate } from './pages/admin/category/index'
 import { SubCreate, SubUpdate } from './pages/admin/sub/index'
 import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product/index'
-import Product from './pages/Product'
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
-import SubList from './components/sub/SubList'
+
 
 const App = () => {
 
@@ -60,6 +59,7 @@ const App = () => {
         <Route exact path="/product/:slug" component={Product} />
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
+        <Route exact path="/shop" component={Shop} />
         {/* login user route */}
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
