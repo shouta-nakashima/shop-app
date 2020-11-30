@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import { getProductsByCount, fetchProductsByFilter } from '../functions/product'
-import {getCategories} from '../functions/category'
+import { getCategories } from '../functions/category'
+import {getSubs} from '../functions/sub'
 import {useSelector, useDispatch} from 'react-redux'
 import {ProductCard} from '../components/cards/index'
 import { Spin, Menu, Slider, Checkbox } from 'antd';
@@ -18,6 +19,8 @@ const Shop = () => {
   const [categories, setCategories] = useState([])
   const [categoryIds, setCategoryIds] = useState([])
   const [star, setStar] = useState('')
+  const [subs, setSubs] = useState([])
+  const [sub, setSub] = useState('')
 
   let dispatch = useDispatch()
   let {search} = useSelector((state) => ({...state}))
@@ -27,6 +30,8 @@ const Shop = () => {
     loadAllProducts()
     //fetch categories
     getCategories().then((res) => setCategories(res.data))
+    //fetch sub category
+    getSubs().then((res) => setSubs(res.data))
   },[])
 
   //1 デフォルトの検索入力で商品を読み込む
@@ -66,6 +71,7 @@ const Shop = () => {
     })
     setStar("")
     setCategoryIds([])
+    setSub('')
     setPrice(value)
     setTimeout(() => {
       setOk(!ok)
@@ -95,6 +101,7 @@ const Shop = () => {
     })
     setPrice([0,0])
     setStar("")
+    setSub('')
     //console.log(e.target.value);
     let inTheState = [...categoryIds]
     let justChecked = e.target.value
@@ -121,6 +128,7 @@ const Shop = () => {
     })
     setPrice([0,0])
     setCategoryIds([])
+    setSub('')
     setStar(num)
     fetchProducts({stars: num})
   }
@@ -134,6 +142,30 @@ const Shop = () => {
     </div>
   )
 
+  //sub category に基づいて商品を表示
+  const showSubs = () => subs.map((s) =>
+    <div
+      key={s._id}
+      onClick={() => handleSubs(s)}
+      className="p-1 m-1 badge badge-secondary"
+      style={{cursor: "pointer"}}
+    >
+      {s.name}
+    </div>)
+  
+  const handleSubs = (sub) => {
+    //console.log(sub);
+    setSub(sub)
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: {text: ""}
+    })
+    setPrice([0,0])
+    setCategoryIds([])
+    setStar('')
+    fetchProducts({sub: sub})
+  }
+
 
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
@@ -142,7 +174,7 @@ const Shop = () => {
           <div className="col-md-3 pt-2 text-center">
             <h4>Search&Filter</h4>
             <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2","3"]}>
+            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4"]}>
               {/* price */}
               <SubMenu
                 key="1"
@@ -188,6 +220,20 @@ const Shop = () => {
               >
                 <div>
                   {showStars()}
+                </div>
+              </SubMenu>
+
+              {/* sub category */}
+              <SubMenu
+                key="4"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined /> Sub category
+                  </span>
+                }
+              >
+                <div className="pl-4 pr-4">
+                  {showSubs()}
                 </div>
               </SubMenu>
             </Menu>
