@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card} from 'antd'
+import React, {useState} from 'react'
+import { Card, Tooltip} from 'antd'
 import { ReadOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import noImages from '../../image/no_image.png'
 import { Link } from 'react-router-dom'
@@ -9,9 +9,11 @@ import _ from 'lodash'
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
+  const [tooltip, setTooltip] = useState('click to add')
   const {title, description, images, slug} = product
 
   const handleAddToCart = () => {
+    
     //create art array
     let cart = []
     if (typeof window !== 'undefined') {
@@ -29,6 +31,8 @@ const ProductCard = ({ product }) => {
       // localStorageに保存
       //console.log('unique', unique);
       localStorage.setItem('cart', JSON.stringify(unique))
+      //show tooltip
+      setTooltip('Added')
     }
   }
   return (
@@ -50,9 +54,11 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${slug}`}> 
             <ReadOutlined className="text-info" /> <br/> 詳細ページへ
           </Link>,
-          <a onClick={handleAddToCart}>
-            <ShoppingCartOutlined className="text-danger" /> <br /> カートに追加
-          </a>
+          <Tooltip title={tooltip}>
+            <a onClick={handleAddToCart}>
+              <ShoppingCartOutlined className="text-danger" /> <br /> カートに追加
+            </a>
+          </Tooltip>
         ]}
       >
         <Meta title={title} description={`${ description && description.substring(0, 15)}...`}/>
