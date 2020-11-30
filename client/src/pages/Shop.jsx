@@ -23,6 +23,8 @@ const Shop = () => {
   const [sub, setSub] = useState('')
   const [brands, setBrands] = useState(["Apple", "Samsung", "Microsoft", "Lenovo", "Dell"])
   const [brand, setBrand] = useState('')
+  const [colors, setColors] = useState(["Black","Brown","White","Silver","Blue"])
+  const [color, setColor] = useState('')
 
   let dispatch = useDispatch()
   let {search} = useSelector((state) => ({...state}))
@@ -75,6 +77,7 @@ const Shop = () => {
     setBrand("")
     setCategoryIds([])
     setSub('')
+    setColor('')
     setPrice(value)
     setTimeout(() => {
       setOk(!ok)
@@ -106,6 +109,7 @@ const Shop = () => {
     setStar("")
     setSub('')
     setBrand("")
+    setColor('')
     //console.log(e.target.value);
     let inTheState = [...categoryIds]
     let justChecked = e.target.value
@@ -135,6 +139,7 @@ const Shop = () => {
     setSub('')
     setStar(num)
     setBrand("")
+    setColor('')
     fetchProducts({stars: num})
   }
   const showStars = () => (
@@ -169,6 +174,7 @@ const Shop = () => {
     setCategoryIds([])
     setStar('')
     setBrand("")
+    setColor('')
     fetchProducts({sub: sub})
   }
 
@@ -196,8 +202,38 @@ const Shop = () => {
     setPrice([0,0])
     setCategoryIds([])
     setStar('')
+    setColor('')
     setBrand(e.target.value)
     fetchProducts({brand: e.target.value})
+  }
+
+  //colorに基づいて商品を表示
+  const showColors = () => 
+    colors.map((c) =>
+      <Radio
+        key={c}
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="pb-1 pl-1 pr-4"
+      >
+        {c}
+      </Radio>
+    )
+
+  const handleColor = (e) => {
+    setSub('')
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: {text: ""}
+    })
+    setPrice([0,0])
+    setCategoryIds([])
+    setStar('')
+    setBrand('')
+    setColor(e.target.value)
+    fetchProducts({color: e.target.value})
   }
 
 
@@ -208,7 +244,7 @@ const Shop = () => {
           <div className="col-md-3 pt-2 text-center">
             <h4>Search&Filter</h4>
             <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5"]}>
+            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5", "6"]}>
               {/* price */}
               <SubMenu
                 key="1"
@@ -282,6 +318,20 @@ const Shop = () => {
               >
                 <div className="pl-4 pr-4">
                   {showBrands()}
+                </div>
+              </SubMenu>
+
+              {/* color */}
+              <SubMenu
+                key="6"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined /> Color
+                  </span>
+                }
+              >
+                <div className="pl-4 pr-4">
+                  {showColors()}
                 </div>
               </SubMenu>
             </Menu>
