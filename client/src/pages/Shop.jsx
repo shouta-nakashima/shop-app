@@ -4,7 +4,7 @@ import { getCategories } from '../functions/category'
 import {getSubs} from '../functions/sub'
 import {useSelector, useDispatch} from 'react-redux'
 import {ProductCard} from '../components/cards/index'
-import { Spin, Menu, Slider, Checkbox } from 'antd';
+import { Spin, Menu, Slider, Checkbox, Radio } from 'antd';
 import { DollarCircleOutlined, DownSquareOutlined,StarOutlined } from '@ant-design/icons'
 import {Star} from '../components/forms/index'
 
@@ -21,6 +21,8 @@ const Shop = () => {
   const [star, setStar] = useState('')
   const [subs, setSubs] = useState([])
   const [sub, setSub] = useState('')
+  const [brands, setBrands] = useState(["Apple", "Samsung", "Microsoft", "Lenovo", "Dell"])
+  const [brand, setBrand] = useState('')
 
   let dispatch = useDispatch()
   let {search} = useSelector((state) => ({...state}))
@@ -70,6 +72,7 @@ const Shop = () => {
       payload: {text: ""}
     })
     setStar("")
+    setBrand("")
     setCategoryIds([])
     setSub('')
     setPrice(value)
@@ -102,6 +105,7 @@ const Shop = () => {
     setPrice([0,0])
     setStar("")
     setSub('')
+    setBrand("")
     //console.log(e.target.value);
     let inTheState = [...categoryIds]
     let justChecked = e.target.value
@@ -130,6 +134,7 @@ const Shop = () => {
     setCategoryIds([])
     setSub('')
     setStar(num)
+    setBrand("")
     fetchProducts({stars: num})
   }
   const showStars = () => (
@@ -163,7 +168,36 @@ const Shop = () => {
     setPrice([0,0])
     setCategoryIds([])
     setStar('')
+    setBrand("")
     fetchProducts({sub: sub})
+  }
+
+  //brandに基づいて商品を表示
+  const showBrands = () => 
+    brands.map((b) =>
+      <Radio
+        key={b}
+        value={b}
+        name={b}
+        checked={b === brand}
+        onChange={handleBrand}
+        className="pb-1 pl-1 pr-4"
+      >
+        {b}
+      </Radio>
+    )
+
+  const handleBrand = (e) => {
+    setSub('')
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: {text: ""}
+    })
+    setPrice([0,0])
+    setCategoryIds([])
+    setStar('')
+    setBrand(e.target.value)
+    fetchProducts({brand: e.target.value})
   }
 
 
@@ -174,7 +208,7 @@ const Shop = () => {
           <div className="col-md-3 pt-2 text-center">
             <h4>Search&Filter</h4>
             <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4"]}>
+            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5"]}>
               {/* price */}
               <SubMenu
                 key="1"
@@ -234,6 +268,20 @@ const Shop = () => {
               >
                 <div className="pl-4 pr-4">
                   {showSubs()}
+                </div>
+              </SubMenu>
+
+              {/* brands */}
+              <SubMenu
+                key="5"
+                title={
+                  <span className="h6">
+                    <DownSquareOutlined /> Brands
+                  </span>
+                }
+              >
+                <div className="pl-4 pr-4">
+                  {showBrands()}
                 </div>
               </SubMenu>
             </Menu>
