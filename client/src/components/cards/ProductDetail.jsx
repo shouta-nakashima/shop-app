@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, Tabs } from 'antd'
+import React, {useState} from 'react'
+import { Card, Tabs,Tooltip } from 'antd'
 import {Link} from 'react-router-dom'
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -9,11 +9,50 @@ import { ProductListItem } from './index'
 import StarRating from 'react-star-ratings'
 import RatingModal from '../modal/RatingModal'
 import {showAverage} from '../../functions/rating'
+import _ from 'lodash'
+import {useSelector, useDispatch} from 'react-redux'
 
 const {TabPane} = Tabs
 
 const ProductDetail = ({ product, onStarClick, star }) => {
-  const {title, images, description, _id} = product
+  const { title, images, description, _id } = product
+  const [tooltip, setTooltip] = useState('click to add')
+  const dispatch = useDispatch()
+  const {user, cart} = useSelector((state) => ({...state}))
+
+  const handleAddToCart = () => {
+    
+    //create art array
+    let cart = []
+    if (typeof window !== 'undefined') {
+      //cartがlocalStorageにある場合は取得
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'))
+      }
+      // 新しい商品をcartに追加
+      cart.push({
+        ...product,
+        count: 1
+      })
+      //重複を削除する
+      let unique = _.uniqWith(cart, _.isEqual)
+      // localStorageに保存
+      //console.log('unique', unique);
+      localStorage.setItem('cart', JSON.stringify(unique))
+      //show tooltip
+      setTooltip('Added')
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique
+      })
+      // show cart item sidedrawer
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true
+      })
+    }
+  }
+
   return (
     <>
       <div className="col-md-7">
@@ -39,9 +78,11 @@ const ProductDetail = ({ product, onStarClick, star }) => {
           : <p className="text-center pt-3 pb-3">No Rating</p>}
         <Card
           actions={[
-            <>
-              <ShoppingCartOutlined className="text-success"/> <br/> カートに追加
-            </>,
+            <Tooltip title={tooltip}>
+              <a onClick={handleAddToCart}>
+                <ShoppingCartOutlined className="text-danger" /> <br /> カートに追加
+              </a>
+            </Tooltip>,
             <Link to="/">
               <HeartOutlined className="text-info" /> <br/> お気に入りに追加
             </Link>,

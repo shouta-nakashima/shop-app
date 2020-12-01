@@ -5,7 +5,7 @@ import { History, Wishlist, Password } from './pages/user/index'
 import {UserRoute,AdminRoute} from './components/routes/index'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {Home,Product,Shop} from './pages/index'
+import {Home,Product,Shop, Cart} from './pages/index'
 import Header from './components/nav/Header'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
@@ -16,6 +16,7 @@ import { SubCreate, SubUpdate } from './pages/admin/sub/index'
 import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product/index'
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
+import SideDrawer from './components/drawer/SideDrawer'
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <SideDrawer/>
       <ToastContainer/>
       <Switch>
         {/* root user route */}
@@ -60,6 +62,7 @@ const App = () => {
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
         <Route exact path="/shop" component={Shop} />
+        <Route exact path="/cart" component={Cart} />
         {/* login user route */}
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
