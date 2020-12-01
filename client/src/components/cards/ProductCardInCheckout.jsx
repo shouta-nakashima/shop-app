@@ -2,7 +2,8 @@ import React from 'react'
 import {useDispatch} from 'react-redux'
 import ModalImage from "react-modal-image";
 import noImages from '../../image/no_image.png'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import {CheckCircleOutlined, CloseCircleOutlined,CloseOutlined} from '@ant-design/icons'
 
 const ProductCardInCheckout = ({ p }) => {
   const colors = ["Black","Brown","White","Silver","Blue"]
@@ -55,6 +56,27 @@ const ProductCardInCheckout = ({ p }) => {
     }
   }
 
+  const handleDelete = () => {
+    //console.log('delete', p._id);
+    let cart = []
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'))
+      }
+      cart.map((product, i) => { 
+        if (product._id === p._id) {
+          cart.splice(i, 1)
+        }
+        
+      })
+      localStorage.setItem('cart', JSON.stringify(cart))
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: cart
+      })
+    }
+  }
+
   return (
     <tbody>
       <tr>
@@ -72,7 +94,7 @@ const ProductCardInCheckout = ({ p }) => {
           <select 
           onChange={handleColorChange} 
           name="color" 
-            className="form-control"
+          className="form-control"
           >
             {p.color ? <option value={p.color}>{ p.color}</option> : <option>Select</option>}
             {colors
@@ -80,11 +102,21 @@ const ProductCardInCheckout = ({ p }) => {
               .map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </td>
-        <td className="text-center">
-          <input type="number" className="form-control" value={p.count} onChange={ handleCountChange}/>
+        <td className="text-center " style={{maxWidth: '75px'}}>
+          <input
+            type="number"
+            className="form-control"
+            value={p.count}
+            onChange={handleCountChange}
+          />
         </td>
-        <td>Shipping</td>
-        <td>Delete Icon</td>
+        <td className=" text-center">
+          {p.shipping === "Yes"
+            ? <CheckCircleOutlined className="text-success text-center" />
+            : <CloseCircleOutlined className="text-danger"/>
+          }
+        </td>
+        <td className="text-center"><CloseOutlined className="text-danger pointer" onClick={handleDelete}/></td>
       </tr>
     </tbody>
   )
