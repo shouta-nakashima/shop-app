@@ -5,7 +5,7 @@ import { History, Wishlist, Password } from './pages/user/index'
 import {UserRoute,AdminRoute} from './components/routes/index'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {Home,Product,Shop, Cart} from './pages/index'
+import {Home,Product,Shop, Cart,Checkout} from './pages/index'
 import Header from './components/nav/Header'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
@@ -67,6 +67,7 @@ const App = () => {
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
+        <UserRoute exact path="/checkout" component={Checkout} />
         {/* admin user route */}
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
