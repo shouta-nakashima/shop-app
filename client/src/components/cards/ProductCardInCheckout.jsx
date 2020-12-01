@@ -2,6 +2,7 @@ import React from 'react'
 import {useDispatch} from 'react-redux'
 import ModalImage from "react-modal-image";
 import noImages from '../../image/no_image.png'
+import {toast} from 'react-toastify'
 
 const ProductCardInCheckout = ({ p }) => {
   const colors = ["Black","Brown","White","Silver","Blue"]
@@ -28,6 +29,32 @@ const ProductCardInCheckout = ({ p }) => {
       })
     }
   }
+
+  const handleCountChange = (e) => {
+    let count = e.target.value < 1 ? 1 : e.target.value
+    if (count > p.quantity) {
+      toast.error(`購入可能な最大数量は${p.quantity}個までです。`)
+      return;
+    }
+    let cart = []
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'))
+      }
+      cart.map((product, i) => { 
+        if (product._id === p._id) {
+          cart[i].count = count
+        }
+        
+      })
+      localStorage.setItem('cart', JSON.stringify(cart))
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: cart
+      })
+    }
+  }
+
   return (
     <tbody>
       <tr>
@@ -53,7 +80,9 @@ const ProductCardInCheckout = ({ p }) => {
               .map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </td>
-        <td>{ p.count}</td>
+        <td className="text-center">
+          <input type="number" className="form-control" value={p.count} onChange={ handleCountChange}/>
+        </td>
         <td>Shipping</td>
         <td>Delete Icon</td>
       </tr>
