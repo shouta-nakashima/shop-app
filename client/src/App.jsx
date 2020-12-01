@@ -16,6 +16,7 @@ import { SubCreate, SubUpdate } from './pages/admin/sub/index'
 import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product/index'
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
+import SideDrawer from './components/drawer/SideDrawer'
 
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
   return (
     <>
       <Header />
+      <SideDrawer/>
       <ToastContainer/>
       <Switch>
         {/* root user route */}
