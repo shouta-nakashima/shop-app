@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {getUserCart} from '../functions/user'
+import {getUserCart,emptyUserCart} from '../functions/user'
+import {toast} from 'react-toastify'
 
 const Checkout = () => {
 
@@ -20,6 +21,25 @@ const Checkout = () => {
 
   const saveAddressToDb = () => {
     //
+  }
+
+  const emptyCart = () => {
+    // localStorage からcartを削除
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cart')
+    }
+    // rtedux からcartを削除
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: []
+    })
+    // dbからcartを削除
+    emptyUserCart(user.token)
+    .then((res) => {
+      setProducts([])
+      setTotal(0)
+      toast.success('カートの内容を削除しました')
+    })
   }
 
   return (
@@ -45,7 +65,9 @@ const Checkout = () => {
         <hr />
         {products.map((p,i) => (
           <div key={i}>
-            <p>{p.product.title} ({p.color}) x {p.count} = { (p.product.price * p.count).toLocaleString()}円</p>
+            <p>
+              {p.product.title} ({p.color}) x {p.count} = {(p.product.price * p.count).toLocaleString()}円
+            </p>
           </div>
         ))}
         <hr />
@@ -53,12 +75,16 @@ const Checkout = () => {
 
         <div className="row">
           <div className="col-md-6">
-            <button className="btn btn-primary">注文する</button>
+            <button className="btn btn-primary btn-raised">注文する</button>
           </div>
-        </div>
-        <div className="row">
           <div className="col-md-6">
-            <button className="btn btn-primary">空のカート</button>
+            <button
+              onClick={emptyCart}
+              disabled={!products.length}
+              className="btn btn-danger btn-raised"
+            >
+              カートを空にする
+            </button>
           </div>
         </div>
       </div>
