@@ -61,7 +61,7 @@ const Checkout = () => {
         <br />
         <ReactQuill theme="snow" value={address} onChange={setAddress}/>
         <button
-          className="btn btn-primary mt-2"
+          className="btn btn-primary mt-2 text-center"
           onClick={saveAddressToDb}
         >SAVE</button>
         <hr />
