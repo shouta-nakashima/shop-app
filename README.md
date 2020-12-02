@@ -55,6 +55,10 @@ cloudinary@1.23.0
 
 #### [subs](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/sub.js)
 
+#### [cart](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/cart.js)
+
+#### [user](https://github.com/shouta-nakashima/shop-app/blob/master/server/models/user.js)
+
 ##### ※詳細は server/models の中を確認ください。
 
 ## Authentications
