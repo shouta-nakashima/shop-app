@@ -17,6 +17,7 @@ import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
 import SideDrawer from './components/drawer/SideDrawer'
+import CreateCoupon from './pages/admin/coupon/CreateCoupon'
 
 
 const App = () => {
@@ -77,6 +78,7 @@ const App = () => {
         <AdminRoute exact path="/admin/product" component={CreateProduct} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
         <AdminRoute exact path="/admin/product/:slug" component={UpdateProduct} />
+        <AdminRoute exact path="/admin/coupon" component={CreateCoupon} />
       </Switch>
     </>
   )
