@@ -25,8 +25,8 @@ exports.userCart = async (req, res) => {
     object.count = cart[i].count;
     object.color = cart[i].color;
     // 合計を作成するための価格を取得
-    let { price } = await Product.findById(cart[i]._id).select("price").exec();
-    object.price = price;
+    let productFromDb = await Product.findById(cart[i]._id).select("price").exec();
+    object.price = productFromDb.price;
 
     products.push(object);
   }
@@ -66,4 +66,12 @@ exports.emptyCart = async (req, res) => {
 
   const cart = await Cart.findOneAndRemove({ orderdBy: user._id }).exec()
   res.json(cart)
+}
+
+exports.saveAddress = async (req, res) => {
+  const userAddress = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { address: req.body.address }
+  ).exec()
+  res.json({ok: true})
 }
