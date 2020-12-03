@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
 
 exports.list = async (req, res) => {
   try {
-    res.json(await Coupon.findById({}).sort({createdAt: -1}).exec())
+    res.json(await Coupon.find({}).sort({createdAt: -1}).exec())
   } catch (err) {
     console.log(err);
   }

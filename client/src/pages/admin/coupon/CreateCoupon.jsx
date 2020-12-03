@@ -13,7 +13,25 @@ const CreateCoupon = () => {
   const [expiry, setExpiry] = useState("")
   const [discount, setDiscount] = useState("")
   const [loading, setLoading] = useState(false)
+  const [coupons, setCoupons] = useState([])
   const {user} = useSelector((state) => ({...state}))
+
+  const loadAllCoupon = () => getCoupons().then((res) => setCoupons(res.data))
+
+  useEffect(() => {
+    loadAllCoupon()
+  },[])
+
+  const handleDelete = (couponId) => {
+    if (window.confirm('削除しますか？')) {
+      setLoading(true)
+      deleteCoupon(couponId, user.token).then((res) => {
+        loadAllCoupon()
+        setLoading(false)
+        toast.error(`${res.data.name}を削除しました。`)
+      }).catch((err) => console.log(err))
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -22,6 +40,7 @@ const CreateCoupon = () => {
     createCoupon({ name, expiry, discount }, user.token)
     .then((res) => {
       setLoading(false)
+      loadAllCoupon()
       setName('')
       setExpiry('')
       setDiscount('')
@@ -65,7 +84,7 @@ const CreateCoupon = () => {
                 <br/>
                 <DatePicker
                   className="form-control"
-                  selected={new Date()}
+                  selected={expiry}
                   value={expiry}
                   onChange={(date) => setExpiry(date)}
                   reqired
@@ -73,6 +92,32 @@ const CreateCoupon = () => {
               </div>
               <button className="btn btn-outline-primary">save</button>
             </form>
+            <h4>{ coupons.length}つのクーポンが作成されています。</h4>
+            <table className="table table-bordered">
+              <thead className="thead-light">
+                <tr>
+                  <th scope="col">クーポン名</th>
+                  <th scope="col">有効期限</th>
+                  <th scope="col">ディスカウント</th>
+                  <th className="text-center text-danger" scope="col">削除</th>
+                </tr>
+              </thead>
+              <tbody>
+                {coupons.map((c) => 
+                  <tr key={c._id}>
+                    <th>{c.name}</th>
+                    <th>{new Date(c.expiry).toLocaleDateString()}まで</th>
+                    <th>{c.discount}% off</th>
+                    <th
+                      className="text-center text-danger pointer"
+                      onClick={() => handleDelete(c._id)}
+                    >
+                      <DeleteOutlined />
+                    </th>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
