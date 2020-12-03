@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 import ReactQuill from 'react-quill'
 import "react-quill/dist/quill.snow.css"
 
-const Checkout = () => {
+const Checkout = ({history}) => {
 
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState(0)
@@ -38,16 +38,24 @@ const Checkout = () => {
   }
 
   const applyDiscountCoupon = () => {
-    console.log('send coupon backend', coupon);
+    //console.log('send coupon backend', coupon);
     applyCoupon(user.token, coupon)
       .then((res) => {
-        console.log('APPLY COUPON RES', res.data);
+        //console.log('APPLY COUPON RES', res.data);
         if (res.data) {
           setTotalAfterDiscount(res.data)
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: true
+          })
         }
         //error
         if (res.data.err) {
           setDiscountError(res.data.err)
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false
+          })
         }
       })
   }
@@ -141,7 +149,13 @@ const Checkout = () => {
         }
         <div className="row">
           <div className="col-md-6">
-            <button className="btn btn-primary btn-raised" disabled={!addressSaved || !products.length}>注文する</button>
+            <button
+              className="btn btn-primary btn-raised"
+              disabled={!addressSaved || !products.length}
+              onClick={() => history.push('/payment')}
+            >
+              注文する
+            </button>
           </div>
           <div className="col-md-6">
             <button
