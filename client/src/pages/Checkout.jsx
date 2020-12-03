@@ -1,23 +1,26 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {getUserCart,emptyUserCart, saveUserAddress} from '../functions/user'
+import {getUserCart,emptyUserCart, saveUserAddress, applyCoupon} from '../functions/user'
 import {toast} from 'react-toastify'
 import ReactQuill from 'react-quill'
 import "react-quill/dist/quill.snow.css"
 
-const Checkout = () => {
+const Checkout = ({history}) => {
 
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState(0)
   const [address, setAddress] = useState("")
   const [addressSaved, setAddressSaved] = useState(false)
+  const [coupon, setCoupon] = useState('')
+  const [totalAfterdiscount, setTotalAfterDiscount] = useState(0)
+  const [discountError, setDiscountError] = useState('')
   const dispatch = useDispatch()
   const {user} = useSelector((state) => ({...state}))
 
   useEffect(() => {
     getUserCart(user.token)
       .then((res) => {
-        console.log('user cart res', JSON.stringify(res.data,null,4));
+        //console.log('user cart res', JSON.stringify(res.data,null,4));
         setProducts(res.data.products)
         setTotal(res.data.cartTotal)
       })
@@ -34,6 +37,67 @@ const Checkout = () => {
     })
   }
 
+  const applyDiscountCoupon = () => {
+    //console.log('send coupon backend', coupon);
+    applyCoupon(user.token, coupon)
+      .then((res) => {
+        //console.log('APPLY COUPON RES', res.data);
+        if (res.data) {
+          setTotalAfterDiscount(res.data)
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: true
+          })
+        }
+        //error
+        if (res.data.err) {
+          setDiscountError(res.data.err)
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false
+          })
+        }
+      })
+  }
+
+  const showAddress = () => (
+    <>
+      <ReactQuill theme="snow" value={address} onChange={setAddress}/>
+        <button
+          className="btn btn-primary mt-2 text-center"
+          onClick={saveAddressToDb}
+        >
+          SAVE
+        </button>
+    </>
+  )
+
+  const showProductSummary = () => 
+    products.map((p, i) => (
+    <div key={i}>
+      <p>
+        {p.product.title} ({p.color}) x {p.count} = {(p.product.price * p.count).toLocaleString()}円
+      </p>
+    </div>
+  ))
+
+  const showApplyCoupon = () => (
+    <>
+      <input 
+        value={coupon}
+        className="form-control"
+        type="text"
+        placeholder="クーポン名を入力"
+        onChange={(e) => {
+          setCoupon(e.target.value)
+          setDiscountError('')
+          setTotalAfterDiscount(0)
+        }}
+      />
+      <button onClick={applyDiscountCoupon} className="btn btn-primary btn-raised mt-2">クーポンを適用</button>
+    </>
+  )
+
   const emptyCart = () => {
     // localStorage からcartを削除
     if (typeof window !== 'undefined') {
@@ -49,6 +113,8 @@ const Checkout = () => {
     .then((res) => {
       setProducts([])
       setTotal(0)
+      setTotalAfterDiscount(0)
+      setCoupon('')
       toast.success('カートの内容を削除しました')
     })
   }
@@ -59,34 +125,37 @@ const Checkout = () => {
         <h4>配送先住所</h4>
         <br />
         <br />
-        <ReactQuill theme="snow" value={address} onChange={setAddress}/>
-        <button
-          className="btn btn-primary mt-2"
-          onClick={saveAddressToDb}
-        >SAVE</button>
+        {showAddress()}
         <hr />
-        <h4>クーポンを使う</h4>
+        <h4>クーポンを使いますか？</h4>
         <br />
-        coupon input button
+        {discountError && <h5 className="text-danger text-center">クーポンが確認できません。</h5>}
+        <br/>
+        {showApplyCoupon()}
+        <br />
       </div>
       <div className="col-md-6">
         <h4>ご注文内容の確認</h4>
         <hr />
         <p>現在{ products.length}つの商品が入っています</p>
         <hr />
-        {products.map((p,i) => (
-          <div key={i}>
-            <p>
-              {p.product.title} ({p.color}) x {p.count} = {(p.product.price * p.count).toLocaleString()}円
-            </p>
-          </div>
-        ))}
+        {showProductSummary()}
         <hr />
         <p>カートの合計：{ total.toLocaleString()}円</p>
-
+        {totalAfterdiscount > 0 && 
+          <p className="text-success ">
+            クーポン適用後の合計：{(totalAfterdiscount * 1).toLocaleString()}円
+          </p>
+        }
         <div className="row">
           <div className="col-md-6">
-            <button className="btn btn-primary btn-raised" disabled={!addressSaved || !products.length}>注文する</button>
+            <button
+              className="btn btn-primary btn-raised"
+              disabled={!addressSaved || !products.length}
+              onClick={() => history.push('/payment')}
+            >
+              注文する
+            </button>
           </div>
           <div className="col-md-6">
             <button

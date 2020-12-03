@@ -5,7 +5,7 @@ import { History, Wishlist, Password } from './pages/user/index'
 import {UserRoute,AdminRoute} from './components/routes/index'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {Home,Product,Shop, Cart,Checkout} from './pages/index'
+import {Home,Product,Shop, Cart,Checkout, Payment} from './pages/index'
 import Header from './components/nav/Header'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
@@ -17,6 +17,7 @@ import { CreateProduct, AllProducts, UpdateProduct } from './pages/admin/product
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
 import SideDrawer from './components/drawer/SideDrawer'
+import CreateCoupon from './pages/admin/coupon/CreateCoupon'
 
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
         <UserRoute exact path="/checkout" component={Checkout} />
+        <UserRoute exact path="/payment" component={Payment} />
         {/* admin user route */}
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />
@@ -77,6 +79,7 @@ const App = () => {
         <AdminRoute exact path="/admin/product" component={CreateProduct} />
         <AdminRoute exact path="/admin/products" component={AllProducts} />
         <AdminRoute exact path="/admin/product/:slug" component={UpdateProduct} />
+        <AdminRoute exact path="/admin/coupon" component={CreateCoupon} />
       </Switch>
     </>
   )
