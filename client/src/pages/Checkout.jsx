@@ -42,13 +42,6 @@ const Checkout = ({history}) => {
     applyCoupon(user.token, coupon)
       .then((res) => {
         //console.log('APPLY COUPON RES', res.data);
-        if (res.data) {
-          setTotalAfterDiscount(res.data)
-          dispatch({
-            type: "COUPON_APPLIED",
-            payload: true
-          })
-        }
         //error
         if (res.data.err) {
           setDiscountError(res.data.err)
@@ -57,19 +50,30 @@ const Checkout = ({history}) => {
             payload: false
           })
         }
+
+        if (res.data) {
+          setTotalAfterDiscount(res.data)
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: true
+          })
+        }
+        
       })
   }
 
   const showAddress = () => (
-    <>
+    <div className="col text-center">
       <ReactQuill theme="snow" value={address} onChange={setAddress}/>
         <button
-          className="btn btn-primary mt-2 text-center"
-          onClick={saveAddressToDb}
+          className="btn btn-primary mt-2 text-center btn-raised"
+        onClick={saveAddressToDb}
+        disabled={!address}
+        
         >
-          SAVE
+          住所を登録
         </button>
-    </>
+    </div>
   )
 
   const showProductSummary = () => 
@@ -82,7 +86,7 @@ const Checkout = ({history}) => {
   ))
 
   const showApplyCoupon = () => (
-    <>
+    <div className="col text-center">
       <input 
         value={coupon}
         className="form-control"
@@ -94,8 +98,14 @@ const Checkout = ({history}) => {
           setTotalAfterDiscount(0)
         }}
       />
-      <button onClick={applyDiscountCoupon} className="btn btn-primary btn-raised mt-2">クーポンを適用</button>
-    </>
+      <button
+        onClick={applyDiscountCoupon}
+        className="btn btn-primary btn-raised mt-2"
+        disabled={!coupon}
+      >
+        クーポンを適用
+      </button>
+    </div>
   )
 
   const emptyCart = () => {
@@ -120,22 +130,23 @@ const Checkout = ({history}) => {
   }
 
   return (
-    <div className="row">
+    <div className="row pt-3">
       <div className="col-md-6">
-        <h4>配送先住所</h4>
+        <h4 className="text-center">配送先住所</h4>
         <br />
         <br />
         {showAddress()}
         <hr />
-        <h4>クーポンを使いますか？</h4>
+        <h4 className="text-center">クーポンを使用</h4>
         <br />
         {discountError && <h5 className="text-danger text-center">クーポンが確認できません。</h5>}
+        {totalAfterdiscount > 0 && <h5 className="text-success text-center">クーポンが適用されました。</h5>}
         <br/>
         {showApplyCoupon()}
         <br />
       </div>
-      <div className="col-md-6">
-        <h4>ご注文内容の確認</h4>
+      <div className="col-md-5">
+        <h4 className="text-danger text-center">ご注文内容の確認</h4>
         <hr />
         <p>現在{ products.length}つの商品が入っています</p>
         <hr />
