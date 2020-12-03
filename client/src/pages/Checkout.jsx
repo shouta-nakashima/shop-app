@@ -12,7 +12,7 @@ const Checkout = () => {
   const [address, setAddress] = useState("")
   const [addressSaved, setAddressSaved] = useState(false)
   const [coupon, setCoupon] = useState('')
-  const [totalAfterdiscount, setTotalAfterDiscount] = useState('')
+  const [totalAfterdiscount, setTotalAfterDiscount] = useState(0)
   const [discountError, setDiscountError] = useState('')
   const dispatch = useDispatch()
   const {user} = useSelector((state) => ({...state}))
@@ -79,9 +79,14 @@ const Checkout = () => {
         value={coupon}
         className="form-control"
         type="text"
-        onChange={(e) => setCoupon(e.target.value)}
+        placeholder="クーポン名を入力"
+        onChange={(e) => {
+          setCoupon(e.target.value)
+          setDiscountError('')
+          setTotalAfterDiscount(0)
+        }}
       />
-      <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">Apply</button>
+      <button onClick={applyDiscountCoupon} className="btn btn-primary btn-raised mt-2">クーポンを適用</button>
     </>
   )
 
@@ -100,6 +105,8 @@ const Checkout = () => {
     .then((res) => {
       setProducts([])
       setTotal(0)
+      setTotalAfterDiscount(0)
+      setCoupon('')
       toast.success('カートの内容を削除しました')
     })
   }
@@ -112,9 +119,12 @@ const Checkout = () => {
         <br />
         {showAddress()}
         <hr />
-        <h4>クーポンを使う</h4>
+        <h4>クーポンを使いますか？</h4>
         <br />
+        {discountError && <h5 className="text-danger text-center">クーポンが確認できません。</h5>}
+        <br/>
         {showApplyCoupon()}
+        <br />
       </div>
       <div className="col-md-6">
         <h4>ご注文内容の確認</h4>
@@ -124,7 +134,11 @@ const Checkout = () => {
         {showProductSummary()}
         <hr />
         <p>カートの合計：{ total.toLocaleString()}円</p>
-
+        {totalAfterdiscount > 0 && 
+          <p className="text-success ">
+            クーポン適用後の合計：{(totalAfterdiscount * 1).toLocaleString()}円
+          </p>
+        }
         <div className="row">
           <div className="col-md-6">
             <button className="btn btn-primary btn-raised" disabled={!addressSaved || !products.length}>注文する</button>

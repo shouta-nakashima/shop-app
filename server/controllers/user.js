@@ -97,7 +97,7 @@ exports.applyCouponToUserCart = async (req, res) => {
   console.log('cartTotal', cartTotal, 'discount', validCoupon.discount)
 
   //割引後の合計を計算する
-  let totalAfterDiscount = (cartTotal - (cartTotal * validCoupon.discount) / 100).toFixed(2)
+  let totalAfterDiscount = (cartTotal - (cartTotal * validCoupon.discount) / 100).toFixed(0)
   Cart.findOneAndUpdate({orderdBy: user._id}, {totalAfterDiscount}, {new: true})
 
   res.json(totalAfterDiscount)
