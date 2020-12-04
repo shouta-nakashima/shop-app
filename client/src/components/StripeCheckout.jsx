@@ -1,7 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { useDispatch, useSelector } from 'react-redux'
-import {createPaymentIntent} from '../functions/stripe'
+import { createPaymentIntent } from '../functions/stripe'
+import {Link} from 'react-router-dom'
 
 const StripeCheckout = ({ history }) => {
   const dispatch = useDispatch()
@@ -25,11 +26,31 @@ const StripeCheckout = ({ history }) => {
   }, [])
   
   const handleSubmit = async (e) => {
-    //
+    e.preventDefault()
+    setProcessing(true)
+
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: e.target.name.value
+        }
+      }
+    })
+    if (payload.error) {
+      setError(`支払いに失敗しました。${ payload.error.message }`)
+      setProcessing(false)
+    } else {
+      console.log(JSON.stringify(payload, null, 4));
+      setError(null)
+      setProcessing(false)
+      setSucceeded(true)
+    }
   }
 
   const handleChange = async (e) => {
-    //
+    setDisabled(e.empty)
+    setError(e.error ? e.error.message : "")
   }
 
   const cartStyle = {
@@ -52,6 +73,14 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <>
+      <p className=
+        {succeeded
+          ? "result-message"
+          : "result-message hidden"}
+      >
+        お支払いが完了しました。
+        <Link to="/user/history">購入履歴で確認してください。</Link>
+      </p>
       <form
         id="payment-form"
         className="stripe-form"
@@ -73,6 +102,8 @@ const StripeCheckout = ({ history }) => {
             }
           </span>
         </button>
+        <br />
+        {error && <div className="card-error" role="alert">{ error}</div>}
       </form>
     </>
   )
