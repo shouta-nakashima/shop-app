@@ -23,7 +23,9 @@ react-star-ratings@2.3.0
 lodash@4.17.20  
 react-modal-image@2.5.0  
 react-quill@1.3.5  
-react-datepicker@3.3.0
+react-datepicker@3.3.0  
+@stripe/react-stripe-js@1.1.2  
+@stripe/stripe-js@1.11.0
 
 ## [Backend CRUD API](https://github.com/shouta-nakashima/shop-app/tree/master/server)
 
