@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import { Card } from 'antd'
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons'
 import shoppingImage from '../image/card.jpg'
+import { createOrder, emptyUserCart } from '../functions/user'
+
 
 const StripeCheckout = ({ history }) => {
   const dispatch = useDispatch()
@@ -50,6 +52,25 @@ const StripeCheckout = ({ history }) => {
       setError(`支払いに失敗しました。${ payload.error.message }`)
       setProcessing(false)
     } else {
+      createOrder(payload, user.token)
+        .then((res) => {
+          if (res.data.ok) {
+            //local strageを空にする
+            if(typeof window !== 'undefined') localStorage.removeItem("cart")
+            //reduxを空にする
+            dispatch({
+              type: "ADD_TO_CART",
+              payload: []
+            })
+            //couponをreset
+            dispatch({
+              type: "COUPON_APPLIED",
+              payload: false
+            })
+            //DBを空にする
+            emptyUserCart(user.token)
+          }
+        })
       //console.log(JSON.stringify(payload, null, 4));
       setError(null)
       setProcessing(false)
