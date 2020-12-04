@@ -38,7 +38,7 @@ const Header = () => {
     history.push('/login')
   }
   return (
-    <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+    <Menu className="container-fluid" onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
       </Item>
