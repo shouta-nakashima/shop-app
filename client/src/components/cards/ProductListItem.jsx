@@ -34,7 +34,7 @@ const ProductListItem = ({ product }) => {
       <ListItem text={"Shipping"} products={shipping} />
       <ListItem text={"Color"} products={color} />
       <ListItem text={"Brand"} products={brand} />
-      <ListItem text={"Available"} products={quantity} />
+      <ListItem text={"Available"} products={quantity < 1 ? <p className="text-danger mr-0">SOLD OUT</p> : quantity} />
       <ListItem text={"Sold"} products={ sold}/>
     </ul>
   )
