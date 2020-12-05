@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Card, Tooltip} from 'antd'
-import { ReadOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import { ReadOutlined, ShoppingCartOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import noImages from '../../image/no_image.png'
 import { Link } from 'react-router-dom'
 import { showAverage } from '../../functions/rating'
@@ -67,8 +67,10 @@ const ProductCard = ({ product }) => {
             <ReadOutlined className="text-info" /> <br/> 詳細ページへ
           </Link>,
           <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart}>
-              <ShoppingCartOutlined className="text-danger" /> <br /> カートに追加
+            <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+              {product.quantity < 1 ? <CloseCircleOutlined className="text-danger"/> : <ShoppingCartOutlined className="text-success" />}
+              <br /> 
+              {product.quantity < 1 ? <p className="text-danger mb-0">SOLD OUT</p> : "カートに追加"}
             </a>
           </Tooltip>
         ]}

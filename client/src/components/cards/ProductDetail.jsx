@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Card, Tabs,Tooltip } from 'antd'
 import {Link} from 'react-router-dom'
-import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import { HeartOutlined, ShoppingCartOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import NoImage from '../../image/no_image.png'
@@ -79,8 +79,10 @@ const ProductDetail = ({ product, onStarClick, star }) => {
         <Card
           actions={[
             <Tooltip title={tooltip}>
-              <a onClick={handleAddToCart}>
-                <ShoppingCartOutlined className="text-danger" /> <br /> カートに追加
+              <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+                {product.quantity < 1 ? <CloseCircleOutlined className="text-danger"/> : <ShoppingCartOutlined className="text-success" />}
+                <br /> 
+                {product.quantity < 1 ? <p className="text-danger mb-0">SOLD OUT</p> : "カートに追加"}
               </a>
             </Tooltip>,
             <Link to="/">
