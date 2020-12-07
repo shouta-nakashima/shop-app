@@ -4,6 +4,7 @@ import { getUserOrders } from '../../functions/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import {toast} from 'react-toastify'
+import {ShowPaymentInfo} from '../../components/cards/index'
 
 const History = () => {
   const [orders, setOrders] = useState([])
@@ -12,7 +13,7 @@ const History = () => {
 
   const loadUserOrders = () => {
     getUserOrders(user.token).then((res) => {
-      console.log(JSON.stringify(res.data, null, 4))
+      //console.log(JSON.stringify(res.data, null, 4))
       setOrders(res.data)
     })
     
@@ -50,7 +51,7 @@ const History = () => {
 
   const showEachOrders = () => orders.map((order, i) => (
     <div key={i} className="m-5 p-3 card">
-      <p>お買い上げ情報を表示</p>
+      <ShowPaymentInfo order={ order}/>
       {showOrderInTable(order)}
       <div className="row">
         <div className="col">
