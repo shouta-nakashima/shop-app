@@ -25,7 +25,9 @@ react-modal-image@2.5.0
 react-quill@1.3.5  
 react-datepicker@3.3.0  
 @stripe/react-stripe-js@1.1.2  
-@stripe/stripe-js@1.11.0
+@stripe/stripe-js@1.11.0  
+@react-pdf/renderer@1.6.12  
+@david.kucsai/react-pdf-table@0.3.0
 
 ## [Backend CRUD API](https://github.com/shouta-nakashima/shop-app/tree/master/server)
 
