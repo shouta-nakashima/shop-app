@@ -4,7 +4,8 @@ import { getUserOrders } from '../../functions/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import {toast} from 'react-toastify'
-import {ShowPaymentInfo} from '../../components/cards/index'
+import { ShowPaymentInfo } from '../../components/cards/index'
+import { Document, Page, Text, View, StyleSheet ,PDFDownloadLink, PDFViewer} from '@react-pdf/renderer';
 
 const History = () => {
   const [orders, setOrders] = useState([])
@@ -55,11 +56,30 @@ const History = () => {
       {showOrderInTable(order)}
       <div className="row">
         <div className="col">
-          <p>PDF down load</p>
+          {showDouwloadLink(order)}
         </div>
       </div>
     </div>
   ))
+
+  const showDouwloadLink = (order) => (
+    <PDFDownloadLink
+      document={
+          <Document>
+            <Page size="A4">
+              <View>
+                <Text>Section #1</Text>
+                <Text>Section #2</Text>
+              </View>
+            </Page>
+          </Document>
+      }
+      fileName="shop-app-invoice.pdf"
+      className="btn btn-sm btn-outline-primary btn-block"
+    >
+      領収書をダウンロード
+    </PDFDownloadLink>
+  )
   
   return (
     <div className ="container-fluid">
