@@ -12,7 +12,7 @@ const Home = () => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
         <div className="jumbotron text-info h1 font-weight-bold text-center">
-          <Jumbotron text={ ['Welcome to SHOP APP','Thanks for coming!!','Have fun slowly']}/>
+          <Jumbotron text={ ['Thanks for coming!!',"Nakaji's SHOP APP",'This is a Demo site']}/>
         </div>
         <h4 className="text-center mt-5 mb-5 p-3 display-3 jumbotron">New Items</h4>
         <NewItems setLoading={setLoading} />
