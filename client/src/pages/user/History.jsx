@@ -82,7 +82,7 @@ const History = () => {
           <UserNav/>
         </div>
         <div className="col text-center">
-          <h4>{orders.length > 0 ? "購入履歴一覧" : "現在購入履歴はありません。"}</h4>
+          <h4 className="mt-3">{orders.length > 0 ? "購入履歴一覧" : "現在購入履歴はありません。"}</h4>
           {showEachOrders()}
         </div>
       </div>
