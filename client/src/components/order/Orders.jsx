@@ -34,7 +34,6 @@ const Orders = ({ orders, handleStatusChange }) => {
         <div key={order._id} className="row pb-5" >
           <div className="btn btn-block bg-light">
             <ShowPaymentInfo order={order} showStatus={ false}/>
-
             <div className="row">
               <div className="col-md-4">
               配送状況
