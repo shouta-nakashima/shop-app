@@ -182,7 +182,7 @@ exports.removeFromWishlist = async (req, res) => {
 }
 
 exports.createCashOrder = async (req, res) => {
-  const { COD } = req.body
+  const { COD, couponApplied } = req.body
 
   if(!COD) return res.status(400).send('この処理は実行されませんでした')
 
@@ -190,17 +190,25 @@ exports.createCashOrder = async (req, res) => {
 
   let userCart = await Cart.findOne({ orderdBy: user._id }).exec()
 
+  let finalAmount = 0
+
+  if (couponApplied && userCart.totalAfterDiscount) {
+    finalAmount = userCart.totalAfterDiscount
+  } else {
+    finalAmount = userCart.cartTotal
+  }
+
   let newOrder = new Order({
     products: userCart.products,
     paymentIntent: {
       id: uniqueid(),
-      amount: userCart.cartTotal,
+      amount: finalAmount,
       currency: "usd",
       status: "代金引換",
       created: Date.now(),
       payment_method_types: ['cash']
     },
-    orderdBy: user._id
+    orderdBy: user._id,
   }).save()
 
   // decrement quantity increment sold

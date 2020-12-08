@@ -15,7 +15,8 @@ const Checkout = ({history}) => {
   const [totalAfterdiscount, setTotalAfterDiscount] = useState(0)
   const [discountError, setDiscountError] = useState('')
   const dispatch = useDispatch()
-  const {user, COD} = useSelector((state) => ({...state}))
+  const { user, COD } = useSelector((state) => ({ ...state }))
+  const coupunTrueOrFalse = useSelector((state) => state.coupon)
 
   useEffect(() => {
     getUserCart(user.token)
@@ -130,8 +131,33 @@ const Checkout = ({history}) => {
   }
 
   const setCashOrder = () => {
-    createCashOrder(user.token, COD).then((res) => {
+    createCashOrder(user.token, COD, coupunTrueOrFalse).then((res) => {
       console.log('CASH DELIVERY RES', res);
+      if (res.data.ok) {
+        //local strageを空にする
+        if(typeof window !== 'undefined') localStorage.removeItem("cart")
+        //reduxを空にする
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: []
+        })
+        //couponをreset
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false
+        })
+        //CODをreset
+        dispatch({
+          type: "COD",
+          payload: false
+        })
+        //DBを空にする
+        emptyUserCart(user.token)
+        toast.success('購入が完了しました。')
+        setTimeout(() => {
+          history.push('/user/history')
+        }, 1000)
+      }
     })
   }
 
