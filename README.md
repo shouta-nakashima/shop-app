@@ -47,7 +47,8 @@ express-jwt@6.0.0
 firebase-admin@9.4.1  
 slugify@1.4.6  
 cloudinary@1.23.0  
-stripe@8.126.0
+stripe@8.126.0  
+uniqueid@1.0.0
 
 ## DB
 

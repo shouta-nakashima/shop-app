@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
+const uniqueid = require('uniqueid')
 
 exports.userCart = async (req, res) => {
   // console.log(req.body); // {cart: []}
@@ -176,6 +177,46 @@ exports.removeFromWishlist = async (req, res) => {
       $pull: { wishlist: productId },
     }
   ).exec()
+
+  res.json({ok: true})
+}
+
+exports.createCashOrder = async (req, res) => {
+  const { COD } = req.body
+
+  if(!COD) return res.status(400).send('この処理は実行されませんでした')
+
+  const user = await User.findOne({email: req.user.email}).exec()
+
+  let userCart = await Cart.findOne({ orderdBy: user._id }).exec()
+
+  let newOrder = new Order({
+    products: userCart.products,
+    paymentIntent: {
+      id: uniqueid(),
+      amount: userCart.cartTotal,
+      currency: "usd",
+      status: "代金引換",
+      created: Date.now(),
+      payment_method_types: ['cash']
+    },
+    orderdBy: user._id
+  }).save()
+
+  // decrement quantity increment sold
+  let bulkOption = userCart.products.map((item) => {
+    return {
+      updateOne: {
+        filter: { _id: item.product._id }, //important item.product
+        update: {$inc: {quantity: -item.count, sold: +item.count}}
+      }
+    }
+  })
+
+  let updated = await Product.bulkWrite(bulkOption, {})
+  console.log('UPDATE QUANTITY', updated);
+
+  console.log('NEW ORDER', newOrder);
 
   res.json({ok: true})
 }

@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { Card, Tabs,Tooltip } from 'antd'
-import {Link} from 'react-router-dom'
 import { HeartOutlined, ShoppingCartOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -61,7 +60,7 @@ const ProductDetail = ({ product, onStarClick, star }) => {
     e.preventDefault()
     addToWishlist(product._id, user.token)
       .then((res) => {
-        console.log('ADD WISHLIST', res.data);
+        //console.log('ADD WISHLIST', res.data);
         toast.success('Wishlistに追加しました')
         history.push('/user/wishlist')
       })
@@ -94,9 +93,15 @@ const ProductDetail = ({ product, onStarClick, star }) => {
           actions={[
             <Tooltip title={tooltip}>
               <a onClick={handleAddToCart} disabled={product.quantity < 1}>
-                {product.quantity < 1 ? <CloseCircleOutlined className="text-danger"/> : <ShoppingCartOutlined className="text-success" />}
+                {product.quantity < 1
+                  ? <CloseCircleOutlined className="text-danger" />
+                  : <ShoppingCartOutlined className="text-success" />
+                }
                 <br /> 
-                {product.quantity < 1 ? <p className="text-danger mb-0">SOLD OUT</p> : "カートに追加"}
+                {product.quantity < 1
+                  ? <p className="text-danger mb-0">SOLD OUT</p>
+                  : "カートに追加"
+                }
               </a>
             </Tooltip>,
             <a onClick={handleAddToWishkist}>

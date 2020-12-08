@@ -19,6 +19,7 @@ const orderSchema = new mongoose.Schema({
     default: '手続き内容の確認中',
     enum: [
       "手続き内容の確認中",
+      "代金引換",
       "配送準備中",
       "配送中",
       "キャンセルされました",

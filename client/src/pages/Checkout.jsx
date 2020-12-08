@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {getUserCart,emptyUserCart, saveUserAddress, applyCoupon} from '../functions/user'
+import {getUserCart,emptyUserCart, saveUserAddress, applyCoupon,createCashOrder} from '../functions/user'
 import {toast} from 'react-toastify'
 import ReactQuill from 'react-quill'
 import "react-quill/dist/quill.snow.css"
@@ -15,7 +15,7 @@ const Checkout = ({history}) => {
   const [totalAfterdiscount, setTotalAfterDiscount] = useState(0)
   const [discountError, setDiscountError] = useState('')
   const dispatch = useDispatch()
-  const {user} = useSelector((state) => ({...state}))
+  const {user, COD} = useSelector((state) => ({...state}))
 
   useEffect(() => {
     getUserCart(user.token)
@@ -129,6 +129,12 @@ const Checkout = ({history}) => {
     })
   }
 
+  const setCashOrder = () => {
+    createCashOrder(user.token, COD).then((res) => {
+      console.log('CASH DELIVERY RES', res);
+    })
+  }
+
   return (
     <div className="container-fluid">
       <div className="row pt-3">
@@ -161,13 +167,20 @@ const Checkout = ({history}) => {
           }
           <div className="row">
             <div className="col-md-6">
-              <button
+              {COD ? (<button
+                className="btn btn-primary btn-raised"
+                disabled={!addressSaved || !products.length}
+                onClick={setCashOrder}
+              >
+                代金引換で購入する
+              </button>)
+                : (<button
                 className="btn btn-primary btn-raised"
                 disabled={!addressSaved || !products.length}
                 onClick={() => history.push('/payment')}
               >
-                注文する
-              </button>
+                オンライン決済で購入する
+              </button>)}
             </div>
             <div className="col-md-6">
               <button
