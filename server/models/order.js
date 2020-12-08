@@ -16,13 +16,13 @@ const orderSchema = new mongoose.Schema({
   paymentIntent: {},
   orderStatus: {
     type: String,
-    default: 'Not Processed',
+    default: '手続き内容の確認中',
     enum: [
-      "Not Processed",
-      "Processing",
-      "Dispatched",
-      "Cancelled",
-      "Complated"
+      "手続き内容の確認中",
+      "配送準備中",
+      "配送中",
+      "キャンセルされました",
+      "お取引完了"
     ]
   },
   orderdBy: {type: ObjectId, ref: "User"}
