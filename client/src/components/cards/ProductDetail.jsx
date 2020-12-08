@@ -8,9 +8,12 @@ import NoImage from '../../image/no_image.png'
 import { ProductListItem } from './index'
 import StarRating from 'react-star-ratings'
 import RatingModal from '../modal/RatingModal'
-import {showAverage} from '../../functions/rating'
+import { showAverage } from '../../functions/rating'
+import {addToWishlist} from '../../functions/user'
 import _ from 'lodash'
 import {useSelector, useDispatch} from 'react-redux'
+import { toast } from 'react-toastify';
+import {useHistory} from 'react-router-dom'
 
 const {TabPane} = Tabs
 
@@ -18,7 +21,8 @@ const ProductDetail = ({ product, onStarClick, star }) => {
   const { title, images, description, _id } = product
   const [tooltip, setTooltip] = useState('click to add')
   const dispatch = useDispatch()
-  const {user, cart} = useSelector((state) => ({...state}))
+  const { user, cart } = useSelector((state) => ({ ...state }))
+  let history = useHistory()
 
   const handleAddToCart = () => {
     
@@ -53,6 +57,16 @@ const ProductDetail = ({ product, onStarClick, star }) => {
     }
   }
 
+  const handleAddToWishkist = (e) => {
+    e.preventDefault()
+    addToWishlist(product._id, user.token)
+      .then((res) => {
+        console.log('ADD WISHLIST', res.data);
+        toast.success('Wishlistに追加しました')
+        history.push('/user/wishlist')
+      })
+  }
+
   return (
     <>
       <div className="col-md-7">
@@ -85,9 +99,9 @@ const ProductDetail = ({ product, onStarClick, star }) => {
                 {product.quantity < 1 ? <p className="text-danger mb-0">SOLD OUT</p> : "カートに追加"}
               </a>
             </Tooltip>,
-            <Link to="/">
+            <a onClick={handleAddToWishkist}>
               <HeartOutlined className="text-info" /> <br/> お気に入りに追加
-            </Link>,
+            </a>,
             <RatingModal>
               <StarRating
                 starHoverColor="skyBlue"
