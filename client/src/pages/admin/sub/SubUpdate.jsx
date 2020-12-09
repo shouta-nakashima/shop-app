@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import {updateSub, getSub } from '../../../functions/sub'
@@ -51,10 +50,7 @@ const SubUpdate = ({history,match}) => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className ="container-fluid">
         <div className="row">
-          <div className="col-md-2">
-            <AdminNav/>
-          </div>
-          <div className="col">
+          <div className="col-md-8 offset-md-2">
             <h4 className="text-center pt-3 pb-3">Update sub category</h4>
 
             <div className="form-group">

@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from 'react'
-import UserNav from '../../components/nav/UserNav'
 import { getWishlist, removeWishlist } from '../../functions/user'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {DeleteOutlined} from '@ant-design/icons'
 
@@ -30,10 +29,7 @@ const Wishlist = () => {
   return (
     <div className ="container-fluid">
       <div className="row">
-        <div className="col-md-2">
-          <UserNav/>
-        </div>
-        <div className="col">
+        <div className="col-md-8 offset-md-2">
           <h3 className="text-center mt-3 " >Wishlist</h3>
           {wishlist.length > 0 ? wishlist.map((p) => (
             <div key={p._id} className="col-md-8 alert alert-secondary mb-3" style={{margin: "auto"}}>

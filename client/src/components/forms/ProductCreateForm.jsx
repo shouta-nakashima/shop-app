@@ -47,8 +47,8 @@ const ProductCreateForm = ({
         <label>Shipping</label>
         <select name="shipping" className="form-control" onChange={handleChange}>
           <option>選択してください</option>
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
+          <option value="店舗受取のみ">店舗受取のみ</option>
+          <option value="配送可能">配送可能</option>
         </select>
       </div>
       <div className="form-group">

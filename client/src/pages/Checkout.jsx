@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {getUserCart,emptyUserCart, saveUserAddress, applyCoupon,createCashOrder} from '../functions/user'
+import {
+  getUserCart,
+  emptyUserCart,
+  saveUserAddress,
+  applyCoupon,
+  createCashOrder
+} from '../functions/user'
 import {toast} from 'react-toastify'
 import ReactQuill from 'react-quill'
 import "react-quill/dist/quill.snow.css"
@@ -132,7 +138,7 @@ const Checkout = ({history}) => {
 
   const setCashOrder = () => {
     createCashOrder(user.token, COD, coupunTrueOrFalse).then((res) => {
-      console.log('CASH DELIVERY RES', res);
+      //console.log('CASH DELIVERY RES', res);
       if (res.data.ok) {
         //local strageを空にする
         if(typeof window !== 'undefined') localStorage.removeItem("cart")

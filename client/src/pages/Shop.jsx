@@ -4,12 +4,12 @@ import { getCategories } from '../functions/category'
 import {getSubs} from '../functions/sub'
 import {useSelector, useDispatch} from 'react-redux'
 import {ProductCard} from '../components/cards/index'
-import { Spin, Menu, Slider, Checkbox, Radio } from 'antd';
-import { DollarCircleOutlined, DownSquareOutlined,StarOutlined } from '@ant-design/icons'
+import { Spin, Menu, Slider, Checkbox, Radio, Button, Drawer } from 'antd';
+import { DollarCircleOutlined, DownSquareOutlined,StarOutlined, SearchOutlined } from '@ant-design/icons'
 import {Star} from '../components/forms/index'
 
 
-const {SubMenu,ItemGroup} = Menu
+const { SubMenu } = Menu
 
 const Shop = () => {
   const [products, setProducts] = useState([])
@@ -26,6 +26,14 @@ const Shop = () => {
   const [colors, setColors] = useState(["Black","Brown","White","Silver","Blue"])
   const [color, setColor] = useState('')
   const [shipping, setShipping] = useState('')
+  const [visible, setVisible] = useState(false);
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  }
 
   let dispatch = useDispatch()
   let {search} = useSelector((state) => ({...state}))
@@ -252,19 +260,19 @@ const Shop = () => {
       <Checkbox
         className="pb-2 pl-4 pr-4"
         onChange={handleShippingChange}
-        value="Yes"
-        checked={shipping === "Yes"}
+        value="配送可能"
+        checked={shipping === "配送可能"}
       >
-        Yes
+        配送可能
       </Checkbox>
       <br/>
       <Checkbox
         className="pb-2 pl-4 pr-4"
         onChange={handleShippingChange}
-        value="No"
-        checked={shipping === "No"}
+        value="店舗受取のみ"
+        checked={shipping === "店舗受取のみ"}
       >
-        No
+        店舗受取
       </Checkbox>
     </>
   )
@@ -289,118 +297,126 @@ const Shop = () => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-3 pt-2 text-center">
-            <h4>Search&Filter</h4>
-            <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5", "6", "7"]}>
-              {/* price */}
-              <SubMenu
-                key="1"
-                title={
-                  <span className="h6">
-                    <DollarCircleOutlined /> Price
-                  </span>
-                }
+          <div className="col-md-10 offset-md-1 pt-2 ">
+            <div className="text-center">
+              <h4 className="text-center">検索商品の一覧 </h4>
+              <Button onClick={showDrawer} className="text-center">商品検索<SearchOutlined /></Button>
+              <div className="col-md-3 pt-2 text-center">
+            </div>
+              <Drawer
+                placement="left"
+                closable={false}
+                onClose={onClose}
+                visible={visible}
               >
-                <div>
-                  <Slider
-                    className="ml-4 mr-4"
-                    tipFormatter={(v) => `${v.toLocaleString()}円`}
-                    range
-                    value={price}
-                    onChange={handleSlider}
-                    max="300000"
-                  />
-                </div>
-              </SubMenu>
-              {/* categories */}
-              <SubMenu
-                key="2"
-                title={
-                  <span className="h6">
-                    <DownSquareOutlined /> Category
-                  </span>
-                }
-              >
-                <div>
-                  {showCategories()}
-                </div>
-              </SubMenu>
+                <Menu mode="inline" >
+                  {/* price */}
+                  <SubMenu
+                    key="1"
+                    title={
+                      <span className="h6">
+                        <DollarCircleOutlined /> 金額で探す
+                      </span>
+                    }
+                  >
+                    <div>
+                      <Slider
+                        className="ml-4 mr-4"
+                        tipFormatter={(v) => `${v.toLocaleString()}円`}
+                        range
+                        value={price}
+                        onChange={handleSlider}
+                        max="300000"
+                      />
+                    </div>
+                  </SubMenu>
+                  {/* categories */}
+                  <SubMenu
+                    key="2"
+                    title={
+                      <span className="h6">
+                        <DownSquareOutlined /> カテゴリー
+                      </span>
+                    }
+                  >
+                    <div>
+                      {showCategories()}
+                    </div>
+                  </SubMenu>
 
-              {/* stars */}
-              <SubMenu
-                key="3"
-                title={
-                  <span className="h6">
-                    <StarOutlined /> Rating
-                  </span>
-                }
-              >
-                <div>
-                  {showStars()}
-                </div>
-              </SubMenu>
+                  {/* stars */}
+                  <SubMenu
+                    key="3"
+                    title={
+                      <span className="h6">
+                        <StarOutlined /> 評価
+                      </span>
+                    }
+                  >
+                    <div>
+                      {showStars()}
+                    </div>
+                  </SubMenu>
 
-              {/* sub category */}
-              <SubMenu
-                key="4"
-                title={
-                  <span className="h6">
-                    <DownSquareOutlined /> Sub category
-                  </span>
-                }
-              >
-                <div className="pl-4 pr-4">
-                  {showSubs()}
-                </div>
-              </SubMenu>
+                  {/* sub category */}
+                  <SubMenu
+                    key="4"
+                    title={
+                      <span className="h6">
+                        <DownSquareOutlined /> 詳細カテゴリー
+                      </span>
+                    }
+                  >
+                    <div className="pl-4 pr-4">
+                      {showSubs()}
+                    </div>
+                  </SubMenu>
 
-              {/* brands */}
-              <SubMenu
-                key="5"
-                title={
-                  <span className="h6">
-                    <DownSquareOutlined /> Brands
-                  </span>
-                }
-              >
-                <div className="pl-4 pr-4">
-                  {showBrands()}
-                </div>
-              </SubMenu>
+                  {/* brands */}
+                  <SubMenu
+                    key="5"
+                    title={
+                      <span className="h6">
+                        <DownSquareOutlined /> ブランドから選ぶ
+                      </span>
+                    }
+                  >
+                    <div className="pl-4 pr-4">
+                      {showBrands()}
+                    </div>
+                  </SubMenu>
 
-              {/* color */}
-              <SubMenu
-                key="6"
-                title={
-                  <span className="h6">
-                    <DownSquareOutlined /> Color
-                  </span>
-                }
-              >
-                <div className="pl-4 pr-4">
-                  {showColors()}
-                </div>
-              </SubMenu>
+                  {/* color */}
+                  <SubMenu
+                    key="6"
+                    title={
+                      <span className="h6">
+                        <DownSquareOutlined /> 色から選ぶ
+                      </span>
+                    }
+                  >
+                    <div className="pl-4 pr-4">
+                      {showColors()}
+                    </div>
+                  </SubMenu>
 
-              {/* shipping */}
-              <SubMenu
-                key="7"
-                title={
-                  <span className="h6">
-                    <DownSquareOutlined /> Shipping
-                  </span>
-                }
-              >
-                <div className="pl-4 pr-4">
-                  {showShipping()}
-                </div>
-              </SubMenu>
-            </Menu>
-          </div>
-          <div className="col-md-9 pt-2">
-            <h4>Products</h4>
-            {products.length < 1 && <p>No Products</p>}
+                  {/* shipping */}
+                  <SubMenu
+                    key="7"
+                    title={
+                      <span className="h6">
+                        <DownSquareOutlined /> 配送可能/店舗受取
+                      </span>
+                    }
+                  >
+                    <div className="pl-4 pr-4">
+                      {showShipping()}
+                    </div>
+                  </SubMenu>
+                </Menu>
+              </Drawer>
+            </div>
+            {products.length < 1 && <p className="text-center mt-5">該当の商品は見つかりません。</p>}
             <div className="row pb-5">
               {products.map((p) => (
                 <div key={p._id} className="col-md-4 mt-3">

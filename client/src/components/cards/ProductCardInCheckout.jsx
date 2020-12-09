@@ -10,7 +10,7 @@ const ProductCardInCheckout = ({ p }) => {
   const dispatch = useDispatch()
 
   const handleColorChange = (e) => {
-    console.log('color changed', e.target.value);
+    //console.log('color changed', e.target.value);
 
     let cart = []
     if (typeof window !== 'undefined') {

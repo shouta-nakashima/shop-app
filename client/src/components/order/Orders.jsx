@@ -23,7 +23,7 @@ const Orders = ({ orders, handleStatusChange }) => {
             <td>{p.product.brand}</td>
             <td>{p.color}</td>
             <td>{p.count}</td>
-            <td>{p.product.shipping === "Yes" ? <CheckCircleOutlined style={{color: "green"}}/> : <CloseCircleOutlined style={{color: "red"}}/>}</td>
+            <td>{p.product.shipping === "配送可能" ? <CheckCircleOutlined style={{color: "green"}}/> : <CloseCircleOutlined style={{color: "red"}}/>}</td>
         </tr>
         ))}
       </tbody>

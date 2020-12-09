@@ -1,21 +1,31 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { Menu } from 'antd';
+import {LogoutOutlined, EditOutlined, HeartOutlined, HistoryOutlined } from '@ant-design/icons'
 
-const UserNav = () => {
+const { Item } = Menu;
+
+const UserNav = ({ onClose, logout }) => {
+  const handleLogoutClose = () => {
+    onClose()
+    logout()
+  }
   return (
-    <nav>
-      <ul className="nav flex-column">
-        <li className="nav-item">
-          <Link to="/user/history" className="nav-link">History</Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/user/password" className="nav-link">Password</Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/user/Wishlist" className="nav-link">WishList</Link>
-        </li>
-      </ul>
-    </nav>
+    <Menu>
+        <Item icon={<HistoryOutlined />} className="nav-item" onClick={onClose}>
+          History
+          <Link to="/user/history" className="nav-link"/>
+        </Item>
+        <Item icon={<EditOutlined />} className="nav-item" onClick={onClose}>
+          Password
+          <Link to="/user/password" className="nav-link"/>
+        </Item>
+        <Item icon={<HeartOutlined />} className="nav-item" onClick={onClose}>
+          WishList
+          <Link to="/user/Wishlist"/>
+        </Item>
+        <Item icon={<LogoutOutlined />} onClick={handleLogoutClose}>Logout</Item>
+    </Menu>
   )
 }
 

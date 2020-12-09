@@ -1,11 +1,10 @@
 import React,{useState, useEffect} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import {useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import DatePicker from 'react-datepicker'
 import { getCoupons, deleteCoupon, createCoupon } from '../../../functions/coupon'
 import { DeleteOutlined } from '@ant-design/icons'
 import { Spin} from 'antd';
-import AdminNav from '../../../components/nav/AdminNav'
 import "react-datepicker/dist/react-datepicker.css";
 
 const CreateCoupon = () => {
@@ -52,10 +51,7 @@ const CreateCoupon = () => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-2">
-            <AdminNav/>
-          </div>
-          <div className="col">
+          <div className="col-md-8 offset-md-2">
             <h4 className="text-center pt-3 pb-3">Create Coupon</h4>
             <form onSubmit={handleSubmit}>
               <div className="form-group">

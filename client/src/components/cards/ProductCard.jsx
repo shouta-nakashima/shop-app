@@ -5,14 +5,13 @@ import noImages from '../../image/no_image.png'
 import { Link } from 'react-router-dom'
 import { showAverage } from '../../functions/rating'
 import _ from 'lodash'
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
   const [tooltip, setTooltip] = useState('click to add')
   const dispatch = useDispatch()
-  const {user, cart} = useSelector((state) => ({...state}))
   const {title, description, images, slug} = product
 
   const handleAddToCart = () => {

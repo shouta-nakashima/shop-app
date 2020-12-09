@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema(
     },
     shipping: {
       type: String,
-      enum: ["Yes", "No"]
+      enum: ["配送可能", "店舗受取のみ"]
     },
     color: {
       type: String,

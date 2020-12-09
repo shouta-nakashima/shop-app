@@ -53,8 +53,8 @@ const ProductUpdateForm = ({
           onChange={handleChange}
           value={shipping === "Yes" ? "Yes" : "No"}
         >
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
+          <option value="店舗受取のみ">店舗受取のみ</option>
+          <option value="配送可能">配送可能</option>
         </select>
       </div>
       <div className="form-group">

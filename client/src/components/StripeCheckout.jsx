@@ -28,7 +28,7 @@ const StripeCheckout = ({ history }) => {
   useEffect(() => {
     createPaymentIntent(user.token, coupon)
       .then((res) => {
-        console.log('create payment intent', res.data);
+        //console.log('create payment intent', res.data);
         setClientSecret(res.data.clientSecret)
         setCartTotal(res.data.cartTotal)
         setTotalAfterDiscount(res.data.totalAfterDiscount)
