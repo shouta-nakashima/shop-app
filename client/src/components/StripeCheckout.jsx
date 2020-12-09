@@ -103,8 +103,7 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <>
-      {
-        !succeeded && <div>
+      {!succeeded && <div >
           {coupon && totalAfterDiscount !== undefined
             ? (
               <p className="alert alert-success">{`クーポンが適用されています。お支払い金額が${totalAfterDiscount.toLocaleString()}円に変更されました。`}</p>

@@ -18,6 +18,8 @@ import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
 import SideDrawer from './components/drawer/SideDrawer'
 import CreateCoupon from './pages/admin/coupon/CreateCoupon'
+import {Layout} from 'antd'
+
 
 
 const App = () => {

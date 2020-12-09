@@ -41,7 +41,7 @@ const ForgotPassword = ({history}) => {
   }
 
   const resetPasswordForm = () => <form onSubmit={handleSubmit}>
-    <div className="form-group">
+    <div className="form-group" style={{paddingTop: "70px"}}>
       <input
         type="email"
         className="form-control"

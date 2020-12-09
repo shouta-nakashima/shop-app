@@ -1,11 +1,9 @@
 import React, {useState} from 'react'
-import { Menu, Badge, Drawer } from 'antd';
+import { Menu, Badge, Drawer, Layout } from 'antd';
 import {
   AppstoreOutlined,
-  SettingOutlined,
   UserOutlined,
   UserAddOutlined,
-  LogoutOutlined,
   ShoppingOutlined,
   ShoppingCartOutlined,
   MenuOutlined
@@ -20,7 +18,9 @@ import {AdminNav, UserNav} from './index'
 
 const { SubMenu, Item } = Menu;//Menu.SubMenu
 
-const Header = () => {
+const {Header} = Layout
+
+const NavHeader = () => {
   let dispatch = useDispatch()
   let {user, cart} = useSelector((state) => ({...state}))
   let history = useHistory()
@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <Header style={{ position: 'fixed', zIndex: 1, width: '100%', paddingRight: 0, paddingLeft: 0 }}>
       <Menu className="container-fluid" onClick={handleClick} selectedKeys={[current]} mode="horizontal">
         {user && (
             <Item onClick={showDrawer} key="menu" icon={<MenuOutlined />} >
@@ -88,12 +88,11 @@ const Header = () => {
         {user && (
           <SubMenu key="SubMenu" icon={<UserOutlined />} title={user.email && user.email.split('@')[0]} className="float-right"/>
         )}
-        <span className="float-right p-1">
+        <span className="float-right pt-3" >
           <Search/>
         </span>
       </Menu>
       <Drawer
-        title={user && user.role === "admin" ? "ADMIN MENU" : "User Menu"}
         placement="left"
         closable={false}
         onClose={onClose}
@@ -101,8 +100,8 @@ const Header = () => {
       >
         {user && user.role === "admin" ? <AdminNav onClose={onClose} logout={ logout}/> : <UserNav onClose={onClose} logout={ logout} />}
       </Drawer>
-    </>
+    </Header>
   )
 }
 
-export default Header
+export default NavHeader

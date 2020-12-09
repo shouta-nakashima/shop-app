@@ -111,7 +111,7 @@ const ProductCardInCheckout = ({ p }) => {
           />
         </td>
         <td className=" text-center">
-          {p.shipping === "Yes"
+          {p.shipping === "配送可能"
             ? <CheckCircleOutlined className="text-success text-center" />
             : <CloseCircleOutlined className="text-danger"/>
           }

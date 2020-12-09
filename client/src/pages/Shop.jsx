@@ -295,7 +295,7 @@ const Shop = () => {
 
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="container-fluid">
+      <div className="container-fluid" style={{paddingTop: "70px"}}>
         <div className="row">
           <div className="col-md-10 offset-md-1 pt-2 ">
             <div className="text-center">

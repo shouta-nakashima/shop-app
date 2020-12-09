@@ -98,8 +98,9 @@ const RegisterComplate = ({history}) => {
       新規登録する
     </Button>
   </form>
+  
   return (
-    <div className="container p-5">
+    <div className="container p-5" style={{paddingTop: "70px"}}>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h3>Sign Up Complate</h3>

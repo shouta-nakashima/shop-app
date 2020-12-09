@@ -8,13 +8,16 @@ const LocalSearch = ({ keyword, setKeyword }) => {
   }
   return (
     // search step2
+    <div>
       <input
         type="search"
-        placeholder="Search" 
+        placeholder="Search"
         value={keyword}
         onChange={handleSearchChange}
-        className="form-control mb-4"
+        className="form-control p-1 "
+        
       />
+    </div>
   )
 }
 

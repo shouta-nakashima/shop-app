@@ -57,7 +57,7 @@ const Cart = ({history}) => {
   )
 
   return (
-    <div className="container-fluid pt-2 ">
+    <div className="container-fluid " style={{paddingTop: "100px"}}>
       <div className="row">
         <div className="col-md-8">
           <h4>Cart</h4>
