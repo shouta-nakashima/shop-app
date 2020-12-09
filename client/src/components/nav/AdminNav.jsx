@@ -9,7 +9,8 @@ import {
   UploadOutlined,
   FilePptOutlined,
   OrderedListOutlined,
-  AccountBookOutlined
+  AccountBookOutlined,
+  UserAddOutlined
 } from '@ant-design/icons'
 
 const { Item } = Menu;
@@ -49,6 +50,10 @@ const AdminNav = ({ onClose, logout }) => {
         <Item icon={<EditOutlined />} className="nav-item" onClick={onClose}>
           Password
           <Link to="/user/password" className="nav-link"/>
+      </Item>
+      <Item icon={<UserAddOutlined />} className="nav-item" onClick={onClose}>
+          UserHistory
+          <Link to="/user/history" className="nav-link"/>
         </Item>
         <Item icon={<LogoutOutlined />} onClick={handleLogoutClose}>Logout</Item>
     </Menu>
