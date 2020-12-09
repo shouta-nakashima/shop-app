@@ -36,7 +36,7 @@ const ForgotPassword = ({history}) => {
       .catch((error) => {
         setLoading(false)
         toast.error('🙅‍♂️送信に失敗しました。再度アドレスをお確かめ下さい。')
-        console.log(error);
+        //console.log(error);
       })
   }
 

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { getProduct, updateProduct } from '../../../functions/product'
@@ -78,7 +77,7 @@ const UpdateProduct = ({ match, history}) => {
         history.push('/admin/products')
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         toast.error(err.response.data.err)
       })
   }
@@ -110,10 +109,7 @@ const UpdateProduct = ({ match, history}) => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-2">
-            <AdminNav/>
-          </div>
-          <div className="col-md-10">
+          <div className="col-md-8 offset-md-2">
             <h4 className="text-center pt-3 pb-3">Product Update</h4>
             <hr />
             <div className="p-3">

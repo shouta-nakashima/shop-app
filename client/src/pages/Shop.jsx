@@ -9,7 +9,7 @@ import { DollarCircleOutlined, DownSquareOutlined,StarOutlined } from '@ant-desi
 import {Star} from '../components/forms/index'
 
 
-const {SubMenu,ItemGroup} = Menu
+const { SubMenu } = Menu
 
 const Shop = () => {
   const [products, setProducts] = useState([])
@@ -290,15 +290,15 @@ const Shop = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-3 pt-2 text-center">
-            <h4>Search&Filter</h4>
+            <h4>商品の検索</h4>
             <hr/>
-            <Menu mode="inline" defaultOpenKeys={["1", "2","3", "4","5", "6", "7"]}>
+            <Menu mode="inline" >
               {/* price */}
               <SubMenu
                 key="1"
                 title={
                   <span className="h6">
-                    <DollarCircleOutlined /> Price
+                    <DollarCircleOutlined /> 金額で探す
                   </span>
                 }
               >
@@ -318,7 +318,7 @@ const Shop = () => {
                 key="2"
                 title={
                   <span className="h6">
-                    <DownSquareOutlined /> Category
+                    <DownSquareOutlined /> カテゴリー
                   </span>
                 }
               >
@@ -332,7 +332,7 @@ const Shop = () => {
                 key="3"
                 title={
                   <span className="h6">
-                    <StarOutlined /> Rating
+                    <StarOutlined /> 評価
                   </span>
                 }
               >
@@ -346,7 +346,7 @@ const Shop = () => {
                 key="4"
                 title={
                   <span className="h6">
-                    <DownSquareOutlined /> Sub category
+                    <DownSquareOutlined /> 詳細カテゴリー
                   </span>
                 }
               >
@@ -360,7 +360,7 @@ const Shop = () => {
                 key="5"
                 title={
                   <span className="h6">
-                    <DownSquareOutlined /> Brands
+                    <DownSquareOutlined /> ブランドから選ぶ
                   </span>
                 }
               >
@@ -374,7 +374,7 @@ const Shop = () => {
                 key="6"
                 title={
                   <span className="h6">
-                    <DownSquareOutlined /> Color
+                    <DownSquareOutlined /> 色から選ぶ
                   </span>
                 }
               >
@@ -388,7 +388,7 @@ const Shop = () => {
                 key="7"
                 title={
                   <span className="h6">
-                    <DownSquareOutlined /> Shipping
+                    <DownSquareOutlined /> 配送 可/不可
                   </span>
                 }
               >
@@ -399,8 +399,8 @@ const Shop = () => {
             </Menu>
           </div>
           <div className="col-md-9 pt-2">
-            <h4>Products</h4>
-            {products.length < 1 && <p>No Products</p>}
+            <h4 className="text-center">検索商品の一覧</h4>
+            {products.length < 1 && <p className="text-center mt-5">該当の商品は見つかりません。</p>}
             <div className="row pb-5">
               {products.map((p) => (
                 <div key={p._id} className="col-md-4 mt-3">

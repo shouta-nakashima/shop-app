@@ -1,14 +1,12 @@
 import React, {useState} from 'react'
-import {UserNav,AdminNav} from '../../components/nav/index'
 import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
-import { useSelector } from 'react-redux'
 import { Spin } from 'antd';
 
 const Password = () => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user } = useSelector((state) => ({ ...state }))
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -44,16 +42,9 @@ const Password = () => {
     </form>
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className ="container-fluid">
-        <div className="row">
-          <div className="col-md-2">
-            {user.role === 'admin' ? <AdminNav/> : <UserNav/>}
-          </div>
-          <div className="col">
-            <h4 className="text-center pt-3 pb-3">Password Update</h4>
-            {passwordupdateForm()}
-          </div>
-        </div>
+      <div className="col-md-8 offset-md-2 ">
+        <h4 className="text-center pt-3 pb-3">Password Update</h4>
+        {passwordupdateForm()}
       </div>
     </Spin>
   )

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { createProduct } from '../../../functions/product'
@@ -43,12 +42,12 @@ const CreateProduct = () => {
     e.preventDefault()
     createProduct(values, user.token)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         window.alert(`${ res.data.title }を作成しました。`)
         window.location.reload()
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         //if (err.response.status === 400) toast.error(err.response.data);
         toast.error(err.response.data.err)
       })
@@ -61,11 +60,11 @@ const CreateProduct = () => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault()
-    console.log('CLICK CATEGORY', e.target.value);
+    //console.log('CLICK CATEGORY', e.target.value);
     setValues({ ...values, subs: [], category: e.target.value })
     getCategorySubs(e.target.value)
       .then((res) => {
-        console.log('SUBs',res);
+        //console.log('SUBs',res);
         setSubOptions(res.data)
       })
     setShowSubs(true)
@@ -74,10 +73,7 @@ const CreateProduct = () => {
     <Spin spinning={loading} tip="Loading..." size="large">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-2">
-            <AdminNav/>
-          </div>
-          <div className="col-md-10">
+          <div className="col-md-8 offset-md-2">
             <h4 className="text-center pt-3 pb-3">Product Create</h4>
             <hr />
             <div className="p-3">

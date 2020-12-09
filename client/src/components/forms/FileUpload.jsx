@@ -28,7 +28,7 @@ const FileUpload = ({values, setValues, setLoading}) => {
             }
           )
             .then((res) => {
-              console.log('IMAGE UPLOAD DATA', res);
+              //console.log('IMAGE UPLOAD DATA', res);
               setLoading(false)
               allUploadedFiles.push(res.data)
 
@@ -49,7 +49,7 @@ const FileUpload = ({values, setValues, setLoading}) => {
 
   const handleImageDelete = (public_id) => {
     setLoading(true)
-    console.log(public_id);
+    //console.log(public_id);
     axios.post(
       `${ process.env.REACT_APP_API }/removeimage`,
       { public_id},

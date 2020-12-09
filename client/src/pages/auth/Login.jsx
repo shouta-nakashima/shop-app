@@ -9,8 +9,8 @@ import { createOrUpdateUser } from "../../functions/auth";
 
 
 const Login = ({history}) => {
-  const [email, setEmail] = useState('fantajista5.6nakaji.s@gmail.com')
-  const [password, setPassword] = useState('test1234')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   let dispatch = useDispatch()
   const {user} = useSelector(state => ({...state}))
@@ -23,7 +23,7 @@ const Login = ({history}) => {
       if (res.data.role === "admin") {
         history.push('/admin/dashboard')
       } else {
-        history.push('/user/history')
+        history.push('/')
       }
     }
   }
@@ -66,7 +66,7 @@ const Login = ({history}) => {
       toast.info('ログインしました。')
       //history.push('/')
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       toast.error('ログインに失敗しました。再度お客様情報をお確かめ下さい。')
       setLoading(false)
     }
@@ -95,7 +95,7 @@ const Login = ({history}) => {
         toast.info('👍ログインしました。')
         // history.push('/')
       }).catch((error) => {
-        console.log(error);
+        //console.log(error);
         toast.error('🙅‍♂️ログインに失敗しました。入力情報を再度ご確認ください。')
       })
   }
