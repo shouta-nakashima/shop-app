@@ -100,7 +100,7 @@ const RegisterComplate = ({history}) => {
   </form>
   
   return (
-    <div className="container p-5" style={{paddingTop: "70px"}}>
+    <div className="container" style={{ paddingTop: "200px", minHeight: "575px" }}>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h3>Sign Up Complate</h3>

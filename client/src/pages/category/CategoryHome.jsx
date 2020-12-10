@@ -23,7 +23,7 @@ const CategoryHome = ({match}) => {
   
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="container-fluid" style={{paddingTop: "70px"}}>
+      <div className="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
         <div className="row">
           <div className="col">
             <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">

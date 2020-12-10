@@ -6,7 +6,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import {ProductCard} from '../components/cards/index'
 import { Spin, Menu, Slider, Checkbox, Radio, Button, Drawer } from 'antd';
 import { DollarCircleOutlined, DownSquareOutlined,StarOutlined, SearchOutlined } from '@ant-design/icons'
-import {Star} from '../components/forms/index'
+import { Star } from '../components/forms/index'
+import { Search } from '../components/forms/index'
 
 
 const { SubMenu } = Menu
@@ -295,12 +296,15 @@ const Shop = () => {
 
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="container-fluid" style={{paddingTop: "70px"}}>
+      <div className="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
         <div className="row">
           <div className="col-md-10 offset-md-1 pt-2 ">
             <div className="text-center">
               <h4 className="text-center">検索商品の一覧 </h4>
-              <Button onClick={showDrawer} className="text-center">商品検索<SearchOutlined /></Button>
+              <div style={{display: "flex", justifyContent: "center"}}>
+                <Button onClick={showDrawer} className="mr-3">条件検索<SearchOutlined /></Button>
+                <Search />
+              </div>
               <div className="col-md-3 pt-2 text-center">
             </div>
               <Drawer

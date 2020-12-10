@@ -14,8 +14,7 @@ const LocalSearch = ({ keyword, setKeyword }) => {
         placeholder="Search"
         value={keyword}
         onChange={handleSearchChange}
-        className="form-control p-1 "
-        
+        className="form-control p-1 mb-2"
       />
     </div>
   )

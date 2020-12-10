@@ -41,7 +41,7 @@ const ForgotPassword = ({history}) => {
   }
 
   const resetPasswordForm = () => <form onSubmit={handleSubmit}>
-    <div className="form-group" style={{paddingTop: "70px"}}>
+    <div className="form-group" >
       <input
         type="email"
         className="form-control"
@@ -66,7 +66,7 @@ const ForgotPassword = ({history}) => {
     </Button>
   </form>
   return (
-    <div className="container col-md-6 offset-md-3 p-5">
+    <div className="container col-md-6 offset-md-3 " style={{paddingTop: "200px", minHeight: "575px"}}>
       {loading ? (<h3 className="text-danger">Loading...</h3>) : (<h3>パスワードをお忘れの方</h3>)}
       <br/>
       {resetPasswordForm()}

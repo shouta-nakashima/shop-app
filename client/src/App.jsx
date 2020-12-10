@@ -6,7 +6,7 @@ import {UserRoute,AdminRoute} from './components/routes/index'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {Home,Product,Shop, Cart,Checkout, Payment} from './pages/index'
-import Header from './components/nav/Header'
+import {NavHeader, Footer} from './components/nav/index'
 import { auth } from './firebase'
 import { useDispatch } from 'react-redux'
 import { currentUser } from './functions/auth'
@@ -18,7 +18,7 @@ import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
 import SideDrawer from './components/drawer/SideDrawer'
 import CreateCoupon from './pages/admin/coupon/CreateCoupon'
-import {Layout} from 'antd'
+
 
 
 
@@ -51,7 +51,7 @@ const App = () => {
   },[dispatch])
   return (
     <>
-      <Header />
+      <NavHeader />
       <SideDrawer/>
       <ToastContainer/>
       <Switch>
@@ -83,6 +83,7 @@ const App = () => {
         <AdminRoute exact path="/admin/product/:slug" component={UpdateProduct} />
         <AdminRoute exact path="/admin/coupon" component={CreateCoupon} />
       </Switch>
+      <Footer/>
     </>
   )
 }

@@ -13,10 +13,9 @@ import {auth} from '../../firebase'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Search } from '../forms/index'
 import {AdminNav, UserNav} from './index'
 
-const { SubMenu, Item } = Menu;//Menu.SubMenu
+const { Item } = Menu;//Menu.SubMenu
 
 const {Header} = Layout
 
@@ -50,47 +49,40 @@ const NavHeader = () => {
   };
 
   return (
-    <Header style={{ position: 'fixed', zIndex: 1, width: '100%', paddingRight: 0, paddingLeft: 0 }}>
-      <Menu className="container-fluid" onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+    <Header  style={{ position: 'fixed', zIndex: 1, width: '100%', paddingRight: 0, paddingLeft: 0 }}>
+      <Menu theme="dark" className="container-fluid" onClick={handleClick} selectedKeys={[current]} mode="horizontal">
         {user && (
-            <Item onClick={showDrawer} key="menu" icon={<MenuOutlined />} >
+            <Item className="text-white" onClick={showDrawer} key="menu" icon={<MenuOutlined />} >
               Menu
             </Item>
         )}
-        <Item key="home" icon={<AppstoreOutlined />}>
-          <Link to="/">Home</Link>
+        <Item className="text-white" key="home" icon={<AppstoreOutlined />}>
+          <Link className="text-white" to="/">Home</Link>
         </Item>
 
-        <Item key="shop" icon={<ShoppingOutlined/>}>
-          <Link to="/shop">Shop</Link>
+        <Item className="text-white" key="shop" icon={<ShoppingOutlined/>}>
+          <Link className="text-white" to="/shop">Shop</Link>
         </Item>
 
-        <Item key="cart" icon={<ShoppingCartOutlined/>}>
+        <Item className="text-white" key="cart" icon={<ShoppingCartOutlined/>}>
           <Link to="/cart">
             <Badge count={cart.length} offset={[9,0]}>
-              Cart
+              <p className="text-white"> Cart</p>
             </Badge>
           </Link>
         </Item>
 
         {!user && (
-          <Item key="register" icon={<UserAddOutlined />} className="float-right">
-            <Link to="/register">Sign Up</Link>
+          <Item className="text-white float-right" key="register" icon={<UserAddOutlined />} >
+            <Link className="text-white" to="/register">Sign Up</Link>
           </Item>
         )}
 
         {!user && (
-          <Item key="login" icon={<UserOutlined />} className="float-right">
-            <Link to="/login">Login</Link>
+          <Item className="text-white float-right" key="login" icon={<UserOutlined />} >
+            <Link className="text-white" to="/login">Login</Link>
           </Item>
         )}
-        
-        {user && (
-          <SubMenu key="SubMenu" icon={<UserOutlined />} title={user.email && user.email.split('@')[0]} className="float-right"/>
-        )}
-        <span className="float-right pt-3" >
-          <Search/>
-        </span>
       </Menu>
       <Drawer
         placement="left"

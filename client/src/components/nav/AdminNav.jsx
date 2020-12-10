@@ -14,17 +14,23 @@ import {
   HeartOutlined,
   AppstoreAddOutlined
 } from '@ant-design/icons'
-import SubMenu from 'antd/lib/menu/SubMenu';
+import { useSelector } from 'react-redux'
 
-const { Item } = Menu;
+
+const { Item, SubMenu } = Menu;
 
 const AdminNav = ({ onClose, logout }) => {
-    const handleLogoutClose = () => {
-      onClose()
-      logout()
-    }
+  let { user } = useSelector((state) => ({ ...state }))
+  
+  const handleLogoutClose = () => {
+    onClose()
+    logout()
+  }
+
   return (
     <Menu mode="inline">
+      <h5>{user && user.email && user.email.split('@')[0]}</h5>
+      <hr/>
       <h5 className="text-center text-info">Admin Only</h5>
       <Item icon={<HistoryOutlined />} className="nav-item" onClick={onClose}>
         Dashboard

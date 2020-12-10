@@ -168,7 +168,7 @@ const Checkout = ({history}) => {
   }
 
   return (
-    <div className="container-fluid" style={{paddingTop: "70px"}}>
+    <div className="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
       <div className="row pt-3">
         <div className="col-md-6">
           <h4 className="text-center">配送先住所</h4>
