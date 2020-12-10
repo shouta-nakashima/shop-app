@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
 import ModalImage from "react-modal-image";
-import noImages from '../../image/no_image.png'
+import noImages from '../../assets/image/no_image.png'
 import { toast } from 'react-toastify'
 import {CheckCircleOutlined, CloseCircleOutlined,CloseOutlined} from '@ant-design/icons'
 

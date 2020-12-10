@@ -3,7 +3,7 @@ import { Card, Tabs,Tooltip } from 'antd'
 import { HeartOutlined, ShoppingCartOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import NoImage from '../../image/no_image.png'
+import NoImage from '../../assets/image/no_image.png'
 import { ProductListItem } from './index'
 import StarRating from 'react-star-ratings'
 import RatingModal from '../modal/RatingModal'

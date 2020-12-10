@@ -1,7 +1,7 @@
 import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
-import '../stripe.css'
+import '../assets/styles/stripe.css'
 import StripeCheckout from '../components/StripeCheckout'
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_KEY)

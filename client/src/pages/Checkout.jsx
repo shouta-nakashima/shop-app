@@ -9,7 +9,6 @@ import {
 } from '../functions/user'
 import { toast } from 'react-toastify'
 import {Address} from '../components/forms/index'
-import "react-quill/dist/quill.snow.css"
 
 const Checkout = ({history}) => {
 

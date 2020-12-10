@@ -5,7 +5,7 @@ import { createPaymentIntent } from '../functions/stripe'
 import { Link } from 'react-router-dom'
 import { Card } from 'antd'
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons'
-import shoppingImage from '../image/card.jpg'
+import shoppingImage from '../assets/image/card.jpg'
 import { createOrder, emptyUserCart } from '../functions/user'
 
 
