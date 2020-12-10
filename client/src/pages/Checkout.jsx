@@ -7,15 +7,16 @@ import {
   applyCoupon,
   createCashOrder
 } from '../functions/user'
-import {toast} from 'react-toastify'
-import ReactQuill from 'react-quill'
+import { toast } from 'react-toastify'
+import {Address} from '../components/forms/index'
 import "react-quill/dist/quill.snow.css"
 
 const Checkout = ({history}) => {
 
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState(0)
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState({})
+  const [subAddress, setSubAddress] = useState("")
   const [addressSaved, setAddressSaved] = useState(false)
   const [coupon, setCoupon] = useState('')
   const [totalAfterdiscount, setTotalAfterDiscount] = useState(0)
@@ -34,10 +35,13 @@ const Checkout = ({history}) => {
   },[])
 
   const saveAddressToDb = () => {
-    //console.log(address);
+    if (subAddress === "") {
+      alert('番地以降は必須項目です。')
+      return false
+    }
     saveUserAddress(user.token, address)
       .then((res) => {
-      if (res.data.ok) {
+        if (res.data.ok) {
         setAddressSaved(true)
         toast.success('配送先住所を保存しました。')
       }
@@ -68,20 +72,6 @@ const Checkout = ({history}) => {
         
       })
   }
-
-  const showAddress = () => (
-    <div className="col text-center">
-      <ReactQuill theme="snow" value={address} onChange={setAddress}/>
-        <button
-          className="btn btn-primary mt-2 text-center btn-raised"
-        onClick={saveAddressToDb}
-        disabled={!address}
-        
-        >
-          住所を登録
-        </button>
-    </div>
-  )
 
   const showProductSummary = () => 
     products.map((p, i) => (
@@ -173,8 +163,12 @@ const Checkout = ({history}) => {
         <div className="col-md-6">
           <h4 className="text-center">配送先住所</h4>
           <br />
-          <br />
-          {showAddress()}
+          <Address
+            saveAddressToDb={saveAddressToDb}
+            address={address}
+            setAddress={setAddress}
+            setSubAddress={setSubAddress}
+          />
           <hr />
           <h4 className="text-center">クーポンを使用</h4>
           <br />

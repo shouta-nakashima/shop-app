@@ -3,7 +3,8 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
-const uniqueid = require('uniqueid')
+const uniqueid = require('uniqueid');
+const user = require("../models/user");
 
 exports.userCart = async (req, res) => {
   // console.log(req.body); // {cart: []}
@@ -74,7 +75,7 @@ exports.emptyCart = async (req, res) => {
 exports.saveAddress = async (req, res) => {
   const userAddress = await User.findOneAndUpdate(
     { email: req.user.email },
-    { address: req.body.address }
+    { address: req.body.address },
   ).exec()
   res.json({ok: true})
 }
