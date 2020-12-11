@@ -2,7 +2,7 @@ import React from 'react'
 import { Drawer, Button } from 'antd'
 import {useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
-import noImage from '../../image/no_image.png'
+import noImage from '../../assets/image/no_image.png'
 
 const SideDrawer = () => {
   const dispatch = useDispatch()

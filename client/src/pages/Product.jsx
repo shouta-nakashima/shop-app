@@ -43,7 +43,7 @@ const Product = ({match}) => {
     });
   };
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
       <div className="row pt-4">
         <ProductDetail
           product={product}

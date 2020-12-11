@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="container-fluid">
+      <div className="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
         <div className="jumbotron text-info h1 font-weight-bold text-center">
           <Jumbotron text={ ['Thanks for coming!!',"Nakaji's SHOP APP",'This is a Demo site']}/>
         </div>

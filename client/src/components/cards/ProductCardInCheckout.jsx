@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch} from 'react-redux'
 import ModalImage from "react-modal-image";
-import noImages from '../../image/no_image.png'
+import noImages from '../../assets/image/no_image.png'
 import { toast } from 'react-toastify'
 import {CheckCircleOutlined, CloseCircleOutlined,CloseOutlined} from '@ant-design/icons'
 
@@ -111,7 +111,7 @@ const ProductCardInCheckout = ({ p }) => {
           />
         </td>
         <td className=" text-center">
-          {p.shipping === "Yes"
+          {p.shipping === "配送可能"
             ? <CheckCircleOutlined className="text-success text-center" />
             : <CloseCircleOutlined className="text-danger"/>
           }

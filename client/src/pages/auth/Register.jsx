@@ -53,9 +53,9 @@ const Register = ({history}) => {
     </Button>
   </form>
   return (
-    <div className="container p-5">
+    <div className="container " style={{paddingTop: "230px", minHeight: "575px"}}>
       <div className="row">
-        <div className="col-md-6 offset-md-3">
+        <div className="col-md-8 offset-md-2">
           <h3>Sign Up</h3>
           <br/>
           {registerform()}

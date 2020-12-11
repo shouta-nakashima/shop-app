@@ -73,7 +73,7 @@ const History = () => {
   )
   
   return (
-    <div className ="container-fluid">
+    <div className ="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
       <div className="row">
         {/* <div className="col-md-2">
           <UserNav/>

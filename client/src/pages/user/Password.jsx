@@ -42,7 +42,7 @@ const Password = () => {
     </form>
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="col-md-8 offset-md-2 ">
+      <div className="col-md-8 offset-md-2 " style={{paddingTop: "70px", minHeight: "575px"}}>
         <h4 className="text-center pt-3 pb-3">Password Update</h4>
         {passwordupdateForm()}
       </div>

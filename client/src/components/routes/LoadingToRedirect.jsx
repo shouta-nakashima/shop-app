@@ -16,7 +16,7 @@ const LoadingToRedirect = () => {
   return () => clearInterval(interval)
   }, [count,history])
   return (
-    <div className="container p-5 text-center">
+    <div className="container text-center" style={{paddingTop: "270px", minHeight: "575px"}}>
       <h4>このページにはアクセス出来ません。</h4>
       <p>あと{count}秒でトップページへリダイレクトします。</p>
     </div>

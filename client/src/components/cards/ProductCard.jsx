@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Card, Tooltip} from 'antd'
 import { ReadOutlined, ShoppingCartOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import noImages from '../../image/no_image.png'
+import noImages from '../../assets/image/no_image.png'
 import { Link } from 'react-router-dom'
 import { showAverage } from '../../functions/rating'
 import _ from 'lodash'

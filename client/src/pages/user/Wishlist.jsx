@@ -27,7 +27,7 @@ const Wishlist = () => {
   }
 
   return (
-    <div className ="container-fluid">
+    <div className ="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
       <div className="row">
         <div className="col-md-8 offset-md-2">
           <h3 className="text-center mt-3 " >Wishlist</h3>

@@ -10,30 +10,41 @@ import {
   FilePptOutlined,
   OrderedListOutlined,
   AccountBookOutlined,
-  UserAddOutlined
+  UserAddOutlined,
+  HeartOutlined,
+  AppstoreAddOutlined
 } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
 
-const { Item } = Menu;
+
+const { Item, SubMenu } = Menu;
 
 const AdminNav = ({ onClose, logout }) => {
-    const handleLogoutClose = () => {
-      onClose()
-      logout()
-    }
+  let { user } = useSelector((state) => ({ ...state }))
+  
+  const handleLogoutClose = () => {
+    onClose()
+    logout()
+  }
+
   return (
-    <Menu>
-        <Item icon={<HistoryOutlined />} className="nav-item" onClick={onClose}>
-          Dashboard
-          <Link to="/admin/dashboard" className="nav-link" />
-          
-        </Item>
+    <Menu mode="inline">
+      <h5>{user && user.email && user.email.split('@')[0]}</h5>
+      <hr/>
+      <h5 className="text-center text-info">Admin Only</h5>
+      <Item icon={<HistoryOutlined />} className="nav-item" onClick={onClose}>
+        Dashboard
+        <Link to="/admin/dashboard" className="nav-link" />
+        
+      </Item>
+      <Item icon={<FilePptOutlined />} className="nav-item" onClick={onClose}>
+        All Items
+        <Link to="/admin/products" className="nav-link"/>
+      </Item>
+      <SubMenu icon={<AppstoreAddOutlined />} title="Create Items">
         <Item icon={<UploadOutlined />} className="nav-item" onClick={onClose}>
           Product
           <Link to="/admin/product" className="nav-link"/>
-        </Item>
-        <Item icon={<FilePptOutlined />} className="nav-item" onClick={onClose}>
-          Products
-          <Link to="/admin/products" className="nav-link"/>
         </Item>
         <Item icon={<OrderedListOutlined />} className="nav-item" onClick={onClose}> 
           Category
@@ -47,15 +58,22 @@ const AdminNav = ({ onClose, logout }) => {
           Coupon
           <Link to="/admin/coupon" className="nav-link"/>
         </Item>
-        <Item icon={<EditOutlined />} className="nav-item" onClick={onClose}>
-          Password
-          <Link to="/user/password" className="nav-link"/>
+      </SubMenu>
+      <hr />
+      <h5 className="text-center text-info">Common page</h5>
+      <Item icon={<EditOutlined />} className="nav-item" onClick={onClose}>
+        Password
+        <Link to="/user/password" className="nav-link"/>
       </Item>
       <Item icon={<UserAddOutlined />} className="nav-item" onClick={onClose}>
-          UserHistory
-          <Link to="/user/history" className="nav-link"/>
-        </Item>
-        <Item icon={<LogoutOutlined />} onClick={handleLogoutClose}>Logout</Item>
+        UserHistory
+        <Link to="/user/history" className="nav-link"/>
+      </Item>
+      <Item icon={<  HeartOutlined/>} className="nav-item" onClick={onClose}>
+        Wishlist
+        <Link to="/user/wishlist" className="nav-link"/>
+      </Item>
+      <Item icon={<LogoutOutlined />} onClick={handleLogoutClose}>Logout</Item>
     </Menu>
   )
 }

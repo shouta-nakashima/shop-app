@@ -49,7 +49,7 @@ const CreateCoupon = () => {
 
   return (
     <Spin spinning={loading} tip="Loading..." size="large">
-      <div className="container-fluid">
+      <div className="container-fluid" style={{paddingTop: "70px", minHeight: "575px"}}>
         <div className="row">
           <div className="col-md-8 offset-md-2">
             <h4 className="text-center pt-3 pb-3">Create Coupon</h4>

@@ -5,7 +5,7 @@ import { createPaymentIntent } from '../functions/stripe'
 import { Link } from 'react-router-dom'
 import { Card } from 'antd'
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons'
-import shoppingImage from '../image/card.jpg'
+import shoppingImage from '../assets/image/card.jpg'
 import { createOrder, emptyUserCart } from '../functions/user'
 
 
@@ -103,8 +103,7 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <>
-      {
-        !succeeded && <div>
+      {!succeeded && <div >
           {coupon && totalAfterDiscount !== undefined
             ? (
               <p className="alert alert-success">{`クーポンが適用されています。お支払い金額が${totalAfterDiscount.toLocaleString()}円に変更されました。`}</p>
