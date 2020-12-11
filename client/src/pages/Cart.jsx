@@ -1,8 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import {ProductCardInCheckout} from '../components/cards/index'
-import {userCart} from '../functions/user'
+import { userCart } from '../functions/user'
+import {ItemTable, OrderListButtons, AllOrderList} from '../components/cart/index'
 
 const Cart = ({history}) => {
   const { user, cart } = useSelector((state) => ({ ...state }))
@@ -36,79 +35,27 @@ const Cart = ({history}) => {
     }).catch((err) => console.log('cart save error', err)) 
   }
 
-  const showCartItem = () => (
-    <table className="table table-bordered">
-      <thead className="thead-light">
-        <tr>
-          <th scope="col">Image</th>
-          <th scope="col">Title</th>
-          <th scope="col">Price</th>
-          <th scope="col">Brand</th>
-          <th scope="col">Color</th>
-          <th scope="col">Count</th>
-          <th scope="col">Shipping</th>
-          <th scope="col">Remove</th>
-        </tr>
-      </thead>
-      {cart.map((p) => (
-        <ProductCardInCheckout key={p._id} p={p} />
-      ))}
-    </table>
-  )
-
   return (
     <div className="container-fluid " style={{paddingTop: "100px", minHeight: "575px"}}>
       <div className="row">
         <div className="col-md-8">
           <h4>Cart</h4>
-          {!cart.length
-            ? <h4>現在カートに商品はありません。 <Link to="/shop">商品を探す</Link></h4>
-            : (showCartItem())
-          }
+          <ItemTable
+            cart={cart}
+          />
         </div>
         <div className="col-md-4">
-          <h4>注文商品一覧</h4>
-          <hr />
-          {cart.map((c, i) => (
-            <div key={i}>
-              <p>{c.title} x {c.count} = {(c.price * c.count).toLocaleString()}円</p>
-            </div>
-          ))}
-          <hr />
-          合計: {getTotal().toLocaleString()}円
+          <AllOrderList
+            cart={cart}
+            getTotal={getTotal}
+          />
           <hr/>
-          {
-            user ? (
-              <>
-                <button
-                  onClick={saveOrderToDb}
-                  className="btn btn-sm btn-primary mt-2"
-                  disabled={!cart.length}
-                >
-                  オンライン決済で購入
-                </button>
-                <br/>
-                <button
-                  onClick={saveCashOrderToDb}
-                  className="btn btn-sm btn-warning mt-2"
-                  disabled={!cart.length}
-                >
-                  代金引換で購入
-                </button>
-              </>
-            ) : (
-                <button
-                  className="btn btn-sm btn-primary mt-2"
-                >
-                  <Link to={{
-                    pathname: "/login",
-                    state: {from: "cart"}
-                  }}>
-                    ログインして購入に進む
-                  </Link>
-                </button>
-            )
-          }
+          <OrderListButtons
+            user={user}
+            cart={cart}
+            saveCashOrderToDb={saveCashOrderToDb}
+            saveOrderToDb={saveOrderToDb}
+          />
         </div>
       </div>
     </div>
