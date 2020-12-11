@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import { getCategories } from '../../functions/category'
 import {getSubs} from '../../functions/sub'
 import { Menu } from 'antd'
@@ -21,7 +20,6 @@ import {
 const {SubMenu} = Menu
 
 const Menus = ({fetchProducts, loadAllProducts}) => {
-  let dispatch = useDispatch()
   const [price, setPrice] = useState([0, 0])
   const [categories, setCategories] = useState([])
   const [categoryIds, setCategoryIds] = useState([])
@@ -42,146 +40,6 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
     //fetch sub category
     getSubs().then((res) => setSubs(res.data))
   },[])
-
-  // priceに基づいて製品をload
-  useEffect(() => {
-    //console.log('price response');
-    fetchProducts({price})
-  }, [ok])
-  
-  const handleSlider = (value) => {
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setStar("")
-    setBrand("")
-    setCategoryIds([])
-    setSub('')
-    setColor('')
-    setShipping('')
-    setPrice(value)
-    setTimeout(() => {
-      setOk(!ok)
-    },300)
-  }
-
-  // category に基づいて製品をload
-  const handleCheck = e => {
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setPrice([0,0])
-    setStar("")
-    setSub('')
-    setBrand("")
-    setColor('')
-    setShipping('')
-    //console.log(e.target.value);
-    let inTheState = [...categoryIds]
-    let justChecked = e.target.value
-    let foundInTheState = inTheState.indexOf(justChecked) //index or -1
-
-    //indexOf? 見つからない場合は-1を返し、そうでない場合はインデックスを返す
-    if (foundInTheState === -1) {
-      inTheState.push(justChecked)
-    } else {
-      // 見つかった場合は、インデックスから1つのアイテムを引き出す
-      inTheState.splice(foundInTheState, 1)
-    }
-    setCategoryIds(inTheState)
-    //console.log(inTheState);
-    fetchProducts({category: inTheState})
-  }
-
-  //5 star ratingで商品を表示
-  const handleStarClick = (num) => {
-    //console.log(num);
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setPrice([0,0])
-    setCategoryIds([])
-    setSub('')
-    setStar(num)
-    setBrand("")
-    setColor('')
-    setShipping('')
-    fetchProducts({stars: num})
-  }
-  
-  //6 sub category に基づいて商品を表示
-  
-  const handleSubs = (sub) => {
-    //console.log(sub);
-    setSub(sub)
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setPrice([0,0])
-    setCategoryIds([])
-    setStar('')
-    setBrand("")
-    setColor('')
-    setShipping('')
-    fetchProducts({sub: sub})
-  }
-
-  // 7 brandに基づいて商品を表示
-
-  const handleBrand = (e) => {
-    setSub('')
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setPrice([0,0])
-    setCategoryIds([])
-    setStar('')
-    setColor('')
-    setShipping('')
-    setBrand(e.target.value)
-    fetchProducts({brand: e.target.value})
-  }
-
-  // 8 colorに基づいて商品を表示
-
-  const handleColor = (e) => {
-    setSub('')
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setPrice([0,0])
-    setCategoryIds([])
-    setStar('')
-    setBrand('')
-    setShipping('')
-    setColor(e.target.value)
-    fetchProducts({color: e.target.value})
-  }
-
-  //9 shippingに基づいて商品を表示
-  
-  const handleShippingChange = (e) => {
-    setSub('')
-    dispatch({
-      type: "SEARCH_QUERY",
-      payload: {text: ""}
-    })
-    setPrice([0,0])
-    setCategoryIds([])
-    setStar('')
-    setBrand('')
-    setColor('')
-    setShipping(e.target.value)
-    fetchProducts({shipping: e.target.value})
-  }
-
-
   return (
     <Menu mode="inline" >
       {/* price */}
@@ -194,8 +52,17 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
       >
         <div>
         <PriceSearch
-          price={price}
-          handleSlider={handleSlider}
+            price={price}
+            ok={ok}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
+            setOk={setOk}
+            fetchProducts={fetchProducts}
         />
         </div>
       </SubMenu>
@@ -211,7 +78,14 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
           <CategoriesSearch
             categories={categories}
             categoryIds={categoryIds}
-            handleCheck={handleCheck}
+            fetchProducts={fetchProducts}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
           />
         </div>
       </SubMenu>
@@ -226,7 +100,14 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
       >
         <div>
           <StarSearch
-            handleStarClick={handleStarClick}
+            fetchProducts={fetchProducts}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
           />
         </div>
       </SubMenu>
@@ -242,7 +123,14 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
         <div className="pl-4 pr-4">
           <SubsSearch
             subs={subs}
-            handleSubs={handleSubs}
+            fetchProducts={fetchProducts}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
           />
         </div>
       </SubMenu>
@@ -260,7 +148,14 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
           <BrandsSearch
             brand={brand}
             brands={brands}
-            handleBrand={handleBrand}
+            fetchProducts={fetchProducts}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
           />
         </div>
       </SubMenu>
@@ -278,7 +173,14 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
           <ColorSearch
             color={color}
             colors={colors}
-            handleColor={handleColor}
+            fetchProducts={fetchProducts}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
           />
         </div>
       </SubMenu>
@@ -295,7 +197,14 @@ const Menus = ({fetchProducts, loadAllProducts}) => {
         <div className="pl-4 pr-4">
           <ShippingSearch
             shipping={shipping}
-            handleShippingChange={handleShippingChange}
+            fetchProducts={fetchProducts}
+            setStar={setStar}
+            setBrand={setBrand}
+            setCategoryIds={setCategoryIds}
+            setSub={setSub}
+            setColor={setColor}
+            setShipping={setShipping}
+            setPrice={setPrice}
           />
         </div>
       </SubMenu>
