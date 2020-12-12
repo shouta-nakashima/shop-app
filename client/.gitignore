@@ -7,6 +7,10 @@
 urlConfig.js
 .env
 firebase.js
+.firebase
+.firebaserc
+firebase.json
+
 
 # testing
 /coverage
